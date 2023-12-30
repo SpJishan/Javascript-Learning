@@ -49,3 +49,18 @@
 
 
 
+//**** 34. Arrow Function- 
+// Learning Fact1: On Arrow functions, the function name is stored in a variable, Perameters are stored after the equal sign of the variable, and the coding blocks are stored after arrow sign*******/
+
+// let calcage = birthyear => 2023 - birthyear;
+// let age= calcage(1995);
+// console.log(age);
+
+
+let calcAverage = (score1,score2,score3) =>{
+   return (score1+score2+score3)/3
+}
+
+let score=calcAverage(1,2,3);
+
+console.log(score);
