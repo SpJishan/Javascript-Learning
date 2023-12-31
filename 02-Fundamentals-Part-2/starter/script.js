@@ -125,7 +125,6 @@
 
 
 
-/
 
 
 // const calcTip = function (bill) {
@@ -136,3 +135,25 @@
 //   const tips = [calcTip(bills[0]), calcTip(bills[1]), calcTip(bills[2])];
    
 //   console.log(bills, tips);
+
+
+//**Objects Methods */
+
+const jishan = {
+    firstName: 'Shafinul',
+    familyName: 'Pasha',
+    lastName: 'Jishan',
+    birthYear: 1993,
+    job: 'Programmer',
+    friends: ['Rafi', 'Faisal', 'Nafi'],
+    hasDriverLicense: true,
+
+    calcAge: function(birthYear){
+        return 2023-birthYear;
+    }
+}
+
+console.log(jishan.firstName);
+console.log(jishan.job);
+console.log(jishan.calcAge(1994));
+console.log(jishan['calcAge'](1992)) 
