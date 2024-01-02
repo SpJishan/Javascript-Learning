@@ -190,14 +190,24 @@ const jishan= [
 
 // console.log(types); //Displaying the newly stored array data 
 
-//****Using Continue statement in a loop */
+// //****Using Continue statement in a loop */
+// for(let i=0; i<jishan.length; i++)
+// {
+    
+//     if(typeof jishan[i] != 'string') continue; // Logic: script:201
+//     console.log(jishan[i], typeof jishan[i]); // Displying data (only string) from the array 
+// }
+
+// console.log(`Logic: First 3 data are string so line 198 executed but the forth data in the array is a number so script 198 not gonna exected and thus the only fifth data displayed which is aso a string`)
+
+//****Using Break statement in a loop */
 for(let i=0; i<jishan.length; i++)
 {
     
-    if(typeof jishan[i] != 'string') continue; // Logic: script:201
+    if(typeof jishan[i] === 'number') break; // Logic: script:201
     console.log(jishan[i], typeof jishan[i]); // Displying data (only string) from the array 
 }
 
-console.log(`Logic: First 3 data are string so line 198 executed but the forth data in the array is a number so script 198 not gonna exected and thus the only fifth data displayed which is aso a string`)
+console.log(`Logic: The first 3 data are strings so script:208 is executed but the fourth data in the array is a number so script:208 is not gonna executed and thus the loop gets breaks`)
 
 
