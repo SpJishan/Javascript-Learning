@@ -173,7 +173,21 @@ const jishan= [
 
 ]
 //****Retrieve Data from array using for loop. */
-for(let i=0;i<jishan.length;i++)
+// for(let i=0;i<jishan.length;i++)
+// {
+//     console.log(jishan[i], typeof jishan[i]);
+// }
+
+//*****Storing data in an array using loop */
+
+const types=[]   //Declaring an empty string
+
+for(let i=0; i< jishan.length; i++)
 {
-    console.log(jishan[i], typeof jishan[i]);
+    types[i]=typeof jishan[i]; //Storing data from an array to an another array
+    console.log(jishan[i], typeof jishan[i]); //Retrieving data from an array
 }
+
+console.log(types); //Displaying the newly stored array data 
+
+
