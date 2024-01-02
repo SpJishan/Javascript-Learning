@@ -200,14 +200,23 @@ const jishan= [
 
 // console.log(`Logic: First 3 data are string so line 198 executed but the forth data in the array is a number so script 198 not gonna exected and thus the only fifth data displayed which is aso a string`)
 
-//****Using Break statement in a loop */
-for(let i=0; i<jishan.length; i++)
-{
+// //****Using Break statement in a loop */
+// for(let i=0; i<jishan.length; i++)
+// {
     
-    if(typeof jishan[i] === 'number') break; // Logic: script:201
-    console.log(jishan[i], typeof jishan[i]); // Displying data (only string) from the array 
-}
+//     if(typeof jishan[i] === 'number') break; // Logic: script:201
+//     console.log(jishan[i], typeof jishan[i]); // Displying data (only string) from the array 
+// }
 
-console.log(`Logic: The first 3 data are strings so script:208 is executed but the fourth data in the array is a number so script:208 is not gonna executed and thus the loop gets breaks`)
+// console.log(`Logic: The first 3 data are strings so script:208 is executed but the fourth data in the array is a number so script:208 is not gonna executed and thus the loop gets breaks`)
+
+// *****Looping Backwards*/
+
+console.log(`*****Looping Backwards*`)
+
+for(let i=jishan.length-1; i>=0 ; i--) // length countation starts from 1 but the index countation starts from 0 
+{
+    console.log(i, jishan[i]);
+}
 
 
