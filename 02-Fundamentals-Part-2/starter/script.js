@@ -178,16 +178,26 @@ const jishan= [
 //     console.log(jishan[i], typeof jishan[i]);
 // }
 
-//*****Storing data in an array using loop */
+// //*****Storing data in an array using loop */
 
-const types=[]   //Declaring an empty string
+// const types=[]   //Declaring an empty string
 
-for(let i=0; i< jishan.length; i++)
+// for(let i=0; i< jishan.length; i++)
+// {
+//     types[i]=typeof jishan[i]; //Storing data from an array to an another array
+//     console.log(jishan[i], typeof jishan[i]); //Retrieving data from an array
+// }
+
+// console.log(types); //Displaying the newly stored array data 
+
+//****Using Continue statement in a loop */
+for(let i=0; i<jishan.length; i++)
 {
-    types[i]=typeof jishan[i]; //Storing data from an array to an another array
-    console.log(jishan[i], typeof jishan[i]); //Retrieving data from an array
+    
+    if(typeof jishan[i] != 'string') continue; // Logic: script:201
+    console.log(jishan[i], typeof jishan[i]); // Displying data (only string) from the array 
 }
 
-console.log(types); //Displaying the newly stored array data 
+console.log(`Logic: First 3 data are string so line 198 executed but the forth data in the array is a number so script 198 not gonna exected and thus the only fifth data displayed which is aso a string`)
 
 
