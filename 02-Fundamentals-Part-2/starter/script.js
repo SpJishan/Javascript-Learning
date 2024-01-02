@@ -137,25 +137,43 @@
 //   console.log(bills, tips);
 
 
-//**Objects Methods */
+//********Objects Methods **********/
 
-const jishan = {
-    firstName: 'Shafinul',
-    familyName: 'Pasha',
-    lastName: 'Jishan',
-    birthYear: 1993,
-    job: 'Programmer',
-    friends: ['Rafi', 'Faisal', 'Nafi'],
-    hasDriverLicense: true,
+// const jishan = {
+//     firstName: 'Shafinul',
+//     familyName: 'Pasha',
+//     lastName: 'Jishan',
+//     birthYear: 1993,
+//     job: 'Programmer',
+//     friends: ['Rafi', 'Faisal', 'Nafi'],
+//     hasDriverLicense: true,
 
-    calcAge: function(birthYear){
-        return 2023-birthYear;
-    }
+//     calcAge: function(birthYear){
+//         return 2023-birthYear;
+//     }
+// }
+
+// console.log(jishan.firstName);
+// console.log(jishan.job);
+// console.log(jishan.calcAge(1994));
+// console.log(jishan['calcAge'](1992));
+
+// console.log(`${jishan.firstName} is a ${jishan.calcAge(1993)} years old,  ${jishan.job} , and has a driver license`);
+
+//******For Loop with an array */
+
+const jishan= [
+    'Shafinul',
+    'Pasha',
+    'Jishan',
+    1993,
+    'Programmer',
+    ['Rafi', 'Faisal', 'Nafi', 'Sakil', 'Rabbi', 'Razib'], 
+    true
+
+]
+//****Retrieve Data from array using for loop. */
+for(let i=0;i<jishan.length;i++)
+{
+    console.log(jishan[i], typeof jishan[i]);
 }
-
-console.log(jishan.firstName);
-console.log(jishan.job);
-console.log(jishan.calcAge(1994));
-console.log(jishan['calcAge'](1992));
-
-console.log(`${jishan.firstName} is a ${jishan.calcAge(1993)} years old,  ${jishan.job} , and has a driver license`);
