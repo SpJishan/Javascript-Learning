@@ -231,17 +231,61 @@ const jishan= [
 
 
 
-///*****   While Loop   */
+// ///*****   While Loop   */
 
-let dice=Math.trunc(Math.random()*6)+1; //Math.random chooses a number between 0 & 1.
-        //Math.trunc reducts the fractional part of the decimal number thus producing a whole number.
+// let dice=Math.trunc(Math.random()*6)+1; //Math.random chooses a number between 0 & 1.
+//         //Math.trunc reducts the fractional part of the decimal number thus producing a whole number.
 
-while(dice!=6){  //Looping condition for while loop
-    console.log(`Dice rolled ${dice}`);
-    dice=Math.trunc(Math.random()*6)+1; //Producing another random number between 1-6
-    if(dice===6)     //Breaking the loop otherwise, it will continue infinitely   
-    console.log(`🎉Dice Rolled ${dice}!!🕶 Congatulation!.You can roll another one! `);
+// while(dice!=6){  //Looping condition for while loop
+//     console.log(`Dice rolled ${dice}`);
+//     dice=Math.trunc(Math.random()*6)+1; //Producing another random number between 1-6
+//     if(dice===6)     //Breaking the loop otherwise, it will continue infinitely   
+//     console.log(`🎉Dice Rolled ${dice}!!🕶 Congatulation!.You can roll another one! `);
+// }
+
+
+
+///*****   Coding Challenge   */
+
+// Your tasks:
+
+// Create an array called bills containing all 10 test bill values.
+
+// Create empty arrays for the tips and the totals (tips and totals)
+
+// Use the calcTip function we wrote before (included in the starter code) to calculate tips and total values (bill + tip) for every bill value in the bills array. Use a for loop to perform the 10 calculations!
+
+
+
+// TEST DATA: 22, 295, 176, 440, 37, 105, 10, 1100, 86, 52
+
+const bills=[22, 295, 176, 440, 37, 105, 10, 1100, 86, 52];
+
+//Declaring empty array
+const tips=[]; 
+const totals=[];
+//Tips calculating function
+const calcTip = function (bill) {
+    return bill >= 50 && bill <= 300 ? bill * 0.15 : bill * 0.2;
+  }
+  
+//For loop to display bills , tips & totals
+//Also to store the empty array
+for (let i=0; i<=9; i++)
+{
+   let total=bills[i]+calcTip(bills[i]);
+   let tip=calcTip(bills[i])
+  console.log(`No.${i+1} Bill =${bills[i]}, Tip=${tip} and Total=${total}`)  ; 
+    tips[i]=tip;
+    totals[i]=total;
 }
+//Displaying the arrays
+console.log(`The Bills: ${bills}`);
+console.log(`The Tips: ${tips}`);
+console.log(`The Totals: ${totals}`);
+
+
+
 
 
 
