@@ -210,13 +210,23 @@ const jishan= [
 
 // console.log(`Logic: The first 3 data are strings so script:208 is executed but the fourth data in the array is a number so script:208 is not gonna executed and thus the loop gets breaks`)
 
-// *****Looping Backwards*/
+// // *****Looping Backwards*/
 
-console.log(`*****Looping Backwards*`)
+// console.log(`*****Looping Backwards*`)
 
-for(let i=jishan.length-1; i>=0 ; i--) // length countation starts from 1 but the index countation starts from 0 
+// for(let i=jishan.length-1; i>=0 ; i--) // length countation starts from 1 but the index countation starts from 0 
+// {
+//     console.log(i, jishan[i]);
+// }
+
+//****Looping inside a loop */
+
+for( let exersize = 1; exersize<3 ; exersize++ )
 {
-    console.log(i, jishan[i]);
+    console.log(`-----Starting Exersize ${exersize}`)
+    for(let rep=1; rep<=4; rep++){  //Looping inside of the loop
+        console.log(`Repitition No. ${rep}`)
+    }
 }
 
 
