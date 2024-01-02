@@ -156,4 +156,6 @@ const jishan = {
 console.log(jishan.firstName);
 console.log(jishan.job);
 console.log(jishan.calcAge(1994));
-console.log(jishan['calcAge'](1992)) 
+console.log(jishan['calcAge'](1992));
+
+console.log(`${jishan.firstName} is a ${jishan.calcAge(1993)} years old,  ${jishan.job} , and has a driver license`);
