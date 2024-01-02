@@ -219,14 +219,29 @@ const jishan= [
 //     console.log(i, jishan[i]);
 // }
 
-//****Looping inside a loop */
+//****  Looping inside a loop */
 
-for( let exersize = 1; exersize<3 ; exersize++ )
-{
-    console.log(`-----Starting Exersize ${exersize}`)
-    for(let rep=1; rep<=4; rep++){  //Looping inside of the loop
-        console.log(`Repitition No. ${rep}`)
-    }
+// for( let exersize = 1; exersize<3 ; exersize++ )
+// {
+//     console.log(`-----Starting Exersize ${exersize}`)
+//     for(let rep=1; rep<=4; rep++){  //Looping inside of the loop
+//         console.log(`Repitition No. ${rep}`)
+//     }
+// }
+
+
+
+///*****   While Loop   */
+
+let dice=Math.trunc(Math.random()*6)+1; //Math.random chooses a number between 0 & 1.
+        //Math.trunc reducts the fractional part of the decimal number thus producing a whole number.
+
+while(dice!=6){  //Looping condition for while loop
+    console.log(`Dice rolled ${dice}`);
+    dice=Math.trunc(Math.random()*6)+1; //Producing another random number between 1-6
+    if(dice===6)     //Breaking the loop otherwise, it will continue infinitely   
+    console.log(`🎉Dice Rolled ${dice}!!🕶 Congatulation!.You can roll another one! `);
 }
+
 
 
