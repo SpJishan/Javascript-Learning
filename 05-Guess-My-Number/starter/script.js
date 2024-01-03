@@ -26,7 +26,7 @@
 
 let score=20; //Declaring score and set it to 20
 let secretNumber= Math.trunc(Math.random()*20) + 1;  //We have to set a secretNumber. so we have to generate a random number between 1-20
-
+let highscore=0;
 console.log(secretNumber);
 
 
@@ -50,6 +50,12 @@ document.querySelector('.check').addEventListener('click',function()
         document.querySelector('.number').style.width ='30rem'; // 30rem is a CSS property should be mention between string or ' '
 
         document.querySelector('.number').textContent=secretNumber;  //Set the secretNumber to the class number (index.html line:15)
+
+        if(score> highscore)
+        {
+            highscore=score;
+            document.querySelector('.highscore').textContent=score;
+        }
         
     }else if(guess>secretNumber) // Game Logic 3?
     {
