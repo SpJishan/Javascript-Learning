@@ -1,5 +1,29 @@
 'use strict';
 
+// Logical Thoughts
+//The input has four case scenario
+// 	1. Input with no input , we already implemented that
+// 	2. Correct number than (winning part)
+// 	• add score++
+// 	3. Input greater than secretNumber than: (loosing part)
+// 	• also see if it is greater than 0 then apply logic , else change to Wrong Guess
+// 	• change the printing message: You lost the game!
+// 	• deduct score-- 
+// 	4. Input less than secretNumber than (loosing part)
+// 	• also see if it is greater than 0 then apply logi, else change to Wrong Guess
+// 	• change the printing message: You lost the game!
+// 	• deduct score-- 
+
+
+// Conding implecation:
+// 	1. Game Logic 1 applied
+// 	2. Declaring score and set it to 20
+// 	3. We have to set a secretNumber. so we have to generate a random number between 1-20
+// 	4. Set the secretNumber to the class number (index.html line:15)
+// 	5. Game Logic 2? than change textContent to ---1--Correct number--2---update score--3--change textContent of score value 
+// 	6. Game Logic 3? than change textContent to ---1--Wrong Number--2---update score--3--change textContent of score value else lost the game
+// 7. Game Logic 4? than change textContent to ---1--Wrong Number--2---update score--3--change textContent of score value else lost the game
+
 let score=20; //Declaring score and set it to 20
 const secretNumber= Math.trunc(Math.random()*20) + 1;  //We have to set a secretNumber. so we have to generate a random number between 1-20
 document.querySelector('.number').textContent=secretNumber;  //Set the secretNumber to the class number (index.html line:15)
@@ -17,6 +41,10 @@ document.querySelector('.check').addEventListener('click',function()
         document.querySelector('.message').textContent='🎉Correct number!';
         score++; //update score
         document.querySelector('.score').textContent=score;
+
+        document.querySelector('body').style.backgroundColor ='#60b347'; //style.backgourndColor is a style property which(multi-words) should be camel case.
+        document.querySelector('.number').style.width ='30rem'; // 30rem is a CSS property should be mention between string or ' '
+        
     }else if(guess>secretNumber) // Game Logic 3?
     {
         if(score>0)
