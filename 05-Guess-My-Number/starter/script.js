@@ -25,8 +25,12 @@
 // 7. Game Logic 4? than change textContent to ---1--Wrong Number--2---update score--3--change textContent of score value else lost the game
 
 let score=20; //Declaring score and set it to 20
-const secretNumber= Math.trunc(Math.random()*20) + 1;  //We have to set a secretNumber. so we have to generate a random number between 1-20
-document.querySelector('.number').textContent=secretNumber;  //Set the secretNumber to the class number (index.html line:15)
+let secretNumber= Math.trunc(Math.random()*20) + 1;  //We have to set a secretNumber. so we have to generate a random number between 1-20
+
+console.log(secretNumber);
+
+
+
 
 document.querySelector('.check').addEventListener('click',function() 
 {
@@ -44,12 +48,14 @@ document.querySelector('.check').addEventListener('click',function()
 
         document.querySelector('body').style.backgroundColor ='#60b347'; //style.backgourndColor is a style property which(multi-words) should be camel case.
         document.querySelector('.number').style.width ='30rem'; // 30rem is a CSS property should be mention between string or ' '
+
+        document.querySelector('.number').textContent=secretNumber;  //Set the secretNumber to the class number (index.html line:15)
         
     }else if(guess>secretNumber) // Game Logic 3?
     {
         if(score>0)
         {
-        document.querySelector('.message').textContent='🚫 Wrong Guess! High Number';
+        document.querySelector('.message').textContent='🚫 Wrong Guess! 📈 High Number';
         score--;
         document.querySelector('.score').textContent=score;
         }else
@@ -59,12 +65,39 @@ document.querySelector('.check').addEventListener('click',function()
     {
         if(score>0)
         {
-        document.querySelector('.message').textContent='🚫 Wrong Guess! Low Number';
+        document.querySelector('.message').textContent='🚫 Wrong Guess! 📉 Low Number';
         score--;
         document.querySelector('.score').textContent=score;
         }else
         {document.querySelector('.message').textContent='❌You lost the game,Please reload if you want to play again'}
         
     }
+});
+
+///////////////////////////////////////
+// Coding Challenge #1
+
+/* 
+Implement a game rest functionality, so that the player can make a new guess! Here is how:
+
+1. Select the element with the 'again' class and attach a click event handler
+2. In the handler function, restore initial values of the score and secretNumber variables
+3. Restore the initial conditions of the message, number, score and guess input field
+4. Also restore the original background color (#222) and number width (15rem)
+
+GOOD LUCK 😀
+*/
+
+document.querySelector('.again').addEventListener('click',function()
+
+{
+    score=20;
+    secretNumber= Math.trunc(Math.random()*20) + 1;
+    document.querySelector('.message').textContent='Start guessing..';
+    document.querySelector('.score').textContent=score;
+    document.querySelector('.number').textContent='?';
+    document.querySelector('.guess').value='';
+    document.querySelector('body').style.backgroundColor ='#222'; //style.backgourndColor is a style property which(multi-words) should be camel case.
+        document.querySelector('.number').style.width ='15rem'; // 30rem is a CSS property should be mention between string or ' '
 });
 
