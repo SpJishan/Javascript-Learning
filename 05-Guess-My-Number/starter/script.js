@@ -1,6 +1,6 @@
 'use strict';
 
-// Logical Thoughts
+//*********Logical Thoughts ********/ 
 //The input has four case scenario
 // 	1. Input with no input , we already implemented that
 // 	2. Correct number than (winning part)
@@ -14,8 +14,11 @@
 // 	• change the printing message: You lost the game!
 // 	• deduct score-- 
 
+//********Refactoring Logic: logic 5*******/
+//The system compares only 1 number , randomly generated and stored upon on the secretNumber variable , so guess!=secretNumber then display wrong input.
 
-// Conding implecation:
+
+//********Conding implecation:
 // 	1. Game Logic 1 applied
 // 	2. Declaring score and set it to 20
 // 	3. We have to set a secretNumber. so we have to generate a random number between 1-20
@@ -24,13 +27,18 @@
 // 	6. Game Logic 3? than change textContent to ---1--Wrong Number--2---update score--3--change textContent of score value else lost the game
 // 7. Game Logic 4? than change textContent to ---1--Wrong Number--2---update score--3--change textContent of score value else lost the game
 
+//*******Refactoring Code:Don't Repeat Yourself(DRY) Principle
+// The game logic 3 & 4 acts upon while getting wrong input. So we can bind those two logic upon a single logical exression.In this case I am using a conditional or ternary operator.Let's call it logic 5
+
 let score=20; //Declaring score and set it to 20
 let secretNumber= Math.trunc(Math.random()*20) + 1;  //We have to set a secretNumber. so we have to generate a random number between 1-20
 let highscore=0;
 console.log(secretNumber);
 
 
-
+let displayMessage=function(message){
+    document.querySelector('.message').textContent=message;
+}
 
 document.querySelector('.check').addEventListener('click',function() 
 {
@@ -39,14 +47,17 @@ document.querySelector('.check').addEventListener('click',function()
 
     if(!guess) //There will be a case without inputting a number when the check button is pressed . The browser will then produce the value of guess=0. 0 means false, so we have to make a truthy value to pass the if condition parameter.
     { 
-    document.querySelector('.message').textContent= '🚫 No Number. Please input a number '
+    //document.querySelector('.message').textContent= '🚫 No Number. Please input a number '
+    displayMessage('🚫 No Number. Please input a number ');
     }else if(guess===secretNumber) // Game Logic 2? so changed the textContent to Correct number
     {
-        document.querySelector('.message').textContent='🎉Correct number!';
+        //document.querySelector('.message').textContent='🎉Correct number!';
+        displayMessage('🎉 Correct number!'); //Refactoring with functions
         score++; //update score
         document.querySelector('.score').textContent=score;
 
         document.querySelector('body').style.backgroundColor ='#60b347'; //style.backgourndColor is a style property which(multi-words) should be camel case.
+         
         document.querySelector('.number').style.width ='30rem'; // 30rem is a CSS property should be mention between string or ' '
 
         document.querySelector('.number').textContent=secretNumber;  //Set the secretNumber to the class number (index.html line:15)
@@ -57,27 +68,33 @@ document.querySelector('.check').addEventListener('click',function()
             document.querySelector('.highscore').textContent=score;
         }
         
-    }else if(guess>secretNumber) // Game Logic 3?
+    }else if(guess!==secretNumber) // Game Logic 3? later applying game logic 5(Refactoring)
     {
         if(score>0)
         {
-        document.querySelector('.message').textContent='🚫 Wrong Guess! 📈 High Number';
+        document.querySelector('body').style.backgroundColor ='#800020';
+        //document.querySelector('.message').textContent=guess>secretNumber?'🚫 Wrong Guess! 📈 High Number':'🚫 Wrong Guess! 📉 Low Number';
+       displayMessage(guess>secretNumber?'🚫 Wrong Guess! 📈 High Number':'🚫 Wrong Guess! 📉 Low Number')
         score--;
         document.querySelector('.score').textContent=score;
-        }else
-        {document.querySelector('.message').textContent='❌You lost the game'}
         
-    }else if(guess<secretNumber) // Game Logic 4?
-    {
-        if(score>0)
-        {
-        document.querySelector('.message').textContent='🚫 Wrong Guess! 📉 Low Number';
-        score--;
-        document.querySelector('.score').textContent=score;
         }else
-        {document.querySelector('.message').textContent='❌You lost the game,Please reload if you want to play again'}
+        {//document.querySelector('.message').textContent='❌You lost the game'
+            displayMessage('❌You lost the game');
+        }
         
     }
+    // else if(guess<secretNumber) // Game Logic 4?
+    // {
+    //     if(score>0)
+    //     {
+    //     document.querySelector('.message').textContent='🚫 Wrong Guess! 📉 Low Number';
+    //     score--;
+    //     document.querySelector('.score').textContent=score;
+    //     }else
+    //     {document.querySelector('.message').textContent='❌You lost the game,Please reload if you want to play again'}
+        
+    // }
 });
 
 ///////////////////////////////////////
