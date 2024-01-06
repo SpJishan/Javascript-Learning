@@ -25,13 +25,38 @@ const overlay= document.querySelector('.overlay'); //selecting the overlay area
 const btnsOpenModal = document.querySelectorAll('.show-modal'); // selecting the button class,there are multiple show-modal so we should use "document.queryselctorAll
 const btnCloseModal= document.querySelector('.close-modal'); //selecting the cross icon
 
+//********Step 5:Refactoring code : for line:47
+const openModal= function(){
+    console.log(`Button Clicked ${i+1}`);
+    modal.classList.remove('hidden'); //This will remove class hidden , so the modal window will be visible.
+    overlay.classList.remove('hidden'); // This wil add overlay effect to the window
+}
+
+//********Step 5:Refactoring code : for line:53 & 54
+const closeModal= function(){    //for line: 53 & 54
+    console.log(`Button Clicked on cross or overlay`);
+    modal.classList.add('hidden'); // by clicking on cross icon the modal window will be closed.
+    overlay.classList.add('hidden'); //  by clicking on the overlay area, the modal window will be closed.
+
+}
+
 //Step 2: Openning the modal window , there are three button so we store the eventHandler function by calling a for loop.
 
+//Step 3:Working with class: When a html block has multiple class , we use classlist property to manipulate the classes
 for(let i=0; i<btnsOpenModal.length; i++){
-    btnsOpenModal[i].addEventListener('click', function(){
-        console.log(`Button Clicked ${i+1}`);
-    })
+    btnsOpenModal[i].addEventListener('click',openModal ) //refactoring 
 }
+
+
+
+
+btnCloseModal.addEventListener('click', closeModal); // will apply on cross sign
+overlay.addEventListener('click', closeModal); //will apply on overlay area
+
+
+
+
+
 
 
 
