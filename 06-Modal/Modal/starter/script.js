@@ -16,6 +16,24 @@
 // 2. We will call the variables to open and close the modals
 
 
+//********Coding: */
+
+//Step 1: Storing the functionality for the working class of the HTML file in variables
+
+const modal= document.querySelector('.modal'); //slecting modal window
+const overlay= document.querySelector('.overlay'); //selecting the overlay area
+const btnsOpenModal = document.querySelectorAll('.show-modal'); // selecting the button class,there are multiple show-modal so we should use "document.queryselctorAll
+const btnCloseModal= document.querySelector('.close-modal'); //selecting the cross icon
+
+//Step 2: Openning the modal window , there are three button so we store the eventHandler function by calling a for loop.
+
+for(let i=0; i<btnsOpenModal.length; i++){
+    btnsOpenModal[i].addEventListener('click', function(){
+        console.log(`Button Clicked ${i+1}`);
+    })
+}
+
+
 
 
 
