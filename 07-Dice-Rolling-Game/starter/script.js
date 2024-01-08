@@ -29,14 +29,26 @@ score1El.textContent=0;
 diceEl.classList.add('.hidden');
 
         // Player scores are stored
-const score=[0,0] 
+const scores=[0,0] 
 let currentScore=0;
 let activePlayer=0; //to manipulate the current score elements and will do it by "activePlayer" variable and so we set it's value 0
+let playing=true;
+
+        //Switch player function-Refactoring our code
+const switchPlayer= function(){
+       
+        document.getElementById(`current--${activePlayer}`).textContent = 0;//resetting the current player score
+        currentScore = 0;
+        activePlayer= activePlayer===0 ? 1: 0; //If the activePlayer is 0 (that is activePlayer===0) then the value should be 1 otherwise 0
+        player0El.classList.toggle('player--active');
+        player1El.classList.toggle('player--active');
+}
 
         //Rolling dice functionality- 
 btnRoll.addEventListener('click', function(){
-    const dice= Math.trunc(Math.random()*6)+1;  //Generting a random number for dice roll
-    console.log(dice);
+    if(playing){
+        const dice= Math.trunc(Math.random()*6)+1;  //Generting a random number for dice roll
+        console.log(dice);
 
         //display dice
     diceEl.classList.remove('.hidden');
@@ -50,10 +62,38 @@ btnRoll.addEventListener('click', function(){
         // current0El.textContent=currentScore; //change later
         
     } else{
-        activePlayer= activePlayer===0 ? 1: 0; //If the activePlayer is 0 (that is activePlayer===0) then the value should be 1 otherwise 0
-        player0El.classList.toggle('player--active');
-        player1El.classList.toggle('player--active');
-    }
-})
+        
+        switchPlayer();
+    }}
+    
+});
+
+btnHold.addEventListener('click', function(){ //Adding Event listener to HOLD button
+    
+    if(playing){  //Add current score to active player's total score
+        scores[activePlayer] +=currentScore;
+
+        //Display the active player's total score
+        document.getElementById(`score--${activePlayer}`).textContent= scores[activePlayer];
+
+        console.log(`logging ${scores[activePlayer]}`);
+
+        //If score=>100 
+        if(scores[activePlayer]>=20){
+            playing = false;
+            diceEl.classList.add('hidden')  //remove dice image
+            document.getElementById(`score--${activePlayer}`).textContent= `Winner`;
+            document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.add('player--winner');
+      document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.remove('player--active'); //Remove player active status
+
+        }else{
+            switchPlayer();
+        }};
+           
+});
 
 
