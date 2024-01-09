@@ -20,19 +20,35 @@ const diceEl=document.querySelector('.dice');
 const player0El=document.querySelector('.player--0');
 const player1El=document.querySelector('.player--1');
 
-score0El.textContent=0;
-score1El.textContent=0;
 
-//Rolling the Dice
 
-        //Make the dice hidden
-diceEl.classList.add('.hidden');
 
-        // Player scores are stored
-const scores=[0,0] 
-let currentScore=0;
-let activePlayer=0; //to manipulate the current score elements and will do it by "activePlayer" variable and so we set it's value 0
-let playing=true;
+
+let scores, currentScore, activePlayer, playing;        //Declaring the variables outside of function scope
+
+
+//Starting Conditions
+
+const init = function() {  //Making a init function to reset all the variables to 0
+    //Setting all the variables to 0
+    scores=[0,0] // Player scores are stored
+    currentScore=0;
+    activePlayer=0; //to manipulate the current score elements and will do it by "activePlayer" variable and so we set it's value 0
+    playing=true;
+    
+    score0El.textContent=0;
+    score1El.textContent=0;
+    current0El.textContent=0;
+    current1El.textContent=0;
+   
+    diceEl.classList.add('.hidden');  //Make the dice hidden
+    player0El.classList.remove('player--winner');
+    player1El.classList.remove('player--winner');
+    player0El.classList.add('player--active');
+    player1El.classList.remove('player--active');
+}
+
+init();
 
         //Switch player function-Refactoring our code
 const switchPlayer= function(){
@@ -79,7 +95,7 @@ btnHold.addEventListener('click', function(){ //Adding Event listener to HOLD bu
         console.log(`logging ${scores[activePlayer]}`);
 
         //If score=>100 
-        if(scores[activePlayer]>=20){
+        if(scores[activePlayer]>=100){
             playing = false;
             diceEl.classList.add('hidden')  //remove dice image
             document.getElementById(`score--${activePlayer}`).textContent= `Winner`;
@@ -95,5 +111,7 @@ btnHold.addEventListener('click', function(){ //Adding Event listener to HOLD bu
         }};
            
 });
+
+btnNew.addEventListener('click', init)
 
 
