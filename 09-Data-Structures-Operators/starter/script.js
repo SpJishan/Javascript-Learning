@@ -12,6 +12,10 @@ const restaurant = {
   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
 
+  order: function (starterIndex, mainIndex){
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
+
   openingHours: {
     thu: {
       open: 12,
@@ -70,11 +74,23 @@ const restaurant = {
 
 //Nested Array destructuring
 
-const nested= [1,2, , [4,5]];
+// const nested= [1,2, , [4,5]];
 
-const [ i, j, ,[k,l]]=  nested;
+// const [ i, j, ,[k,l]]=  nested;
 
-console.log(j, k, l);
+// console.log(j, k, l);
 
 
+const arr = [7, 8, 9];
+const badNewArr = [1, 2, arr[0], arr[1], arr[2]]; // normal array representation
+console.log(badNewArr);
+
+const newArr = [1, 2, ...arr]; // array calling with **spread** operators
+console.log(newArr);
+
+console.log(...newArr);
+console.log(1, 2, 7, 8, 9);
+
+const newMenu = [...restaurant.mainMenu, 'Gnocci']; // Changing the name of object's property , also adding new array item to that property.
+console.log(newMenu);
 
