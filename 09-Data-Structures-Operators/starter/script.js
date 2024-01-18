@@ -16,6 +16,31 @@ const restaurant = {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
 
+  // orderDelivery: function({starterIndex, mainIndex, time, address}){
+  //   console.log(
+  //     //**Error on: ${this.starterMenu.[starterIndex]}, there will be no dot after starter */
+  //     // `Order Recieved! ${this.starterMenu.[starterIndex]} and ${this.mainMenu.[mainIndex]} will be delivered at ${time} to ${address}`
+  //     `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+  //     );
+  // },
+
+  //*******Another Way: Calling a function from an obect's property's to interchange  array data.
+
+  orderDelivery: function({starterIndex=2, mainIndex=2, time='19:30', address}){  //setting perameters data on function
+    console.log(
+      //**Error on: ${this.starterMenu.[starterIndex]}, there will be no dot after starter */
+      // `Order Recieved! ${this.starterMenu.[starterIndex]} and ${this.mainMenu.[mainIndex]} will be delivered at ${time} to ${address}`
+      `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+      );
+  },
+
+  //Function to Displaying the ingredients after user input
+
+  orderPasta: function(ing1, ing2, ing3){
+    console.log(`You added ${ing1}, ${ing2}, ${ing3} to your pasta.`);
+  },
+
+
   openingHours: {
     thu: {
       open: 12,
@@ -72,7 +97,7 @@ const restaurant = {
 // console.log(restaurant2.order(2,3));
 
 
-//Nested Array destructuring
+//********Nested Array destructuring
 
 // const nested= [1,2, , [4,5]];
 
@@ -81,16 +106,50 @@ const restaurant = {
 // console.log(j, k, l);
 
 
-const arr = [7, 8, 9];
-const badNewArr = [1, 2, arr[0], arr[1], arr[2]]; // normal array representation
-console.log(badNewArr);
+// const arr = [7, 8, 9];
+// const badNewArr = [1, 2, arr[0], arr[1], arr[2]]; // normal array representation
+// console.log(badNewArr);
 
-const newArr = [1, 2, ...arr]; // array calling with **spread** operators
-console.log(newArr);
+// const newArr = [1, 2, ...arr]; // array's data are calling with **spread** operators
+// console.log(newArr);
 
-console.log(...newArr);
-console.log(1, 2, 7, 8, 9);
+// console.log(...newArr);
+// console.log(1, 2, 7, 8, 9);
 
-const newMenu = [...restaurant.mainMenu, 'Gnocci']; // Changing the name of object's property , also adding new array item to that property.
-console.log(newMenu);
+// const newMenu = [...restaurant.mainMenu, 'Gnocci']; // Changing the name of object's property , also adding new array item to that property.
+// console.log(newMenu);
 
+//**Destructuring object with function(updating on restuarant object script line 19-21) */
+
+// restaurant.orderDelivery({
+//   address: '119/2 Ahmedbag, Dhaka-1214',
+//   starterIndex: 1       //updating data on function calling
+  
+// })
+
+//***Spread operator: Calling the array data stored in ingredients by object's property function (Script:39-41) */
+
+//promt to ask about ingredients to customer
+
+// const ingredients= [
+//   prompt('Make Pasta Ingredient 1?'),
+//   prompt('Make Pasta Ingredient 2?'),
+//   prompt('Make Pasta Ingredient 3?')
+// ]
+
+// console.log(ingredients); //Displaying the ingredients after user input
+
+// // restaurant.orderPasta(ingredients[0],ingredients[1],ingredients[2]); //old ways function calling
+
+
+// restaurant.orderPasta(...ingredients); //Calling the array data stored in ingredients by object's property function (Script:39-41) with spread operators
+
+//**Modifying objects with spread operators */
+//Spread operators can work with iterables , but objects are not iterables so we have to call it inside{}
+const restaurantNew= {...restaurant}; // storing objects value to new variable with spread operator
+console.log(restaurantNew);
+
+restaurantNew.name='Hatam Tai'; // Updating name on new object
+
+console.log(restaurant.name); // Displying older name
+console.log(restaurantNew.name); // Displaying new name
