@@ -16,9 +16,19 @@ const restaurant = {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
 
-  orderDelivery: function({starterIndex, mainIndex, time, address}){
+  // orderDelivery: function({starterIndex, mainIndex, time, address}){
+  //   console.log(
+  //     //**Error on: ${this.starterMenu.[starterIndex]}, there will be no dot after starter */
+  //     // `Order Recieved! ${this.starterMenu.[starterIndex]} and ${this.mainMenu.[mainIndex]} will be delivered at ${time} to ${address}`
+  //     `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+  //     );
+  // },
+
+  //*******Another Way: Calling a function from an obect's property's to interchange  array data.
+
+  orderDelivery: function({starterIndex=2, mainIndex=2, time='19:30', address}){  //setting perameters data on function
     console.log(
-      //**Error on: ${this.starterMenu.[starterIndex]}, there will be no dot after starterMenu */
+      //**Error on: ${this.starterMenu.[starterIndex]}, there will be no dot after starter */
       // `Order Recieved! ${this.starterMenu.[starterIndex]} and ${this.mainMenu.[mainIndex]} will be delivered at ${time} to ${address}`
       `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
       );
@@ -106,9 +116,8 @@ const restaurant = {
 //**Destructuring object with function(updating on restuarant object script line 19-21) */
 
 restaurant.orderDelivery({
-  time: '19:00',
   address: '119/2 Ahmedbag, Dhaka-1214',
-  starterIndex:1,
-  mainIndex: 1
+  starterIndex: 1       //updating data on function calling
+  
 })
 
