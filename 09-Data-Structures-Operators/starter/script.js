@@ -16,6 +16,15 @@ const restaurant = {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
 
+  orderDelivery: function({starterIndex, mainIndex, time, address}){
+    console.log(
+      //**Error on: ${this.starterMenu.[starterIndex]}, there will be no dot after starterMenu */
+      // `Order Recieved! ${this.starterMenu.[starterIndex]} and ${this.mainMenu.[mainIndex]} will be delivered at ${time} to ${address}`
+      `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+      );
+  },
+
+
   openingHours: {
     thu: {
       open: 12,
@@ -72,7 +81,7 @@ const restaurant = {
 // console.log(restaurant2.order(2,3));
 
 
-//Nested Array destructuring
+//********Nested Array destructuring
 
 // const nested= [1,2, , [4,5]];
 
@@ -81,16 +90,25 @@ const restaurant = {
 // console.log(j, k, l);
 
 
-const arr = [7, 8, 9];
-const badNewArr = [1, 2, arr[0], arr[1], arr[2]]; // normal array representation
-console.log(badNewArr);
+// const arr = [7, 8, 9];
+// const badNewArr = [1, 2, arr[0], arr[1], arr[2]]; // normal array representation
+// console.log(badNewArr);
 
-const newArr = [1, 2, ...arr]; // array calling with **spread** operators
-console.log(newArr);
+// const newArr = [1, 2, ...arr]; // array's data are calling with **spread** operators
+// console.log(newArr);
 
-console.log(...newArr);
-console.log(1, 2, 7, 8, 9);
+// console.log(...newArr);
+// console.log(1, 2, 7, 8, 9);
 
-const newMenu = [...restaurant.mainMenu, 'Gnocci']; // Changing the name of object's property , also adding new array item to that property.
-console.log(newMenu);
+// const newMenu = [...restaurant.mainMenu, 'Gnocci']; // Changing the name of object's property , also adding new array item to that property.
+// console.log(newMenu);
+
+//**Destructuring object with function(updating on restuarant object script line 19-21) */
+
+restaurant.orderDelivery({
+  time: '19:00',
+  address: '119/2 Ahmedbag, Dhaka-1214',
+  starterIndex:1,
+  mainIndex: 1
+})
 
