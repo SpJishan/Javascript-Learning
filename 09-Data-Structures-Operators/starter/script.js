@@ -131,15 +131,25 @@ const restaurant = {
 
 //promt to ask about ingredients to customer
 
-const ingredients= [
-  prompt('Make Pasta Ingredient 1?'),
-  prompt('Make Pasta Ingredient 2?'),
-  prompt('Make Pasta Ingredient 3?')
-]
+// const ingredients= [
+//   prompt('Make Pasta Ingredient 1?'),
+//   prompt('Make Pasta Ingredient 2?'),
+//   prompt('Make Pasta Ingredient 3?')
+// ]
 
-console.log(ingredients); //Displaying the ingredients after user input
+// console.log(ingredients); //Displaying the ingredients after user input
 
-// restaurant.orderPasta(ingredients[0],ingredients[1],ingredients[2]); //old ways function calling
+// // restaurant.orderPasta(ingredients[0],ingredients[1],ingredients[2]); //old ways function calling
 
 
-restaurant.orderPasta(...ingredients); //Calling the array data stored in ingredients by object's property function (Script:39-41) with spread operators
+// restaurant.orderPasta(...ingredients); //Calling the array data stored in ingredients by object's property function (Script:39-41) with spread operators
+
+//**Modifying objects with spread operators */
+//Spread operators can work with iterables , but objects are not iterables so we have to call it inside{}
+const restaurantNew= {...restaurant}; // storing objects value to new variable with spread operator
+console.log(restaurantNew);
+
+restaurantNew.name='Hatam Tai'; // Updating name on new object
+
+console.log(restaurant.name); // Displying older name
+console.log(restaurantNew.name); // Displaying new name
