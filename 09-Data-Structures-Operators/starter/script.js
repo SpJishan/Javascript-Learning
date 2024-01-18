@@ -34,6 +34,12 @@ const restaurant = {
       );
   },
 
+  //Function to Displaying the ingredients after user input
+
+  orderPasta: function(ing1, ing2, ing3){
+    console.log(`You added ${ing1}, ${ing2}, ${ing3} to your pasta.`);
+  },
+
 
   openingHours: {
     thu: {
@@ -115,9 +121,25 @@ const restaurant = {
 
 //**Destructuring object with function(updating on restuarant object script line 19-21) */
 
-restaurant.orderDelivery({
-  address: '119/2 Ahmedbag, Dhaka-1214',
-  starterIndex: 1       //updating data on function calling
+// restaurant.orderDelivery({
+//   address: '119/2 Ahmedbag, Dhaka-1214',
+//   starterIndex: 1       //updating data on function calling
   
-})
+// })
 
+//***Spread operator: Calling the array data stored in ingredients by object's property function (Script:39-41) */
+
+//promt to ask about ingredients to customer
+
+const ingredients= [
+  prompt('Make Pasta Ingredient 1?'),
+  prompt('Make Pasta Ingredient 2?'),
+  prompt('Make Pasta Ingredient 3?')
+]
+
+console.log(ingredients); //Displaying the ingredients after user input
+
+// restaurant.orderPasta(ingredients[0],ingredients[1],ingredients[2]); //old ways function calling
+
+
+restaurant.orderPasta(...ingredients); //Calling the array data stored in ingredients by object's property function (Script:39-41) with spread operators
