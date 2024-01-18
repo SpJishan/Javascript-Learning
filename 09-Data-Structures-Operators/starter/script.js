@@ -1,10 +1,17 @@
 'use strict';
 
-// Data needed for a later exercise
+/////////////////////////////////////////////////////////////////////////////////////////
+//   Data needed for a later exercise
+/////////////////////////////////////////////////////////////////////////////////////////
+
 const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
-// Data needed for first part of the section
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//   Data needed for first part of the section
+/////////////////////////////////////////////////////////////////////////////////////////  
+
 const restaurant = {
   name: 'Classico Italiano',
   location: 'Via Angelo Tavanti 23, Firenze, Italy',
@@ -57,8 +64,10 @@ const restaurant = {
   },
 };
 
+/////////////////////////////////////////////////////////////////////////////////////////
+//   DE Structuring Arrays
+/////////////////////////////////////////////////////////////////////////////////////////
 
-//*******DE Structuring Arrays*******
 
 //Storing array in multiple variable
 
@@ -96,14 +105,22 @@ const restaurant = {
 // console.log(restaurant2.order(1,2)); 
 // console.log(restaurant2.order(2,3));
 
+/////////////////////////////////////////////////////////////////////////////////////////
+//   Nested Array destructuring
+/////////////////////////////////////////////////////////////////////////////////////////
 
-//********Nested Array destructuring
 
 // const nested= [1,2, , [4,5]];
 
 // const [ i, j, ,[k,l]]=  nested;
 
 // console.log(j, k, l);
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//   Spread Operators Some basics 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 
 // const arr = [7, 8, 9];
@@ -119,7 +136,11 @@ const restaurant = {
 // const newMenu = [...restaurant.mainMenu, 'Gnocci']; // Changing the name of object's property , also adding new array item to that property.
 // console.log(newMenu);
 
+/////////////////////////////////////////////////////////////////////////////////////////
 //**Destructuring object with function(updating on restuarant object script line 19-21) */
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 // restaurant.orderDelivery({
 //   address: '119/2 Ahmedbag, Dhaka-1214',
@@ -127,7 +148,11 @@ const restaurant = {
   
 // })
 
+/////////////////////////////////////////////////////////////////////////////////////////
 //***Spread operator: Calling the array data stored in ingredients by object's property function (Script:39-41) */
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 //promt to ask about ingredients to customer
 
@@ -144,12 +169,18 @@ const restaurant = {
 
 // restaurant.orderPasta(...ingredients); //Calling the array data stored in ingredients by object's property function (Script:39-41) with spread operators
 
-//**Modifying objects with spread operators */
+//////////////////////////////////////////////////////////////////////////////////////////
+//   Modifying objects with spread operators */
+//////////////////////////////////////////////////////////////////////////////////////////
+
 //Spread operators can work with iterables , but objects are not iterables so we have to call it inside{}
-const restaurantNew= {...restaurant}; // storing objects value to new variable with spread operator
-console.log(restaurantNew);
+// const restaurantNew= {...restaurant}; // storing objects value to new variable with spread operator
+// console.log(restaurantNew);
 
-restaurantNew.name='Hatam Tai'; // Updating name on new object
+// restaurantNew.name='Hatam Tai'; // Updating name on new object
 
-console.log(restaurant.name); // Displying older name
-console.log(restaurantNew.name); // Displaying new name
+// console.log(restaurant.name); // Displying older name
+// console.log(restaurantNew.name); // Displaying new name
+
+
+
