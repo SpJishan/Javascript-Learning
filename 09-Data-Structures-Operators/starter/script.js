@@ -246,34 +246,48 @@ const restaurant = {
 //                         OR, && Operators ShortCircuiting 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-console.log('---- OR ----');
-// Use ANY data type, return ANY data type, short-circuiting
-//OR operator will return first truthy value
-console.log(3 || 'Jishan');
-console.log('' || 'Jishan');
-console.log(true || 0);
-console.log(undefined || null);
+// console.log('---- OR ----');
+// // Use ANY data type, return ANY data type, short-circuiting
+// //OR operator will return first truthy value
+// console.log(3 || 'Jishan');
+// console.log('' || 'Jishan');
+// console.log(true || 0);
+// console.log(undefined || null);
 
-console.log(undefined || 0 || '' || 'Hello' || 23 || null);
+// console.log(undefined || 0 || '' || 'Hello' || 23 || null);
 
+// restaurant.numGuests = 0;
+// const guests1 = restaurant.numGuests ? restaurant.numGuests : 10;
+// console.log(guests1);
+
+// const guests2 = restaurant.numGuests || 10;
+// console.log(guests2);
+
+// console.log('---- AND ----');
+// //AND operator will return first falsie value
+// console.log(0 && 'Jishan');
+// console.log(7 && 'Jishan');
+
+// console.log('Hello' && 23 && null && 'Jishan');
+
+// // Practical example
+// //if logic to check if a method exist
+// if (restaurant.orderPizza) {
+//   restaurant.orderPizza('mushrooms', 'spinach');
+// }
+// //Tarnary logic to check if a method exist
+// restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach');
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//                         The Nullish Coalescing Operator
+//////////////////////////////////////////////////////////////////////////////////////////
+
+
+// The Nullish Coalescing Operator
 restaurant.numGuests = 0;
-const guests1 = restaurant.numGuests ? restaurant.numGuests : 10;
-console.log(guests1);
+const guests = restaurant.numGuests || 10; //Null and undefined is falsie value so turthy value 10 is return
+console.log(guests);
 
-const guests2 = restaurant.numGuests || 10;
-console.log(guests2);
-
-console.log('---- AND ----');
-//AND operator will return first falsie value
-console.log(0 && 'Jishan');
-console.log(7 && 'Jishan');
-
-console.log('Hello' && 23 && null && 'Jishan');
-
-// Practical example
-//if logic to check if a method exist
-if (restaurant.orderPizza) {
-  restaurant.orderPizza('mushrooms', 'spinach');
-}
-//Tarnary logic to check if a method exist
-restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach');
+// Nullish: null and undefined (NOT 0 or '')
+const guestCorrect = restaurant.numGuests ?? 10; //0 or empty string as truthy value so 0 is returned
+console.log(guestCorrect)
