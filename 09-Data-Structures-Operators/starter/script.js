@@ -1,10 +1,17 @@
 'use strict';
 
-// Data needed for a later exercise
+/////////////////////////////////////////////////////////////////////////////////////////
+//   Data needed for a later exercise
+/////////////////////////////////////////////////////////////////////////////////////////
+
 const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
-// Data needed for first part of the section
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//   Data needed for first part of the section
+/////////////////////////////////////////////////////////////////////////////////////////  
+
 const restaurant = {
   name: 'Classico Italiano',
   location: 'Via Angelo Tavanti 23, Firenze, Italy',
@@ -40,6 +47,11 @@ const restaurant = {
     console.log(`You added ${ing1}, ${ing2}, ${ing3} to your pasta.`);
   },
 
+  orderPizza(mainIngredient, ...otherIngredients) {
+    console.log(mainIngredient);
+    console.log(otherIngredients);
+  },
+
 
   openingHours: {
     thu: {
@@ -57,8 +69,10 @@ const restaurant = {
   },
 };
 
+/////////////////////////////////////////////////////////////////////////////////////////
+//   DE Structuring Arrays
+/////////////////////////////////////////////////////////////////////////////////////////
 
-//*******DE Structuring Arrays*******
 
 //Storing array in multiple variable
 
@@ -96,14 +110,22 @@ const restaurant = {
 // console.log(restaurant2.order(1,2)); 
 // console.log(restaurant2.order(2,3));
 
+/////////////////////////////////////////////////////////////////////////////////////////
+//   Nested Array destructuring
+/////////////////////////////////////////////////////////////////////////////////////////
 
-//********Nested Array destructuring
 
 // const nested= [1,2, , [4,5]];
 
 // const [ i, j, ,[k,l]]=  nested;
 
 // console.log(j, k, l);
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//   Spread Operators Some basics 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 
 // const arr = [7, 8, 9];
@@ -119,7 +141,11 @@ const restaurant = {
 // const newMenu = [...restaurant.mainMenu, 'Gnocci']; // Changing the name of object's property , also adding new array item to that property.
 // console.log(newMenu);
 
+/////////////////////////////////////////////////////////////////////////////////////////
 //**Destructuring object with function(updating on restuarant object script line 19-21) */
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 // restaurant.orderDelivery({
 //   address: '119/2 Ahmedbag, Dhaka-1214',
@@ -127,7 +153,11 @@ const restaurant = {
   
 // })
 
+/////////////////////////////////////////////////////////////////////////////////////////
 //***Spread operator: Calling the array data stored in ingredients by object's property function (Script:39-41) */
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 //promt to ask about ingredients to customer
 
@@ -144,12 +174,120 @@ const restaurant = {
 
 // restaurant.orderPasta(...ingredients); //Calling the array data stored in ingredients by object's property function (Script:39-41) with spread operators
 
-//**Modifying objects with spread operators */
+//////////////////////////////////////////////////////////////////////////////////////////
+//   Modifying objects with spread operators */
+//////////////////////////////////////////////////////////////////////////////////////////
+
 //Spread operators can work with iterables , but objects are not iterables so we have to call it inside{}
-const restaurantNew= {...restaurant}; // storing objects value to new variable with spread operator
-console.log(restaurantNew);
+// const restaurantNew= {...restaurant}; // storing objects value to new variable with spread operator
+// console.log(restaurantNew);
 
-restaurantNew.name='Hatam Tai'; // Updating name on new object
+// restaurantNew.name='Hatam Tai'; // Updating name on new object
 
-console.log(restaurant.name); // Displying older name
-console.log(restaurantNew.name); // Displaying new name
+// console.log(restaurant.name); // Displying older name
+// console.log(restaurantNew.name); // Displaying new name
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//                         Rest Pattern and Parameters 
+//////////////////////////////////////////////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//                         The Basics
+//////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+//Spread operator unpack an array
+//Rest operator packed an array
+
+// Spread works with value , used on right side of =
+// const arr= [1, 2, 3, ...[4,5]] ;
+// console.log(arr);
+
+// // Rest works with variable , used on left side of =
+// const [a, b, ...others] = [1, 2, 3, 4, 5];
+// console.log(a, b, others);
+
+// // The rest operator should be the last element, so there should be one rest operators
+
+// const [pizza , ...otherFood]= [...restaurant.starterMenu, ...restaurant.mainMenu]
+// console.log(pizza);
+// console.log(...otherFood);
+
+// //Rest operators working on Objects
+
+// const { sat, ...weekdays } = restaurant.openingHours;
+// console.log(weekdays);
+
+// //Rest on functions
+
+// const add = function (...numbers) {
+//   let sum = 0;
+//   for (let i = 0; i < numbers.length; i++)
+//    sum += numbers[i];
+//   console.log(sum);
+// };
+
+// add(2, 3);
+// add(5, 3, 7, 2);
+// add(8, 2, 5, 3, 2, 1, 4);
+
+// const x = [23, 5, 7];
+// add(...x);
+
+// //Rest operators on function perameters
+// restaurant.orderPizza('mushrooms', 'onion', 'olives', 'spinach');
+// restaurant.orderPizza('mushrooms');
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//                         OR, && Operators ShortCircuiting 
+//////////////////////////////////////////////////////////////////////////////////////////
+
+// console.log('---- OR ----');
+// // Use ANY data type, return ANY data type, short-circuiting
+// //OR operator will return first truthy value
+// console.log(3 || 'Jishan');
+// console.log('' || 'Jishan');
+// console.log(true || 0);
+// console.log(undefined || null);
+
+// console.log(undefined || 0 || '' || 'Hello' || 23 || null);
+
+// restaurant.numGuests = 0;
+// const guests1 = restaurant.numGuests ? restaurant.numGuests : 10;
+// console.log(guests1);
+
+// const guests2 = restaurant.numGuests || 10;
+// console.log(guests2);
+
+// console.log('---- AND ----');
+// //AND operator will return first falsie value
+// console.log(0 && 'Jishan');
+// console.log(7 && 'Jishan');
+
+// console.log('Hello' && 23 && null && 'Jishan');
+
+// // Practical example
+// //if logic to check if a method exist
+// if (restaurant.orderPizza) {
+//   restaurant.orderPizza('mushrooms', 'spinach');
+// }
+// //Tarnary logic to check if a method exist
+// restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach');
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//                         The Nullish Coalescing Operator
+//////////////////////////////////////////////////////////////////////////////////////////
+
+
+// The Nullish Coalescing Operator
+restaurant.numGuests = 0;
+const guests = restaurant.numGuests || 10; //Null and undefined is falsie value so turthy value 10 is return
+console.log(guests);
+
+// Nullish: null and undefined (NOT 0 or '')
+const guestCorrect = restaurant.numGuests ?? 10; //0 or empty string as truthy value so 0 is returned
+console.log(guestCorrect)
