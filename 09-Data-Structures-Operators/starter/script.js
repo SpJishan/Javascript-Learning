@@ -12,6 +12,98 @@ const flights =
 //   Data needed for first part of the section
 /////////////////////////////////////////////////////////////////////////////////////////  
 
+// const restaurant = {
+//   name: 'Classico Italiano',
+//   location: 'Via Angelo Tavanti 23, Firenze, Italy',
+//   categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+//   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+//   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+
+//   order: function (starterIndex, mainIndex){
+//     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+//   },
+
+//   // orderDelivery: function({starterIndex, mainIndex, time, address}){
+//   //   console.log(
+//   //     //**Error on: ${this.starterMenu.[starterIndex]}, there will be no dot after starter */
+//   //     // `Order Recieved! ${this.starterMenu.[starterIndex]} and ${this.mainMenu.[mainIndex]} will be delivered at ${time} to ${address}`
+//   //     `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+//   //     );
+//   // },
+
+//   //*******Another Way: Calling a function from an obect's property's to interchange  array data.
+
+//   orderDelivery: function({starterIndex=2, mainIndex=2, time='19:30', address}){  //setting perameters data on function
+//     console.log(
+//       //**Error on: ${this.starterMenu.[starterIndex]}, there will be no dot after starter */
+//       // `Order Recieved! ${this.starterMenu.[starterIndex]} and ${this.mainMenu.[mainIndex]} will be delivered at ${time} to ${address}`
+//       `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+//       );
+//   },
+
+//   //Function to Displaying the ingredients after user input
+
+//   orderPasta: function(ing1, ing2, ing3){
+//     console.log(`You added ${ing1}, ${ing2}, ${ing3} to your pasta.`);
+//   },
+
+//   orderPizza(mainIngredient, ...otherIngredients) {
+//     console.log(mainIngredient);
+//     console.log(otherIngredients);
+//   },
+
+
+//   openingHours: {
+//     thu: {
+//       open: 12,
+//       close: 22,
+//     },
+//     fri: {
+//       open: 11,
+//       close: 23,
+//     },
+//     sat: {
+//       open: 0, // Open 24 hours
+//       close: 24,
+//     },
+//   },
+// };
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//   111. Enhanced Object Literals 3 ways
+/////////////////////////////////////////////////////////////////////////////////////////
+const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']; //3rdway
+const openingHours = { //1st way: we can declare an object outside of another object and than use them as variabe.
+  [weekdays[3]]: {
+    open: 12,
+    close: 22,
+  },
+  [weekdays[4]]: {
+    open: 11,
+    close: 23,
+  },
+  [weekdays[5]]: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
+
+const openingHours= { 
+  thu: {
+    open: 12,
+    close: 22,
+  },
+  fri: {
+    open: 11,
+    close: 23,
+  },
+  sat: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
+
 const restaurant = {
   name: 'Classico Italiano',
   location: 'Via Angelo Tavanti 23, Firenze, Italy',
@@ -19,7 +111,7 @@ const restaurant = {
   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
 
-  order: function (starterIndex, mainIndex){
+  order(starterIndex, mainIndex){ //enhamced obj literals for function
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
 
@@ -33,7 +125,7 @@ const restaurant = {
 
   //*******Another Way: Calling a function from an obect's property's to interchange  array data.
 
-  orderDelivery: function({starterIndex=2, mainIndex=2, time='19:30', address}){  //setting perameters data on function
+  orderDelivery({starterIndex=2, mainIndex=2, time='19:30', address}){  //setting perameters data on function, //enhamced obj literals for function
     console.log(
       //**Error on: ${this.starterMenu.[starterIndex]}, there will be no dot after starter */
       // `Order Recieved! ${this.starterMenu.[starterIndex]} and ${this.mainMenu.[mainIndex]} will be delivered at ${time} to ${address}`
@@ -43,35 +135,21 @@ const restaurant = {
 
   //Function to Displaying the ingredients after user input
 
-  orderPasta: function(ing1, ing2, ing3){
+  // orderPasta: function(ing1, ing2, ing3){
+  //   console.log(`You added ${ing1}, ${ing2}, ${ing3} to your pasta.`);
+  // },
+  orderPasta(ing1, ing2, ing3){  //enhamced obj literals for function
     console.log(`You added ${ing1}, ${ing2}, ${ing3} to your pasta.`);
   },
 
-  orderPizza(mainIngredient, ...otherIngredients) {
+  orderPizza(mainIngredient, ...otherIngredients) { //enhamced obj literals for function
     console.log(mainIngredient);
     console.log(otherIngredients);
   },
 
-
-  openingHours: {
-    thu: {
-      open: 12,
-      close: 22,
-    },
-    fri: {
-      open: 11,
-      close: 23,
-    },
-    sat: {
-      open: 0, // Open 24 hours
-      close: 24,
-    },
-  },
+  openingHours,
+ 
 };
-
-/////////////////////////////////////////////////////////////////////////////////////////
-//   DE Structuring Arrays
-/////////////////////////////////////////////////////////////////////////////////////////
 
 
 //Storing array in multiple variable
