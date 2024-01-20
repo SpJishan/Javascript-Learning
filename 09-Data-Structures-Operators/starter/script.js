@@ -12,6 +12,84 @@ const flights =
 //   Data needed for first part of the section
 /////////////////////////////////////////////////////////////////////////////////////////  
 
+// const restaurant = {
+//   name: 'Classico Italiano',
+//   location: 'Via Angelo Tavanti 23, Firenze, Italy',
+//   categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+//   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+//   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+
+//   order: function (starterIndex, mainIndex){
+//     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+//   },
+
+//   // orderDelivery: function({starterIndex, mainIndex, time, address}){
+//   //   console.log(
+//   //     //**Error on: ${this.starterMenu.[starterIndex]}, there will be no dot after starter */
+//   //     // `Order Recieved! ${this.starterMenu.[starterIndex]} and ${this.mainMenu.[mainIndex]} will be delivered at ${time} to ${address}`
+//   //     `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+//   //     );
+//   // },
+
+//   //*******Another Way: Calling a function from an obect's property's to interchange  array data.
+
+//   orderDelivery: function({starterIndex=2, mainIndex=2, time='19:30', address}){  //setting perameters data on function
+//     console.log(
+//       //**Error on: ${this.starterMenu.[starterIndex]}, there will be no dot after starter */
+//       // `Order Recieved! ${this.starterMenu.[starterIndex]} and ${this.mainMenu.[mainIndex]} will be delivered at ${time} to ${address}`
+//       `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+//       );
+//   },
+
+//   //Function to Displaying the ingredients after user input
+
+//   orderPasta: function(ing1, ing2, ing3){
+//     console.log(`You added ${ing1}, ${ing2}, ${ing3} to your pasta.`);
+//   },
+
+//   orderPizza(mainIngredient, ...otherIngredients) {
+//     console.log(mainIngredient);
+//     console.log(otherIngredients);
+//   },
+
+
+//   openingHours: {
+//     thu: {
+//       open: 12,
+//       close: 22,
+//     },
+//     fri: {
+//       open: 11,
+//       close: 23,
+//     },
+//     sat: {
+//       open: 0, // Open 24 hours
+//       close: 24,
+//     },
+//   },
+// };
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//   111. Enhanced Object Literals 3 ways
+/////////////////////////////////////////////////////////////////////////////////////////
+const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']; //3rdway
+const openingHours = { //1st way: we can declare an object outside of another object and than use them as variabe.
+  [weekdays[3]]: {
+    open: 12,
+    close: 22,
+  },
+  [weekdays[4]]: {
+    open: 11,
+    close: 23,
+  },
+  [weekdays[5]]: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
+
+
 const restaurant = {
   name: 'Classico Italiano',
   location: 'Via Angelo Tavanti 23, Firenze, Italy',
@@ -19,7 +97,7 @@ const restaurant = {
   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
 
-  order: function (starterIndex, mainIndex){
+  order(starterIndex, mainIndex){ //enhamced obj literals for function
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
 
@@ -33,7 +111,7 @@ const restaurant = {
 
   //*******Another Way: Calling a function from an obect's property's to interchange  array data.
 
-  orderDelivery: function({starterIndex=2, mainIndex=2, time='19:30', address}){  //setting perameters data on function
+  orderDelivery({starterIndex=2, mainIndex=2, time='19:30', address}){  //setting perameters data on function, //enhamced obj literals for function
     console.log(
       //**Error on: ${this.starterMenu.[starterIndex]}, there will be no dot after starter */
       // `Order Recieved! ${this.starterMenu.[starterIndex]} and ${this.mainMenu.[mainIndex]} will be delivered at ${time} to ${address}`
@@ -43,35 +121,21 @@ const restaurant = {
 
   //Function to Displaying the ingredients after user input
 
-  orderPasta: function(ing1, ing2, ing3){
+  // orderPasta: function(ing1, ing2, ing3){
+  //   console.log(`You added ${ing1}, ${ing2}, ${ing3} to your pasta.`);
+  // },
+  orderPasta(ing1, ing2, ing3){  //enhamced obj literals for function
     console.log(`You added ${ing1}, ${ing2}, ${ing3} to your pasta.`);
   },
 
-  orderPizza(mainIngredient, ...otherIngredients) {
+  orderPizza(mainIngredient, ...otherIngredients) { //enhamced obj literals for function
     console.log(mainIngredient);
     console.log(otherIngredients);
   },
 
-
-  openingHours: {
-    thu: {
-      open: 12,
-      close: 22,
-    },
-    fri: {
-      open: 11,
-      close: 23,
-    },
-    sat: {
-      open: 0, // Open 24 hours
-      close: 24,
-    },
-  },
+  openingHours,
+ 
 };
-
-/////////////////////////////////////////////////////////////////////////////////////////
-//   DE Structuring Arrays
-/////////////////////////////////////////////////////////////////////////////////////////
 
 
 //Storing array in multiple variable
@@ -283,11 +347,187 @@ const restaurant = {
 //////////////////////////////////////////////////////////////////////////////////////////
 
 
-// The Nullish Coalescing Operator
-restaurant.numGuests = 0;
-const guests = restaurant.numGuests || 10; //Null and undefined is falsie value so turthy value 10 is return
-console.log(guests);
+// // The Nullish Coalescing Operator
+// restaurant.numGuests = 0;
+// const guests = restaurant.numGuests || 10; //Null and undefined is falsie value so turthy value 10 is return
+// console.log(guests);
 
-// Nullish: null and undefined (NOT 0 or '')
-const guestCorrect = restaurant.numGuests ?? 10; //0 or empty string as truthy value so 0 is returned
-console.log(guestCorrect)
+// // Nullish: null and undefined (NOT 0 or '')
+// const guestCorrect = restaurant.numGuests ?? 10; //0 or empty string as truthy value so 0 is returned
+// console.log(guestCorrect)
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//                        Coding Challenge: Array 
+//////////////////////////////////////////////////////////////////////////////////////////
+
+/* 
+We're building a football betting app (soccer for my American friends 😅)!
+
+Suppose we get data from a web service about a certain game (below). In this challenge we're gonna work with the data. So here are your tasks:
+
+1. Create one player array for each team (variables 'players1' and 'players2')
+2. The first player in any player array is the goalkeeper and the others are field players. For Bayern Munich (team 1) create one variable ('gk') with the goalkeeper's name, and one array ('fieldPlayers') with all the remaining 10 field players
+3. Create an array 'allPlayers' containing all players of both teams (22 players)
+4. During the game, Bayern Munich (team 1) used 3 substitute players. So create a new array ('players1Final') containing all the original team1 players plus 'Thiago', 'Coutinho' and 'Perisic'
+5. Based on the game.odds object, create one variable for each odd (called 'team1', 'draw' and 'team2')
+6. Write a function ('printGoals') that receives an arbitrary number of player names (NOT an array) and prints each of them to the console, along with the number of goals that were scored in total (number of player names passed in)
+7. The team with the lower odd is more likely to win. Print to the console which team is more likely to win, WITHOUT using an if/else statement or the ternary operator.
+
+TEST DATA FOR 6: Use players 'Davies', 'Muller', 'Lewandowski' and 'Kimmich'. Then, call the function again with players from game.scored
+
+GOOD LUCK 😀
+*/
+
+const game = {
+  team1: 'Bayern Munich',
+  team2: 'Borrussia Dortmund',
+  players: [
+    [
+      'Neuer',
+      'Pavard',
+      'Martinez',
+      'Alaba',
+      'Davies',
+      'Kimmich',
+      'Goretzka',
+      'Coman',
+      'Muller',
+      'Gnarby',
+      'Lewandowski',
+    ],
+    [
+      'Burki',
+      'Schulz',
+      'Hummels',
+      'Akanji',
+      'Hakimi',
+      'Weigl',
+      'Witsel',
+      'Hazard',
+      'Brandt',
+      'Sancho',
+      'Gotze',
+    ],
+  ],
+  score: '4:0',
+  scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+  date: 'Nov 9th, 2037',
+  odds: {
+    team1: 1.33,
+    x: 3.25,
+    team2: 6.5,
+  },
+};
+
+// //////////////////////////////////////////////////////////////////////////////////////////
+// //1. Create one player array for each team (variables 'players1' and 'players2')
+// //////////////////////////////////////////////////////////////////////////////////////////
+
+// const [players1, players2]= game.players; //Setting array variables from object's array
+// console.log(players1, players2)
+
+// //////////////////////////////////////////////////////////////////////////////////////////
+// //2. The first player in any player array is the goalkeeper and the others are field players. For Bayern Munich (team 1) create one variable ('gk') with the goalkeeper's name, and one array ('fieldPlayers') with all the remaining 10 field players
+// //////////////////////////////////////////////////////////////////////////////////////////
+
+// const [gk, ...fieldPlayers]= players1; //Using rest operators, assigning 1st member then remainings player
+// console.log(gk, fieldPlayers);
+
+// //////////////////////////////////////////////////////////////////////////////////////////
+// //3. Create an array 'allPlayers' containing all players of both teams (22 players)
+// //////////////////////////////////////////////////////////////////////////////////////////
+
+// const allPlayers =[...players1,...players2];  //Using spread operator 2 array is joined to one array
+// console.log(allPlayers);
+
+// //////////////////////////////////////////////////////////////////////////////////////////
+// //4. During the game, Bayern Munich (team 1) used 3 substitute players. So create a new array ('players1Final') containing all the original team1 players plus 'Thiago', 'Coutinho' and 'Perisic'
+// //////////////////////////////////////////////////////////////////////////////////////////
+
+// const players1Final =[...players1,'Thiago','Continho','Perisic']; //Using spread operator and playername to update all payers to a final variable
+// console.log(players1Final);
+
+// //////////////////////////////////////////////////////////////////////////////////////////
+// //5. Based on the game.odds object, create one variable for each odd (called 'team1', 'draw' and 'team2')
+// //////////////////////////////////////////////////////////////////////////////////////////
+
+// const {odds: { team1, x:draw , team2}} =game; //Setting the variable name on a nested destructuring , here we rename x to draw, It's a compex concept
+
+// console.log(team1,draw, team2);
+
+// //////////////////////////////////////////////////////////////////////////////////////////
+// //6. Write a function ('printGoals') that receives an arbitrary number of player names (NOT an array) and prints each of them to the console, along with the number of goals that were scored in total (number of player names passed in)
+// //////////////////////////////////////////////////////////////////////////////////////////
+
+// const printGoals= function(...players){ // Recieve an array of perameters
+//   console.log(players); //Dispalayng the array
+//   console.log(`${players.length} goles are scored`); //Number of array are goaled
+// }
+
+// printGoals(...game.scored);
+
+// //////////////////////////////////////////////////////////////////////////////////////////
+// //7. The team with the lower odd is more likely to win. Print to the console which team is more likely to win, WITHOUT using an if/else statement or the ternary operator.
+// //////////////////////////////////////////////////////////////////////////////////////////
+
+// team1 < team2 && console.log('Team 1 is more likely to win'); //passed the condition and print
+// team1 > team2 && console.log('Team 2 is more likely to win');
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//                        110 Looping Arrays The for of Loop
+//////////////////////////////////////////////////////////////////////////////////////////
+
+// const menu = [...restaurant.starterMenu,...restaurant.mainMenu] //Joining two array into one variable
+
+// console.log(menu);
+
+// for (const item of menu){ //for of loop
+//   console.log(item);
+// }
+
+// console.log(...menu.entries());
+
+// //Old Ways to use for of loop
+// for (const item of menu.entries()){     
+//   console.log(`${item[0]+1}: ${item[1]}`);
+// }
+
+// //New Way to use for of loop
+// for (const [i, el] of menu.entries()){     // we know the resut is stored in two array so we destructuring those array
+//   console.log(`${i+1}: ${el}`);
+// }
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//                        111 Optional Chaining
+//////////////////////////////////////////////////////////////////////////////////////////
+if (restaurant.openingHours && restaurant.openingHours.mon)
+  console.log(restaurant.openingHours.mon.open);
+
+// console.log(restaurant.openingHours.mon.open);
+
+// WITH optional chaining c
+console.log(restaurant.openingHours.mon?.open);
+console.log(restaurant.openingHours?.mon?.open);
+
+// Example
+const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+for (const day of days) {
+  const open = restaurant.openingHours[day]?.open ?? 'closed';
+  console.log(`On ${day}, we open at ${open}`);
+}
+
+// Methods
+console.log(restaurant.order?.(0, 1) ?? 'Method does not exist');
+console.log(restaurant.orderRisotto?.(0, 1) ?? 'Method does not exist');
+
+// Arrays
+const users = [{ name: 'Jonas', email: 'hello@jonas.io' }];
+// const users = [];
+
+console.log(users[0]?.name ?? 'User array empty');
+
+if (users.length > 0) console.log(users[0].name);
+else console.log('user array empty');
