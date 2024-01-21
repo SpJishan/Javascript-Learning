@@ -635,61 +635,98 @@ GOOD LUCK 😀
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
-//              114 Coding Challenge 2
+//              115 Sets
 //////////////////////////////////////////////////////////////////////////////////////////
 
 //new Set keyword to define sets
 
-const ordersSet = new Set([ 
-  'Chowmin',
-  'Fried Rice',
-  'Pizza',
-  'Chowmin',
-  'Pasta',
-  'Risotto',
-  'Pasta'
-]);
+// const ordersSet = new Set([ 
+//   'Chowmin',
+//   'Fried Rice',
+//   'Pizza',
+//   'Chowmin',
+//   'Pasta',
+//   'Risotto',
+//   'Pasta'
+// ]);
 
-console.log(ordersSet); //Only displays the unique names stored in the set
-console.log(ordersSet.size); //Number of unique names stored in the set
+// console.log(ordersSet); //Only displays the unique names stored in the set
+// console.log(ordersSet.size); //Number of unique names stored in the set
 
-console.log(new Set('Jishannnnn'));
+// console.log(new Set('Jishannnnn'));
 
-console.log(ordersSet.has('Pizza'));
-console.log(ordersSet.has('bread')); //Checking a value is stored in set
+// console.log(ordersSet.has('Pizza'));
+// console.log(ordersSet.has('bread')); //Checking a value is stored in set
 
-console.log(ordersSet.add('Bread')); //Adding a value in the set
-console.log(ordersSet.has('Bread'));
+// console.log(ordersSet.add('Bread')); //Adding a value in the set
+// console.log(ordersSet.has('Bread'));
 
-ordersSet.delete('Risotto'); //Deleting a value in the set
-console.log(ordersSet);
+// ordersSet.delete('Risotto'); //Deleting a value in the set
+// console.log(ordersSet);
 
-//looping a set
+// //looping a set
 
-for (const order of ordersSet){
-  console.log(order);
-}
+// for (const order of ordersSet){
+//   console.log(order);
+// }
 
-const ordersSet2 = new Set([  // value stored as set
-  'Chowmin',
-  'Fried Rice',
-  'Pizza',
-  'Chowmin',
-  'Pasta',
-  'Risotto',
-  'Pasta'
-]);
+// const ordersSet2 = new Set([  // value stored as set
+//   'Chowmin',
+//   'Fried Rice',
+//   'Pizza',
+//   'Chowmin',
+//   'Pasta',
+//   'Risotto',
+//   'Pasta'
+// ]);
 
 
-const ordersSet3 = [...new Set([  // value stored as array but the duplicate value will erase
-  'Chowmin',
-  'Fried Rice',
-  'Pizza',
-  'Chowmin',
-  'Pasta',
-  'Risotto',
-  'Pasta'
-])];
+// const ordersSet3 = [...new Set([  // value stored as array but the duplicate value will erase
+//   'Chowmin',
+//   'Fried Rice',
+//   'Pizza',
+//   'Chowmin',
+//   'Pasta',
+//   'Risotto',
+//   'Pasta'
+// ])];
 
-console.log(ordersSet2);
-console.log(ordersSet3);
+// console.log(ordersSet2);
+// console.log(ordersSet3);
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//              116 Maps
+//////////////////////////////////////////////////////////////////////////////////////////
+
+const rest = new Map();
+
+rest.set('name', 'Hatam Tai'); // Setting/Storing map key(name) and value(Hatam Tai)
+rest.set(1, 'Ahmedbag Bashabo');
+rest.set(2, 'khilgaw');
+
+
+
+//Storing Multiple map key and value
+rest
+  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are open :D')
+  .set(false, 'We are closed :(');
+
+  console.log(rest);
+
+console.log(rest.get('name')); //To retrieve a data we use rest.get(key)
+console.log(rest.get(true));
+console.log(rest.get(1));
+
+const time = 8; 
+console.log(rest.get(time > rest.get('open') && time < rest.get('close'))); //Practicle Example
+
+const arr = [1, 2]; //For array key we have to assign the array to a variable.
+rest.set(arr, 'Test');
+rest.set(document.querySelector('h1'), 'Heading');
+console.log(rest); 
+console.log(rest.size);
+
+console.log(rest.get(arr));
