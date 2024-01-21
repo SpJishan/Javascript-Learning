@@ -596,39 +596,100 @@ GOOD LUCK 😀
 */
 
 
-//////////////////////////////////////////////////////////////////////////////////////////
-//              1. Loop over the game.scored array and print each player name to the console, along with the goal number (Example: "Goal 1: Lewandowski")
-//////////////////////////////////////////////////////////////////////////////////////////
-console.log(game.scored.entries()); 
-//game.scored.entries() will return the scored array in game object with an index number and value of the scored array , in where the players name are stored. 
-for (const [i, player] of game.scored.entries()){
-      console.log(`Goal ${i+1}: player`);
-};
+// //////////////////////////////////////////////////////////////////////////////////////////
+// //              1. Loop over the game.scored array and print each player name to the console, along with the goal number (Example: "Goal 1: Lewandowski")
+// //////////////////////////////////////////////////////////////////////////////////////////
+// console.log(game.scored.entries()); 
+// //game.scored.entries() will return the scored array in game object with an index number and value of the scored array , in where the players name are stored. 
+// for (const [i, player] of game.scored.entries()){
+//       console.log(`Goal ${i+1}: player`);
+// };
+
+// //////////////////////////////////////////////////////////////////////////////////////////
+// //              2. Use a loop to calculate the average odd and log it to the console (We already studied how to calculate averages, you can go check if you don't remember)
+// //////////////////////////////////////////////////////////////////////////////////////////
+
+// let average=0;
+// //Object.values(game.odd) will access the value of key named odds
+// for ( const odd of Object.values(game.odds) ){
+//   average += odd;
+// };
+// average /= Object.values(game.odds).length;
+// console.log(average);
+
+// //////////////////////////////////////////////////////////////////////////////////////////
+// // 3. Print the 3 odds to the console, but in a nice formatted way, exaclty like this:
+// // Odd of victory Bayern Munich: 1.33
+// // Odd of draw: 3.25
+// // Odd of victory Borrussia Dortmund: 6.5
+// // Get the team names directly from the game object, don't hardcode them (except for "draw"). HINT: Note how the odds and the game objects have the same property names 😉
+// //////////////////////////////////////////////////////////////////////////////////////////
+
+// console.log(Object.entries(game.odds)); //it returns an index and the entries stored in odds
+
+// for ( const [team, odd] of Object.entries(game.odds) )
+// {
+//   const teamStr = team === 'x' ? 'draw' : `victory ${game[team]}`;
+//   console.log(`Odd of ${teamStr} ${odd}`);
+// }
+
 
 //////////////////////////////////////////////////////////////////////////////////////////
-//              2. Use a loop to calculate the average odd and log it to the console (We already studied how to calculate averages, you can go check if you don't remember)
+//              114 Coding Challenge 2
 //////////////////////////////////////////////////////////////////////////////////////////
 
-let average=0;
-//Object.values(game.odd) will access the value of key named odds
-for ( const odd of Object.values(game.odds) ){
-  average += odd;
-};
-average /= Object.values(game.odds).length;
-console.log(average);
+//new Set keyword to define sets
 
-//////////////////////////////////////////////////////////////////////////////////////////
-// 3. Print the 3 odds to the console, but in a nice formatted way, exaclty like this:
-// Odd of victory Bayern Munich: 1.33
-// Odd of draw: 3.25
-// Odd of victory Borrussia Dortmund: 6.5
-// Get the team names directly from the game object, don't hardcode them (except for "draw"). HINT: Note how the odds and the game objects have the same property names 😉
-//////////////////////////////////////////////////////////////////////////////////////////
+const ordersSet = new Set([ 
+  'Chowmin',
+  'Fried Rice',
+  'Pizza',
+  'Chowmin',
+  'Pasta',
+  'Risotto',
+  'Pasta'
+]);
 
-console.log(Object.entries(game.odds)); //it returns an index and the entries stored in odds
+console.log(ordersSet); //Only displays the unique names stored in the set
+console.log(ordersSet.size); //Number of unique names stored in the set
 
-for ( const [team, odd] of Object.entries(game.odds) )
-{
-  const teamStr = team === 'x' ? 'draw' : `victory ${game[team]}`;
-  console.log(`Odd of ${teamStr} ${odd}`);
+console.log(new Set('Jishannnnn'));
+
+console.log(ordersSet.has('Pizza'));
+console.log(ordersSet.has('bread')); //Checking a value is stored in set
+
+console.log(ordersSet.add('Bread')); //Adding a value in the set
+console.log(ordersSet.has('Bread'));
+
+ordersSet.delete('Risotto'); //Deleting a value in the set
+console.log(ordersSet);
+
+//looping a set
+
+for (const order of ordersSet){
+  console.log(order);
 }
+
+const ordersSet2 = new Set([  // value stored as set
+  'Chowmin',
+  'Fried Rice',
+  'Pizza',
+  'Chowmin',
+  'Pasta',
+  'Risotto',
+  'Pasta'
+]);
+
+
+const ordersSet3 = [...new Set([  // value stored as array but the duplicate value will erase
+  'Chowmin',
+  'Fried Rice',
+  'Pizza',
+  'Chowmin',
+  'Pasta',
+  'Risotto',
+  'Pasta'
+])];
+
+console.log(ordersSet2);
+console.log(ordersSet3);
