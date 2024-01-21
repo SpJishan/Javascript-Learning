@@ -502,32 +502,231 @@ const game = {
 //////////////////////////////////////////////////////////////////////////////////////////
 //                        111 Optional Chaining
 //////////////////////////////////////////////////////////////////////////////////////////
-if (restaurant.openingHours && restaurant.openingHours.mon)
-  console.log(restaurant.openingHours.mon.open);
+// if (restaurant.openingHours && restaurant.openingHours.mon)
+//   console.log(restaurant.openingHours.mon.open);
 
-// console.log(restaurant.openingHours.mon.open);
+// // console.log(restaurant.openingHours.mon.open);
 
-// WITH optional chaining c
-console.log(restaurant.openingHours.mon?.open);
-console.log(restaurant.openingHours?.mon?.open);
+// // WITH optional chaining c
+// console.log(restaurant.openingHours.mon?.open);
+// console.log(restaurant.openingHours?.mon?.open);
 
-// Example
-const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+// // Example
+// const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
-for (const day of days) {
-  const open = restaurant.openingHours[day]?.open ?? 'closed';
-  console.log(`On ${day}, we open at ${open}`);
-}
+// for (const day of days) {
+//   const open = restaurant.openingHours[day]?.open ?? 'closed';
+//   console.log(`On ${day}, we open at ${open}`);
+// }
 
-// Methods
-console.log(restaurant.order?.(0, 1) ?? 'Method does not exist');
-console.log(restaurant.orderRisotto?.(0, 1) ?? 'Method does not exist');
+// // Methods
+// console.log(restaurant.order?.(0, 1) ?? 'Method does not exist');
+// console.log(restaurant.orderRisotto?.(0, 1) ?? 'Method does not exist');
 
-// Arrays
-const users = [{ name: 'Jonas', email: 'hello@jonas.io' }];
-// const users = [];
+// // Arrays
+// const users = [{ name: 'Jonas', email: 'hello@jonas.io' }];
+// // const users = [];
 
-console.log(users[0]?.name ?? 'User array empty');
+// console.log(users[0]?.name ?? 'User array empty');
 
-if (users.length > 0) console.log(users[0].name);
-else console.log('user array empty');
+// if (users.length > 0) console.log(users[0].name);
+// else console.log('user array empty');
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//              113 Looping Objects Object Keys, Values, and Entries
+//////////////////////////////////////////////////////////////////////////////////////////
+
+
+// //Object Keys
+// const properties = Object.keys(openingHours);  //applying object.keys, We can use object properties or key using Object.key
+// console.log(properties);
+
+// // console.log(`We are open ${properties.length} days on a week`);
+
+// // for (const day of properties){
+// //   console.log(day);
+// // }
+
+// let openstr = `We are open ${properties.length} days on a week:`
+// for (const day of properties){
+//   openstr +=`${day}, `;
+// }
+
+// console.log(openstr);
+// //Object value
+
+// const values= Object.values(openingHours); //We can access object value using Object.value
+// console.log(values);
+
+
+// //Object Entries
+// const entries= Object.entries(openingHours); //We can use both keys and value using Object.entries
+// console.log(entries);
+
+// for(const [days, {open, close}] of entries )
+// {
+//   console.log(`On ${days} we open at ${open} and close at ${close}`);
+// }
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//              114 Coding Challenge 2
+//////////////////////////////////////////////////////////////////////////////////////////
+
+// Coding Challenge #2
+
+/* 
+Let's continue with our football betting app!
+
+1. Loop over the game.scored array and print each player name to the console, along with the goal number (Example: "Goal 1: Lewandowski")
+2. Use a loop to calculate the average odd and log it to the console (We already studied how to calculate averages, you can go check if you don't remember)
+3. Print the 3 odds to the console, but in a nice formatted way, exaclty like this:
+      Odd of victory Bayern Munich: 1.33
+      Odd of draw: 3.25
+      Odd of victory Borrussia Dortmund: 6.5
+Get the team names directly from the game object, don't hardcode them (except for "draw"). HINT: Note how the odds and the game objects have the same property names 😉
+
+BONUS: Create an object called 'scorers' which contains the names of the players who scored as properties, and the number of goals as the value. In this game, it will look like this:
+      {
+        Gnarby: 1,
+        Hummels: 1,
+        Lewandowski: 2
+      }
+
+GOOD LUCK 😀
+*/
+
+
+// //////////////////////////////////////////////////////////////////////////////////////////
+// //              1. Loop over the game.scored array and print each player name to the console, along with the goal number (Example: "Goal 1: Lewandowski")
+// //////////////////////////////////////////////////////////////////////////////////////////
+// console.log(game.scored.entries()); 
+// //game.scored.entries() will return the scored array in game object with an index number and value of the scored array , in where the players name are stored. 
+// for (const [i, player] of game.scored.entries()){
+//       console.log(`Goal ${i+1}: player`);
+// };
+
+// //////////////////////////////////////////////////////////////////////////////////////////
+// //              2. Use a loop to calculate the average odd and log it to the console (We already studied how to calculate averages, you can go check if you don't remember)
+// //////////////////////////////////////////////////////////////////////////////////////////
+
+// let average=0;
+// //Object.values(game.odd) will access the value of key named odds
+// for ( const odd of Object.values(game.odds) ){
+//   average += odd;
+// };
+// average /= Object.values(game.odds).length;
+// console.log(average);
+
+// //////////////////////////////////////////////////////////////////////////////////////////
+// // 3. Print the 3 odds to the console, but in a nice formatted way, exaclty like this:
+// // Odd of victory Bayern Munich: 1.33
+// // Odd of draw: 3.25
+// // Odd of victory Borrussia Dortmund: 6.5
+// // Get the team names directly from the game object, don't hardcode them (except for "draw"). HINT: Note how the odds and the game objects have the same property names 😉
+// //////////////////////////////////////////////////////////////////////////////////////////
+
+// console.log(Object.entries(game.odds)); //it returns an index and the entries stored in odds
+
+// for ( const [team, odd] of Object.entries(game.odds) )
+// {
+//   const teamStr = team === 'x' ? 'draw' : `victory ${game[team]}`;
+//   console.log(`Odd of ${teamStr} ${odd}`);
+// }
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//              115 Sets
+//////////////////////////////////////////////////////////////////////////////////////////
+
+//new Set keyword to define sets
+
+// const ordersSet = new Set([ 
+//   'Chowmin',
+//   'Fried Rice',
+//   'Pizza',
+//   'Chowmin',
+//   'Pasta',
+//   'Risotto',
+//   'Pasta'
+// ]);
+
+// console.log(ordersSet); //Only displays the unique names stored in the set
+// console.log(ordersSet.size); //Number of unique names stored in the set
+
+// console.log(new Set('Jishannnnn'));
+
+// console.log(ordersSet.has('Pizza'));
+// console.log(ordersSet.has('bread')); //Checking a value is stored in set
+
+// console.log(ordersSet.add('Bread')); //Adding a value in the set
+// console.log(ordersSet.has('Bread'));
+
+// ordersSet.delete('Risotto'); //Deleting a value in the set
+// console.log(ordersSet);
+
+// //looping a set
+
+// for (const order of ordersSet){
+//   console.log(order);
+// }
+
+// const ordersSet2 = new Set([  // value stored as set
+//   'Chowmin',
+//   'Fried Rice',
+//   'Pizza',
+//   'Chowmin',
+//   'Pasta',
+//   'Risotto',
+//   'Pasta'
+// ]);
+
+
+// const ordersSet3 = [...new Set([  // value stored as array but the duplicate value will erase
+//   'Chowmin',
+//   'Fried Rice',
+//   'Pizza',
+//   'Chowmin',
+//   'Pasta',
+//   'Risotto',
+//   'Pasta'
+// ])];
+
+// console.log(ordersSet2);
+// console.log(ordersSet3);
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//              116 Maps
+//////////////////////////////////////////////////////////////////////////////////////////
+
+const rest = new Map();
+
+rest.set('name', 'Hatam Tai'); // Setting/Storing map key(name) and value(Hatam Tai)
+rest.set(1, 'Ahmedbag Bashabo');
+rest.set(2, 'khilgaw');
+
+
+
+//Storing Multiple map key and value
+rest
+  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are open :D')
+  .set(false, 'We are closed :(');
+
+  console.log(rest);
+
+console.log(rest.get('name')); //To retrieve a data we use rest.get(key)
+console.log(rest.get(true));
+console.log(rest.get(1));
+
+const time = 8; 
+console.log(rest.get(time > rest.get('open') && time < rest.get('close'))); //Practicle Example
+
+const arr = [1, 2]; //For array key we have to assign the array to a variable.
+rest.set(arr, 'Test');
+rest.set(document.querySelector('h1'), 'Heading');
+console.log(rest); 
+console.log(rest.size);
+
+console.log(rest.get(arr));
