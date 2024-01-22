@@ -698,35 +698,78 @@ GOOD LUCK 😀
 //              116 Maps
 //////////////////////////////////////////////////////////////////////////////////////////
 
-const rest = new Map();
+// const rest = new Map();
 
-rest.set('name', 'Hatam Tai'); // Setting/Storing map key(name) and value(Hatam Tai)
-rest.set(1, 'Ahmedbag Bashabo');
-rest.set(2, 'khilgaw');
+// rest.set('name', 'Hatam Tai'); // Setting/Storing map key(name) and value(Hatam Tai)
+// rest.set(1, 'Ahmedbag Bashabo');
+// rest.set(2, 'khilgaw');
 
 
 
-//Storing Multiple map key and value
-rest
-  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
-  .set('open', 11)
-  .set('close', 23)
-  .set(true, 'We are open :D')
-  .set(false, 'We are closed :(');
+// //Storing Multiple map key and value
+// rest
+//   .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+//   .set('open', 11)
+//   .set('close', 23)
+//   .set(true, 'We are open :D')
+//   .set(false, 'We are closed :(');
 
-  console.log(rest);
+//   console.log(rest);
 
-console.log(rest.get('name')); //To retrieve a data we use rest.get(key)
-console.log(rest.get(true));
-console.log(rest.get(1));
+// console.log(rest.get('name')); //To retrieve a data we use rest.get(key)
+// console.log(rest.get(true));
+// console.log(rest.get(1));
 
-const time = 8; 
-console.log(rest.get(time > rest.get('open') && time < rest.get('close'))); //Practicle Example
+// const time = 8; 
+// console.log(rest.get(time > rest.get('open') && time < rest.get('close'))); //Practicle Example
 
-const arr = [1, 2]; //For array key we have to assign the array to a variable.
-rest.set(arr, 'Test');
-rest.set(document.querySelector('h1'), 'Heading');
-console.log(rest); 
-console.log(rest.size);
+// const arr = [1, 2]; //For array key we have to assign the array to a variable.
+// rest.set(arr, 'Test');
+// rest.set(document.querySelector('h1'), 'Heading');
+// console.log(rest); 
+// console.log(rest.size);
 
-console.log(rest.get(arr));
+// console.log(rest.get(arr));
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//              117 Maps Iteration
+//////////////////////////////////////////////////////////////////////////////////////////
+
+//We can use map_name.set, or initially setting all the key and value 
+
+const question = new Map([
+  ['question', 'What is the best programming language in the world?'],
+  [1, 'C'],
+  [2, 'Java'],
+  [3, 'JavaScript'],
+  ['correct', 3],
+  [true, 'Correct 🎉'],
+  [false, 'Try Again'],
+]);
+console.log(question);
+
+//Converting Objects to Map, Object.entries and Map ; both have key and value data
+console.log(Object.entries(openingHours));
+
+const hoursMap= new Map (Object.entries(openingHours));
+console.log(hoursMap);
+
+//Quiz App
+
+console.log(question.get('question')); //Asking the question
+
+for (const [key, value] of question){ //Generating Options
+  if(typeof key === 'number'){
+    console.log(`Answer ${key}: ${value}`);
+  };
+};
+
+const answer = Number(prompt(`Your Answer?`)); // Asking key value 1/2/3
+
+console.log(question.get(question.get('correct')===answer)); // if it get a value of 3 which key is 'correct'(line:745)  then the statment will be true , which is another key(line:746) that will generate the value 'Correct 🎉' else , will produce a key of false(line:747)
+
+//Converting Maps to array
+
+console.log(...question);
+console.log(...question.keys());
+console.log(...question.values());
