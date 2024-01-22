@@ -779,43 +779,106 @@ GOOD LUCK 😀
 //              Working With Strings - Part 1
 //////////////////////////////////////////////////////////////////////////////////////////
 
+// const airline = 'TAP Air Portugal';
+// const plane = 'A320';
+
+// console.log(plane[0]); //String can be called like array index
+// console.log(plane[1]);
+// console.log(plane[2]);
+// console.log('B737'[0]); //We can write string directly then call it index
+
+// console.log(airline.length); //length: Number of letter with space, a string has
+// console.log('B737'.length);
+
+// console.log(airline.indexOf('r')); //Finding index a letter from left
+// console.log(airline.lastIndexOf('r')); //Finding index a letter from right
+// console.log(airline.indexOf('portugal')); //-1 is a false value, it is case sensitive
+
+
+// console.log(airline.slice(4)); // Will cut the first 4 index that is TAP(space)
+// console.log(airline.slice(4, 7)); // will start from 5 and end with index of 7
+
+// console.log(airline.slice(0, airline.indexOf(' '))); //will start from 1 and end before space 
+// console.log(airline.slice(airline.lastIndexOf(' ') + 1)); //will start from 8 which is space
+
+// console.log(airline.slice(-2)); // last 2 letter
+// console.log(airline.slice(1, -1)); //start from 2 end before last character
+
+// const checkMiddleSeat = function (seat) {
+//   // B and E are middle seats
+//   const s = seat.slice(-1); //Will select the last character
+//   if (s === 'B' || 'E') console.log('You got the middle seat 😬');
+//   else console.log('You got lucky 😎');
+// };
+
+// checkMiddleSeat('11B');
+// checkMiddleSeat('23C');
+// checkMiddleSeat('3E');
+
+// console.log(new String('jishan'));
+// console.log(typeof new String('jishan')); //will show as object
+
+// console.log(typeof new String('jishan').slice(1)); // using the slice function it will show as string
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//             121 Working With Strings - Part 2
+//////////////////////////////////////////////////////////////////////////////////////////
+
 const airline = 'TAP Air Portugal';
-const plane = 'A320';
 
-console.log(plane[0]); //String can be called like array index
-console.log(plane[1]);
-console.log(plane[2]);
-console.log('B737'[0]); //We can write string directly then call it index
+console.log(airline.toLowerCase()); // Converting all alohabet to lowercase
+console.log(airline.toUpperCase()); // Converting all alohabet to uppercase
 
-console.log(airline.length); //length: Number of letter with space, a string has
-console.log('B737'.length);
+// Fix capitalization in name
+const passenger = 'jIShan'; // Jishan
+//1st to convert all alphabet to lowercase, then call the first index[0] joined the other alphabet with slice method
+const passengerLower = passenger.toLowerCase(); 
+const passengerCorrect =
+  passengerLower[0].toUpperCase() + passengerLower.slice(1);
+console.log(passengerCorrect);
 
-console.log(airline.indexOf('r')); //Finding index a letter from left
-console.log(airline.lastIndexOf('r')); //Finding index a letter from right
-console.log(airline.indexOf('portugal')); //-1 is a false value, it is case sensitive
+// Comparing emails
+const email = 'hello@jishan.io';
+const loginEmail = '  Hello@Jishan.Io \n';
 
+// const lowerEmail = loginEmail.toLowerCase();
+// const trimmedEmail = lowerEmail.trim();
+const normalizedEmail = loginEmail.toLowerCase().trim();
+console.log(normalizedEmail);
+console.log(email === normalizedEmail);
 
-console.log(airline.slice(4)); // Will cut the first 4 index that is TAP(space)
-console.log(airline.slice(4, 7)); // will start from 5 and end with index of 7
+// replacing
+const priceGB = '288,97£';
+const priceUS = priceGB.replace('£', '$').replace(',', '.');
+console.log(priceUS);
 
-console.log(airline.slice(0, airline.indexOf(' '))); //will start from 1 and end before space 
-console.log(airline.slice(airline.lastIndexOf(' ') + 1)); //will start from 8 which is space
+const announcement =
+  'All passengers come to boarding door 23. Boarding door 23!';
 
-console.log(airline.slice(-2)); // last 2 letter
-console.log(airline.slice(1, -1)); //start from 2 end before last character
+console.log(announcement.replace('door', 'gate'));
+console.log(announcement.replaceAll('door', 'gate'));
 
-const checkMiddleSeat = function (seat) {
-  // B and E are middle seats
-  const s = seat.slice(-1); //Will select the last character
-  if (s === 'B' || 'E') console.log('You got the middle seat 😬');
-  else console.log('You got lucky 😎');
+// Booleans
+const plane = 'Airbus A320neo';
+console.log(plane.includes('A320'));
+console.log(plane.includes('Boeing'));
+console.log(plane.startsWith('Airb'));
+
+if (plane.startsWith('Airbus') && plane.endsWith('neo')) {
+  console.log('Part of the NEW ARirbus family');
+}
+
+// Practice exercise
+const checkBaggage = function (items) {
+  const baggage = items.toLowerCase();
+
+  if (baggage.includes('knife') || baggage.includes('gun')) {
+    console.log('You are NOT allowed on board');
+  } else {
+    console.log('Welcome aboard!');
+  }
 };
 
-checkMiddleSeat('11B');
-checkMiddleSeat('23C');
-checkMiddleSeat('3E');
-
-console.log(new String('jishan'));
-console.log(typeof new String('jishan')); //will show as object
-
-console.log(typeof new String('jishan').slice(1)); // using the slice function it will show as string
+checkBaggage('I have a laptop, some Food and a pocket Knife');
+checkBaggage('Socks and camera');
+checkBaggage('Got some snacks and a gun for protection');
