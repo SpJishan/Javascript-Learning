@@ -737,39 +737,85 @@ GOOD LUCK 😀
 
 //We can use map_name.set, or initially setting all the key and value 
 
-const question = new Map([
-  ['question', 'What is the best programming language in the world?'],
-  [1, 'C'],
-  [2, 'Java'],
-  [3, 'JavaScript'],
-  ['correct', 3],
-  [true, 'Correct 🎉'],
-  [false, 'Try Again'],
-]);
-console.log(question);
+// const question = new Map([
+//   ['question', 'What is the best programming language in the world?'],
+//   [1, 'C'],
+//   [2, 'Java'],
+//   [3, 'JavaScript'],
+//   ['correct', 3],
+//   [true, 'Correct 🎉'],
+//   [false, 'Try Again'],
+// ]);
+// console.log(question);
 
-//Converting Objects to Map, Object.entries and Map ; both have key and value data
-console.log(Object.entries(openingHours));
+// //Converting Objects to Map, Object.entries and Map ; both have key and value data
+// console.log(Object.entries(openingHours));
 
-const hoursMap= new Map (Object.entries(openingHours));
-console.log(hoursMap);
+// const hoursMap= new Map (Object.entries(openingHours));
+// console.log(hoursMap);
 
-//Quiz App
+// //Quiz App
 
-console.log(question.get('question')); //Asking the question
+// console.log(question.get('question')); //Asking the question
 
-for (const [key, value] of question){ //Generating Options
-  if(typeof key === 'number'){
-    console.log(`Answer ${key}: ${value}`);
-  };
+// for (const [key, value] of question){ //Generating Options
+//   if(typeof key === 'number'){
+//     console.log(`Answer ${key}: ${value}`);
+//   };
+// };
+
+// const answer = Number(prompt(`Your Answer?`)); // Asking key value 1/2/3
+
+// console.log(question.get(question.get('correct')===answer)); // if it get a value of 3 which key is 'correct'(line:745)  then the statment will be true , which is another key(line:746) that will generate the value 'Correct 🎉' else , will produce a key of false(line:747)
+
+// //Converting Maps to array
+
+// console.log(...question);
+// console.log(...question.keys());
+// console.log(...question.values());
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//              Working With Strings - Part 1
+//////////////////////////////////////////////////////////////////////////////////////////
+
+const airline = 'TAP Air Portugal';
+const plane = 'A320';
+
+console.log(plane[0]); //String can be called like array index
+console.log(plane[1]);
+console.log(plane[2]);
+console.log('B737'[0]); //We can write string directly then call it index
+
+console.log(airline.length); //length: Number of letter with space, a string has
+console.log('B737'.length);
+
+console.log(airline.indexOf('r')); //Finding index a letter from left
+console.log(airline.lastIndexOf('r')); //Finding index a letter from right
+console.log(airline.indexOf('portugal')); //-1 is a false value, it is case sensitive
+
+
+console.log(airline.slice(4)); // Will cut the first 4 index that is TAP(space)
+console.log(airline.slice(4, 7)); // will start from 5 and end with index of 7
+
+console.log(airline.slice(0, airline.indexOf(' '))); //will start from 1 and end before space 
+console.log(airline.slice(airline.lastIndexOf(' ') + 1)); //will start from 8 which is space
+
+console.log(airline.slice(-2)); // last 2 letter
+console.log(airline.slice(1, -1)); //start from 2 end before last character
+
+const checkMiddleSeat = function (seat) {
+  // B and E are middle seats
+  const s = seat.slice(-1); //Will select the last character
+  if (s === 'B' || 'E') console.log('You got the middle seat 😬');
+  else console.log('You got lucky 😎');
 };
 
-const answer = Number(prompt(`Your Answer?`)); // Asking key value 1/2/3
+checkMiddleSeat('11B');
+checkMiddleSeat('23C');
+checkMiddleSeat('3E');
 
-console.log(question.get(question.get('correct')===answer)); // if it get a value of 3 which key is 'correct'(line:745)  then the statment will be true , which is another key(line:746) that will generate the value 'Correct 🎉' else , will produce a key of false(line:747)
+console.log(new String('jishan'));
+console.log(typeof new String('jishan')); //will show as object
 
-//Converting Maps to array
-
-console.log(...question);
-console.log(...question.keys());
-console.log(...question.values());
+console.log(typeof new String('jishan').slice(1)); // using the slice function it will show as string
