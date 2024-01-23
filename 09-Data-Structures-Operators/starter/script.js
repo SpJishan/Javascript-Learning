@@ -824,61 +824,76 @@ GOOD LUCK 😀
 //             121 Working With Strings - Part 2
 //////////////////////////////////////////////////////////////////////////////////////////
 
-const airline = 'TAP Air Portugal';
+// const airline = 'TAP Air Portugal';
 
-console.log(airline.toLowerCase()); // Converting all alohabet to lowercase
-console.log(airline.toUpperCase()); // Converting all alohabet to uppercase
+// console.log(airline.toLowerCase()); // Converting all alohabet to lowercase
+// console.log(airline.toUpperCase()); // Converting all alohabet to uppercase
 
-// Fix capitalization in name
-const passenger = 'jIShan'; // Jishan
-//1st to convert all alphabet to lowercase, then call the first index[0] joined the other alphabet with slice method
-const passengerLower = passenger.toLowerCase(); 
-const passengerCorrect =
-  passengerLower[0].toUpperCase() + passengerLower.slice(1);
-console.log(passengerCorrect);
+// // Fix capitalization in name
+// const passenger = 'jIShan'; // Jishan
+// //1st to convert all alphabet to lowercase, then call the first index[0] joined the other alphabet with slice method
+// const passengerLower = passenger.toLowerCase(); 
+// const passengerCorrect =
+//   passengerLower[0].toUpperCase() + passengerLower.slice(1);
+// console.log(passengerCorrect);
 
-// Comparing emails
-const email = 'hello@jishan.io';
-const loginEmail = '  Hello@Jishan.Io \n';
+// // Comparing emails
+// const email = 'hello@jishan.io';
+// const loginEmail = '  Hello@Jishan.Io \n';
 
-// const lowerEmail = loginEmail.toLowerCase();
-// const trimmedEmail = lowerEmail.trim();
-const normalizedEmail = loginEmail.toLowerCase().trim();
-console.log(normalizedEmail);
-console.log(email === normalizedEmail);
+// // const lowerEmail = loginEmail.toLowerCase();
+// // const trimmedEmail = lowerEmail.trim();
+// const normalizedEmail = loginEmail.toLowerCase().trim();
+// console.log(normalizedEmail);
+// console.log(email === normalizedEmail);
 
-// replacing
-const priceGB = '288,97£';
-const priceUS = priceGB.replace('£', '$').replace(',', '.');
-console.log(priceUS);
+// // replacing
+// const priceGB = '288,97£';
+// const priceUS = priceGB.replace('£', '$').replace(',', '.');
+// console.log(priceUS);
 
-const announcement =
-  'All passengers come to boarding door 23. Boarding door 23!';
+// const announcement =
+//   'All passengers come to boarding door 23. Boarding door 23!';
 
-console.log(announcement.replace('door', 'gate'));
-console.log(announcement.replaceAll('door', 'gate'));
+// console.log(announcement.replace('door', 'gate'));
+// console.log(announcement.replaceAll('door', 'gate'));
 
-// Booleans
-const plane = 'Airbus A320neo';
-console.log(plane.includes('A320'));
-console.log(plane.includes('Boeing'));
-console.log(plane.startsWith('Airb'));
+// // Booleans
+// const plane = 'Airbus A320neo';
+// console.log(plane.includes('A320'));
+// console.log(plane.includes('Boeing'));
+// console.log(plane.startsWith('Airb'));
 
-if (plane.startsWith('Airbus') && plane.endsWith('neo')) {
-  console.log('Part of the NEW ARirbus family');
-}
+// if (plane.startsWith('Airbus') && plane.endsWith('neo')) {
+//   console.log('Part of the NEW ARirbus family');
+// }
 
-// Practice exercise
-const checkBaggage = function (items) {
-  const baggage = items.toLowerCase();
+// // Practice exercise
+// const checkBaggage = function (items) {
+//   const baggage = items.toLowerCase();
 
-  if (baggage.includes('knife') || baggage.includes('gun')) {
-    console.log('You are NOT allowed on board');
-  } else {
-    console.log('Welcome aboard!');
-  }
-};
+//   if (baggage.includes('knife') || baggage.includes('gun')) {
+//     console.log('You are NOT allowed on board');
+//   } else {
+//     console.log('Welcome aboard!');
+//   }
+// };
 
-checkBaggage('I have a laptop, some Food and a pocket Knife');
-checkBaggage('Socks and camera');
-checkBaggage('Got some snacks and a gun for protection');
+// checkBaggage('I have a laptop, some Food and a pocket Knife');
+// checkBaggage('Socks and camera');
+// checkBaggage('Got some snacks and a gun for protection');
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//             122 Working With Strings - Part 3
+//////////////////////////////////////////////////////////////////////////////////////////
+
+
+//String split and join
+
+console.log('My+name+is+Shafinul+Pasha+Jishan'.split('+')); //split('+') will store words as string before + sign
+
+const [firstName, middleName, lastName]= 'Shafinul Pasha Jishan'.split(' ');//spliting and storing to array variable
+
+const newName = ['Mr.', firstName.toUpperCase(), middleName.toUpperCase(), lastName.toUpperCase()].join(' '); //converting names to uppercase
+console.log(newName);
+
