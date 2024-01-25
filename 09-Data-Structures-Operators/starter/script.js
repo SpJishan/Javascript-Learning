@@ -888,62 +888,121 @@ GOOD LUCK 😀
 //////////////////////////////////////////////////////////////////////////////////////////
 
 
-//String split and join
+// //String split and join
 
-console.log('My+name+is+Shafinul+Pasha+Jishan'.split('+')); //split('+') will store words as string before + sign
+// console.log('My+name+is+Shafinul+Pasha+Jishan'.split('+')); //split('+') will store words as string before + sign
 
-const [firstName, middleName, lastName]= 'Shafinul Pasha Jishan'.split(' ');//spliting and storing to array variable
+// const [firstName, middleName, lastName]= 'Shafinul Pasha Jishan'.split(' ');//spliting and storing to array variable
 
-const newName = ['Mr.', firstName.toUpperCase(), middleName.toUpperCase(), lastName.toUpperCase()].join(' '); //converting names to uppercase
-console.log(newName);
+// const newName = ['Mr.', firstName.toUpperCase(), middleName.toUpperCase(), lastName.toUpperCase()].join(' '); //converting names to uppercase
+// console.log(newName);
 
 
-//Converting first alphabet of a word to capitalized
+// //Converting first alphabet of a word to capitalized
 
-const capitalizedName =function(name){
-  const names = name.split(' ');
-  const namesUpper = [];
+// const capitalizedName =function(name){
+//   const names = name.split(' ');
+//   const namesUpper = [];
 
-  for(const n of names){
-    // namesUpper.push(n[0].toUpperCase() + n.slice(1)); //Slice method to capitalize name 
-    namesUpper.push(n.replace(n[0],n[0].toUpperCase())); //Replace method to capitalize name
-  }
-  console.log(namesUpper.join(' '));
+//   for(const n of names){
+//     // namesUpper.push(n[0].toUpperCase() + n.slice(1)); //Slice method to capitalize name 
+//     namesUpper.push(n.replace(n[0],n[0].toUpperCase())); //Replace method to capitalize name
+//   }
+//   console.log(namesUpper.join(' '));
+// }
+
+// capitalizedName('shafinul pasha jishan');
+// capitalizedName('imtiaz uddin sakil');
+
+// //Padding
+
+// const message = 'Go to gate 23';
+
+// console.log(message.padStart(20, '*').padEnd(30, '*')); //padstart 20 counts * and message
+// console.log('Jishan'.padStart(20, '*').padEnd(30, '*'));
+
+// //Hiding the digits in mastercard
+
+// const maskCreditCard = function(number) {
+//   const str = number + '';  // Will convert a given number to a string
+//   const last = str.slice(-4);
+//   console.log(last.padStart(str.length, '*'));
+// }
+
+// maskCreditCard(1234567890);
+// maskCreditCard(12345678901234567);
+
+// //Repeat a message
+
+// const message2 = 'Flight will be delayed , for bad weather......';
+
+// console.log(message2.repeat(5));
+
+// //repeat an emoji
+
+// const planesInLine = function(n){
+//   console.log(`There are ${n} planes in line ${'✈'.repeat(n)}`);
+// } 
+
+// planesInLine(5);
+// planesInLine(10);
+// planesInLine(15);
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//             119- Coding Challenge 3
+//////////////////////////////////////////////////////////////////////////////////////////
+
+/* 
+Let's continue with our football betting app! This time, we have a map with a log of the events that happened during the game. The values are the events themselves, and the keys are the minutes in which each event happened (a football game has 90 minutes plus some extra time).
+
+1. Create an array 'events' of the different game events that happened (no duplicates)
+2. After the game has finished, is was found that the yellow card from minute 64 was unfair. So remove this event from the game events log.
+3. Print the following string to the console: "An event happened, on average, every 9 minutes" (keep in mind that a game has 90 minutes)
+4. Loop over the events and log them to the console, marking whether it's in the first half or second half (after 45 min) of the game, like this:
+      [FIRST HALF] 17: ⚽️ GOAL
+
+GOOD LUCK 😀
+*/
+
+const gameEvents = new Map([
+  [17, '⚽️ GOAL'],
+  [36, '🔁 Substitution'],
+  [47, '⚽️ GOAL'],
+  [61, '🔁 Substitution'],
+  [64, '🔶 Yellow card'],
+  [69, '🔴 Red card'],
+  [70, '🔁 Substitution'],
+  [72, '🔁 Substitution'],
+  [76, '⚽️ GOAL'],
+  [80, '⚽️ GOAL'],
+  [92, '🔶 Yellow card'],
+]);
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// 1. Create an array 'events' of the different game events that happened (no duplicates)
+
+//We  know , a set cannot contains duplicate values , they want to store different game events so we store the value of map , gameEvents. With a spread operator we can unpack this set to an array wihout any duplicates
+
+const events = [...new Set(gameEvents.values())]; 
+console.log(events);
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//2. After the game has finished, is was found that the yellow card from minute 64 was unfair. So remove this event from the game events log.
+
+gameEvents.delete(64);
+console.log(gameEvents);
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//3. Print the following string to the console: "An event happened, on average, every 9 minutes" (keep in mind that a game has 90 minutes)
+
+console.log(gameEvents.size); //which is 10
+
+console.log(`An event happened, on average, every ${90/gameEvents.size} minutes`);
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//4. Loop over the events and log them to the console, marking whether it's in the first half or second half (after 45 min) of the game, like this: [FIRST HALF] 17: ⚽️ GOAL
+
+for (const [min, event] of gameEvents){
+  const half = min < 45 ? 'FIRST' : 'SECOND';
+  console.log(`[${half} HALF] ${min}: ${event}`)
 }
-
-capitalizedName('shafinul pasha jishan');
-capitalizedName('imtiaz uddin sakil');
-
-//Padding
-
-const message = 'Go to gate 23';
-
-console.log(message.padStart(20, '*').padEnd(30, '*')); //padstart 20 counts * and message
-console.log('Jishan'.padStart(20, '*').padEnd(30, '*'));
-
-//Hiding the digits in mastercard
-
-const maskCreditCard = function(number) {
-  const str = number + '';  // Will convert a given number to a string
-  const last = str.slice(-4);
-  console.log(last.padStart(str.length, '*'));
-}
-
-maskCreditCard(1234567890);
-maskCreditCard(12345678901234567);
-
-//Repeat a message
-
-const message2 = 'Flight will be delayed , for bad weather......';
-
-console.log(message2.repeat(5));
-
-//repeat an emoji
-
-const planesInLine = function(n){
-  console.log(`There are ${n} planes in line ${'✈'.repeat(n)}`);
-} 
-
-planesInLine(5);
-planesInLine(10);
-planesInLine(15);
