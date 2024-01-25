@@ -897,3 +897,53 @@ const [firstName, middleName, lastName]= 'Shafinul Pasha Jishan'.split(' ');//sp
 const newName = ['Mr.', firstName.toUpperCase(), middleName.toUpperCase(), lastName.toUpperCase()].join(' '); //converting names to uppercase
 console.log(newName);
 
+
+//Converting first alphabet of a word to capitalized
+
+const capitalizedName =function(name){
+  const names = name.split(' ');
+  const namesUpper = [];
+
+  for(const n of names){
+    // namesUpper.push(n[0].toUpperCase() + n.slice(1)); //Slice method to capitalize name 
+    namesUpper.push(n.replace(n[0],n[0].toUpperCase())); //Replace method to capitalize name
+  }
+  console.log(namesUpper.join(' '));
+}
+
+capitalizedName('shafinul pasha jishan');
+capitalizedName('imtiaz uddin sakil');
+
+//Padding
+
+const message = 'Go to gate 23';
+
+console.log(message.padStart(20, '*').padEnd(30, '*')); //padstart 20 counts * and message
+console.log('Jishan'.padStart(20, '*').padEnd(30, '*'));
+
+//Hiding the digits in mastercard
+
+const maskCreditCard = function(number) {
+  const str = number + '';  // Will convert a given number to a string
+  const last = str.slice(-4);
+  console.log(last.padStart(str.length, '*'));
+}
+
+maskCreditCard(1234567890);
+maskCreditCard(12345678901234567);
+
+//Repeat a message
+
+const message2 = 'Flight will be delayed , for bad weather......';
+
+console.log(message2.repeat(5));
+
+//repeat an emoji
+
+const planesInLine = function(n){
+  console.log(`There are ${n} planes in line ${'✈'.repeat(n)}`);
+} 
+
+planesInLine(5);
+planesInLine(10);
+planesInLine(15);
