@@ -698,35 +698,359 @@ GOOD LUCK 😀
 //              116 Maps
 //////////////////////////////////////////////////////////////////////////////////////////
 
-const rest = new Map();
+// const rest = new Map();
 
-rest.set('name', 'Hatam Tai'); // Setting/Storing map key(name) and value(Hatam Tai)
-rest.set(1, 'Ahmedbag Bashabo');
-rest.set(2, 'khilgaw');
+// rest.set('name', 'Hatam Tai'); // Setting/Storing map key(name) and value(Hatam Tai)
+// rest.set(1, 'Ahmedbag Bashabo');
+// rest.set(2, 'khilgaw');
 
 
 
-//Storing Multiple map key and value
-rest
-  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
-  .set('open', 11)
-  .set('close', 23)
-  .set(true, 'We are open :D')
-  .set(false, 'We are closed :(');
+// //Storing Multiple map key and value
+// rest
+//   .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+//   .set('open', 11)
+//   .set('close', 23)
+//   .set(true, 'We are open :D')
+//   .set(false, 'We are closed :(');
 
-  console.log(rest);
+//   console.log(rest);
 
-console.log(rest.get('name')); //To retrieve a data we use rest.get(key)
-console.log(rest.get(true));
-console.log(rest.get(1));
+// console.log(rest.get('name')); //To retrieve a data we use rest.get(key)
+// console.log(rest.get(true));
+// console.log(rest.get(1));
 
-const time = 8; 
-console.log(rest.get(time > rest.get('open') && time < rest.get('close'))); //Practicle Example
+// const time = 8; 
+// console.log(rest.get(time > rest.get('open') && time < rest.get('close'))); //Practicle Example
 
-const arr = [1, 2]; //For array key we have to assign the array to a variable.
-rest.set(arr, 'Test');
-rest.set(document.querySelector('h1'), 'Heading');
-console.log(rest); 
-console.log(rest.size);
+// const arr = [1, 2]; //For array key we have to assign the array to a variable.
+// rest.set(arr, 'Test');
+// rest.set(document.querySelector('h1'), 'Heading');
+// console.log(rest); 
+// console.log(rest.size);
 
-console.log(rest.get(arr));
+// console.log(rest.get(arr));
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//              117 Maps Iteration
+//////////////////////////////////////////////////////////////////////////////////////////
+
+//We can use map_name.set, or initially setting all the key and value 
+
+// const question = new Map([
+//   ['question', 'What is the best programming language in the world?'],
+//   [1, 'C'],
+//   [2, 'Java'],
+//   [3, 'JavaScript'],
+//   ['correct', 3],
+//   [true, 'Correct 🎉'],
+//   [false, 'Try Again'],
+// ]);
+// console.log(question);
+
+// //Converting Objects to Map, Object.entries and Map ; both have key and value data
+// console.log(Object.entries(openingHours));
+
+// const hoursMap= new Map (Object.entries(openingHours));
+// console.log(hoursMap);
+
+// //Quiz App
+
+// console.log(question.get('question')); //Asking the question
+
+// for (const [key, value] of question){ //Generating Options
+//   if(typeof key === 'number'){
+//     console.log(`Answer ${key}: ${value}`);
+//   };
+// };
+
+// const answer = Number(prompt(`Your Answer?`)); // Asking key value 1/2/3
+
+// console.log(question.get(question.get('correct')===answer)); // if it get a value of 3 which key is 'correct'(line:745)  then the statment will be true , which is another key(line:746) that will generate the value 'Correct 🎉' else , will produce a key of false(line:747)
+
+// //Converting Maps to array
+
+// console.log(...question);
+// console.log(...question.keys());
+// console.log(...question.values());
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//              Working With Strings - Part 1
+//////////////////////////////////////////////////////////////////////////////////////////
+
+// const airline = 'TAP Air Portugal';
+// const plane = 'A320';
+
+// console.log(plane[0]); //String can be called like array index
+// console.log(plane[1]);
+// console.log(plane[2]);
+// console.log('B737'[0]); //We can write string directly then call it index
+
+// console.log(airline.length); //length: Number of letter with space, a string has
+// console.log('B737'.length);
+
+// console.log(airline.indexOf('r')); //Finding index a letter from left
+// console.log(airline.lastIndexOf('r')); //Finding index a letter from right
+// console.log(airline.indexOf('portugal')); //-1 is a false value, it is case sensitive
+
+
+// console.log(airline.slice(4)); // Will cut the first 4 index that is TAP(space)
+// console.log(airline.slice(4, 7)); // will start from 5 and end with index of 7
+
+// console.log(airline.slice(0, airline.indexOf(' '))); //will start from 1 and end before space 
+// console.log(airline.slice(airline.lastIndexOf(' ') + 1)); //will start from 8 which is space
+
+// console.log(airline.slice(-2)); // last 2 letter
+// console.log(airline.slice(1, -1)); //start from 2 end before last character
+
+// const checkMiddleSeat = function (seat) {
+//   // B and E are middle seats
+//   const s = seat.slice(-1); //Will select the last character
+//   if (s === 'B' || 'E') console.log('You got the middle seat 😬');
+//   else console.log('You got lucky 😎');
+// };
+
+// checkMiddleSeat('11B');
+// checkMiddleSeat('23C');
+// checkMiddleSeat('3E');
+
+// console.log(new String('jishan'));
+// console.log(typeof new String('jishan')); //will show as object
+
+// console.log(typeof new String('jishan').slice(1)); // using the slice function it will show as string
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//             121 Working With Strings - Part 2
+//////////////////////////////////////////////////////////////////////////////////////////
+
+// const airline = 'TAP Air Portugal';
+
+// console.log(airline.toLowerCase()); // Converting all alohabet to lowercase
+// console.log(airline.toUpperCase()); // Converting all alohabet to uppercase
+
+// // Fix capitalization in name
+// const passenger = 'jIShan'; // Jishan
+// //1st to convert all alphabet to lowercase, then call the first index[0] joined the other alphabet with slice method
+// const passengerLower = passenger.toLowerCase(); 
+// const passengerCorrect =
+//   passengerLower[0].toUpperCase() + passengerLower.slice(1);
+// console.log(passengerCorrect);
+
+// // Comparing emails
+// const email = 'hello@jishan.io';
+// const loginEmail = '  Hello@Jishan.Io \n';
+
+// // const lowerEmail = loginEmail.toLowerCase();
+// // const trimmedEmail = lowerEmail.trim();
+// const normalizedEmail = loginEmail.toLowerCase().trim();
+// console.log(normalizedEmail);
+// console.log(email === normalizedEmail);
+
+// // replacing
+// const priceGB = '288,97£';
+// const priceUS = priceGB.replace('£', '$').replace(',', '.');
+// console.log(priceUS);
+
+// const announcement =
+//   'All passengers come to boarding door 23. Boarding door 23!';
+
+// console.log(announcement.replace('door', 'gate'));
+// console.log(announcement.replaceAll('door', 'gate'));
+
+// // Booleans
+// const plane = 'Airbus A320neo';
+// console.log(plane.includes('A320'));
+// console.log(plane.includes('Boeing'));
+// console.log(plane.startsWith('Airb'));
+
+// if (plane.startsWith('Airbus') && plane.endsWith('neo')) {
+//   console.log('Part of the NEW ARirbus family');
+// }
+
+// // Practice exercise
+// const checkBaggage = function (items) {
+//   const baggage = items.toLowerCase();
+
+//   if (baggage.includes('knife') || baggage.includes('gun')) {
+//     console.log('You are NOT allowed on board');
+//   } else {
+//     console.log('Welcome aboard!');
+//   }
+// };
+
+// checkBaggage('I have a laptop, some Food and a pocket Knife');
+// checkBaggage('Socks and camera');
+// checkBaggage('Got some snacks and a gun for protection');
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//             122 Working With Strings - Part 3
+//////////////////////////////////////////////////////////////////////////////////////////
+
+
+// //String split and join
+
+// console.log('My+name+is+Shafinul+Pasha+Jishan'.split('+')); //split('+') will store words as string before + sign
+
+// const [firstName, middleName, lastName]= 'Shafinul Pasha Jishan'.split(' ');//spliting and storing to array variable
+
+// const newName = ['Mr.', firstName.toUpperCase(), middleName.toUpperCase(), lastName.toUpperCase()].join(' '); //converting names to uppercase
+// console.log(newName);
+
+
+// //Converting first alphabet of a word to capitalized
+
+// const capitalizedName =function(name){
+//   const names = name.split(' ');
+//   const namesUpper = [];
+
+//   for(const n of names){
+//     // namesUpper.push(n[0].toUpperCase() + n.slice(1)); //Slice method to capitalize name 
+//     namesUpper.push(n.replace(n[0],n[0].toUpperCase())); //Replace method to capitalize name
+//   }
+//   console.log(namesUpper.join(' '));
+// }
+
+// capitalizedName('shafinul pasha jishan');
+// capitalizedName('imtiaz uddin sakil');
+
+// //Padding
+
+// const message = 'Go to gate 23';
+
+// console.log(message.padStart(20, '*').padEnd(30, '*')); //padstart 20 counts * and message
+// console.log('Jishan'.padStart(20, '*').padEnd(30, '*'));
+
+// //Hiding the digits in mastercard
+
+// const maskCreditCard = function(number) {
+//   const str = number + '';  // Will convert a given number to a string
+//   const last = str.slice(-4);
+//   console.log(last.padStart(str.length, '*'));
+// }
+
+// maskCreditCard(1234567890);
+// maskCreditCard(12345678901234567);
+
+// //Repeat a message
+
+// const message2 = 'Flight will be delayed , for bad weather......';
+
+// console.log(message2.repeat(5));
+
+// //repeat an emoji
+
+// const planesInLine = function(n){
+//   console.log(`There are ${n} planes in line ${'✈'.repeat(n)}`);
+// } 
+
+// planesInLine(5);
+// planesInLine(10);
+// planesInLine(15);
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//             119- Coding Challenge 3
+//////////////////////////////////////////////////////////////////////////////////////////
+
+/* 
+Let's continue with our football betting app! This time, we have a map with a log of the events that happened during the game. The values are the events themselves, and the keys are the minutes in which each event happened (a football game has 90 minutes plus some extra time).
+
+1. Create an array 'events' of the different game events that happened (no duplicates)
+2. After the game has finished, is was found that the yellow card from minute 64 was unfair. So remove this event from the game events log.
+3. Print the following string to the console: "An event happened, on average, every 9 minutes" (keep in mind that a game has 90 minutes)
+4. Loop over the events and log them to the console, marking whether it's in the first half or second half (after 45 min) of the game, like this:
+      [FIRST HALF] 17: ⚽️ GOAL
+
+GOOD LUCK 😀
+*/
+
+const gameEvents = new Map([
+  [17, '⚽️ GOAL'],
+  [36, '🔁 Substitution'],
+  [47, '⚽️ GOAL'],
+  [61, '🔁 Substitution'],
+  [64, '🔶 Yellow card'],
+  [69, '🔴 Red card'],
+  [70, '🔁 Substitution'],
+  [72, '🔁 Substitution'],
+  [76, '⚽️ GOAL'],
+  [80, '⚽️ GOAL'],
+  [92, '🔶 Yellow card'],
+]);
+
+// /////////////////////////////////////////////////////////////////////////////////////////
+// // 1. Create an array 'events' of the different game events that happened (no duplicates)
+
+// //We  know , a set cannot contains duplicate values , they want to store different game events so we store the value of map , gameEvents. With a spread operator we can unpack this set to an array wihout any duplicates
+
+// const events = [...new Set(gameEvents.values())]; 
+// console.log(events);
+
+// /////////////////////////////////////////////////////////////////////////////////////////
+// //2. After the game has finished, is was found that the yellow card from minute 64 was unfair. So remove this event from the game events log.
+
+// gameEvents.delete(64);
+// console.log(gameEvents);
+
+// /////////////////////////////////////////////////////////////////////////////////////////
+// //3. Print the following string to the console: "An event happened, on average, every 9 minutes" (keep in mind that a game has 90 minutes)
+
+// console.log(gameEvents.size); //which is 10
+
+// console.log(`An event happened, on average, every ${90/gameEvents.size} minutes`);
+
+// /////////////////////////////////////////////////////////////////////////////////////////
+// //4. Loop over the events and log them to the console, marking whether it's in the first half or second half (after 45 min) of the game, like this: [FIRST HALF] 17: ⚽️ GOAL
+
+// for (const [min, event] of gameEvents){
+//   const half = min < 45 ? 'FIRST' : 'SECOND';
+//   console.log(`[${half} HALF] ${min}: ${event}`)
+// }
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//             123- Coding Challenge 4
+//////////////////////////////////////////////////////////////////////////////////////////
+/* 
+Write a program that receives a list of variable names written in underscore_case and convert them to camelCase.
+
+The input will come from a textarea inserted into the DOM (see code below), and conversion will happen when the button is pressed.
+
+THIS TEST DATA (pasted to textarea)
+underscore_case
+ first_name
+Some_Variable 
+  calculate_AGE
+delayed_departure
+
+SHOULD PRODUCE THIS OUTPUT (5 separate console.log outputs)
+underscoreCase      ✅
+firstName           ✅✅
+someVariable        ✅✅✅
+calculateAge        ✅✅✅✅
+delayedDeparture    ✅✅✅✅✅
+
+HINT 1: Remember which character defines a new line in the textarea 😉
+HINT 2: The solution only needs to work for a variable made out of 2 words, like a_b
+HINT 3: Start without worrying about the ✅. Tackle that only after you have the variable name conversion working 😉
+HINT 4: This challenge is difficult on purpose, so start watching the solution in case you're stuck. Then pause and continue!
+
+Afterwards, test with your own test data!
+
+GOOD LUCK 😀
+*/
+
+document.body.append(document.createElement('textarea')); //Created textbox area
+document.body.append(document.createElement('button')); //Created a button
+
+document.querySelector('button').addEventListener('click', function(){ 
+  const text = document.querySelector('textarea').value; //Storing the input
+  const rows = text.split('\n'); //Storing inputs in an array as individual
+  
+  for (const [i, row] of rows.entries() ){  // taking individual elements from array
+    const [first, second] = row.toLowerCase().trim().split('_'); //converting the individual elements to lowercase,removing whitespace by trim(),then spliting them upon _
+    const output = `${first}${second.replace(second[0], second[0].toUpperCase())}`;// replace method to make camelCase word
+    console.log(`${output.padEnd(20)}${'✅'.repeat(i+1)}`);
+  }
+})
+
