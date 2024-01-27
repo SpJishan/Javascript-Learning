@@ -103,26 +103,74 @@
 //   806 Functions Accepting Callback Functions 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-const greet = function(greeting){
-    return function(name){
-        console.log(`${greeting} ${name}`);
-    };
+// const greet = function(greeting){
+//     return function(name){
+//         console.log(`${greeting} ${name}`);
+//     };
+// };
+
+// const greeter = greet('As-Salamu-Alaykum');
+
+// greeter('Jishan'); // Calling the callback function
+// greeter('Rafi');
+// greeter('Nafi');
+// greeter('Sakil');
+
+// greet('As-Salamu-Alaykum')('Shafinul'); // Another way to direct calling the main function
+
+// //Converting to an arrow function
+
+// const greetArr = (greeting) => (name) => console.log(`${greeting} ${name}`);
+
+// greetArr('As-Salamu-Alaykum')('Shafinul Pasha Jishan');
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//   808 The call and apply Methods (this keyword)
+/////////////////////////////////////////////////////////////////////////////////////////
+
+//Creating an airlines object data
+const AirBangla ={ 
+    airline: 'Air Bangla',
+    iataCode: 'Bangla',
+    booking: [], // Empty array to store all the booking from book function
+    book(flightNum, passengerName){
+        console.log(`${passengerName} booked a seat on ${this.airline} flight:${this.iataCode}${flightNum}`);
+    
+        this.booking.push({filght: `${this.iataCode}${flightNum}`}); //Using this keyword
+    },
+    
 };
 
-const greeter = greet('As-Salamu-Alaykum');
+AirBangla.book(123, 'Shafinul Pasha Jishan');
+AirBangla.book(1234, 'Tushar Ahsan');
 
-greeter('Jishan'); // Calling the callback function
-greeter('Rafi')
-greeter('Nafi')
-greeter('Sakil');
+//Creating another two airlines object data
 
-greet('As-Salamu-Alaykum')('Shafinul'); // Another way to direct calling the main function
+const AirAstra = {
+    airline : 'Air Astra',
+    iataCode : 'Bangladesh Airlines',
+    booking:[],
+};
 
-//Converting to an arrow function
+const SkyAir = {
+    airline : 'Sky Air',
+    iataCode : 'Dubai Airlines',
+    booking : [],
+};
 
-const greetArr = (greeting) => (name) => console.log(`${greeting} ${name}`);
+const books = AirBangla.book; // Storing an object's function to a variable
+// books(123, 'Shafinul Pasha Jishan');
+//But books(123, 'Shafinul Pasha Jishan'); will not work , because this keyword is not present in AirAstra and SkyAir so we have to use call() function then the new object name to access the this keyword inside the variable
 
-greetArr('As-Salamu-Alaykum')('Shafinul Pasha Jishan')
+books.call(AirAstra, 123, 'Shafinul Pasha Jishan');
+books.call(SkyAir, 1234, "Tushar Ahsan");
 
 
+//Apply Method
+const flightData = [583, "Shafinul"];
+books.apply(SkyAir, flightData);
+
+//Apply Method by Call() function & REST/Spread operator
+books.call(SkyAir, ...flightData);
 
