@@ -63,40 +63,66 @@
 //   806 Functions Accepting Callback Functions 
 /////////////////////////////////////////////////////////////////////////////////////////
 // "/ /g"-The "g" after the regular expression is an option or flag that performs a global search, looking in the whole string and returning all matches.
-const lowerCase = function(str){
-    return str.replace(/ /g, ' ').toLowerCase(); 
+// const lowerCase = function(str){
+//     return str.replace(/ /g, ' ').toLowerCase(); 
+// };
+
+
+
+// //Making the first word uppercase
+
+// const upperCase = function(str) {
+//     const [first, ...others] =str.split(' ');
+//     return [first.toUpperCase(), ...others].join(' ');
+// };
+
+// //Higher Order function
+
+// const transformer = function(str, fn){
+//     console.log(`Original String: ${str}`);
+//     console.log(`Transformed String: ${fn(str)}`);
+
+//     console.log(`Transformed Function: ${fn.name}`);
+// }
+
+// transformer(`toDay is a beautiful day`, lowerCase);
+// transformer(`toDay is a beautiful day`, upperCase);
+
+// //Simple eventlistener 
+
+// const HI5 = function(){
+//     console.log('🖐');
+// };
+
+// document.body.addEventListener('click' , HI5); //This is an example of hgher order function.
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//   806 Functions Accepting Callback Functions 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+const greet = function(greeting){
+    return function(name){
+        console.log(`${greeting} ${name}`);
+    };
 };
 
+const greeter = greet('As-Salamu-Alaykum');
 
+greeter('Jishan'); // Calling the callback function
+greeter('Rafi')
+greeter('Nafi')
+greeter('Sakil');
 
-//Making the first word uppercase
+greet('As-Salamu-Alaykum')('Shafinul'); // Another way to direct calling the main function
 
-const upperCase = function(str) {
-    const [first, ...others] =str.split(' ');
-    return [first.toUpperCase(), ...others].join(' ');
-};
+//Converting to an arrow function
 
-//Higher Order function
+const greetArr = (greeting) => (name) => console.log(`${greeting} ${name}`);
 
-const transformer = function(str, fn){
-    console.log(`Original String: ${str}`);
-    console.log(`Transformed String: ${fn(str)}`);
-
-    console.log(`Transformed Function: ${fn.name}`);
-}
-
-transformer(`toDay is a beautiful day`, lowerCase);
-transformer(`toDay is a beautiful day`, upperCase);
-
-//Simple eventlistener 
-
-const HI5 = function(){
-    console.log('🖐');
-};
-
-document.body.addEventListener('click' , HI5); //This is an example of hgher order function.
-
-
+greetArr('As-Salamu-Alaykum')('Shafinul Pasha Jishan')
 
 
 
