@@ -142,8 +142,8 @@ const AirBangla ={
     
 };
 
-AirBangla.book(123, 'Shafinul Pasha Jishan');
-AirBangla.book(1234, 'Tushar Ahsan');
+// AirBangla.book(123, 'Shafinul Pasha Jishan');
+// AirBangla.book(1234, 'Tushar Ahsan');
 
 //Creating another two airlines object data
 
@@ -160,17 +160,61 @@ const SkyAir = {
 };
 
 const books = AirBangla.book; // Storing an object's function to a variable
-// books(123, 'Shafinul Pasha Jishan');
-//But books(123, 'Shafinul Pasha Jishan'); will not work , because this keyword is not present in AirAstra and SkyAir so we have to use call() function then the new object name to access the this keyword inside the variable
+// // books(123, 'Shafinul Pasha Jishan');
+// //But books(123, 'Shafinul Pasha Jishan'); will not work , because this keyword is not present in AirAstra and SkyAir so we have to use call() function then the new object name to access the this keyword inside the variable
 
-books.call(AirAstra, 123, 'Shafinul Pasha Jishan');
-books.call(SkyAir, 1234, "Tushar Ahsan");
+// books.call(AirAstra, 123, 'Shafinul Pasha Jishan'); // we have to call the object to set this keyword by call method. So the call method will call the function books and set this keyword into AirAstra Object.
+// books.call(SkyAir, 1234, "Tushar Ahsan");
 
 
-//Apply Method
-const flightData = [583, "Shafinul"];
-books.apply(SkyAir, flightData);
+// //Apply Method , will take a list of parameters with array
+// const flightData = [583, "Shafinul"];
+// books.apply(SkyAir, flightData);
 
-//Apply Method by Call() function & REST/Spread operator
-books.call(SkyAir, ...flightData);
+// //Apply Method by Call() function & REST/Spread operator
+// books.call(SkyAir, ...flightData);
+// books.call(SkyAir, 586, 'Shafinul');
 
+/////////////////////////////////////////////////////////////////////////////////////////
+//   808 The bind Method (this keyword)
+/////////////////////////////////////////////////////////////////////////////////////////
+
+//The bind method automatically creates a new function with this keyword in the object that is bind. On Call / Apply method they have to call the function book and then set this keyword on the object in which the bind method creates a new function for that object.
+const skyairDA = books.bind(SkyAir);
+const airastraBA = books.bind(AirAstra);
+
+skyairDA(234, "Shafinul");
+//We can predefine a parameter
+const newskyairDA= books.bind(SkyAir, 345);
+
+newskyairDA("Shafinul Pasha");
+
+
+//Bind method on Eventlistener 
+AirBangla.planes = 300;
+AirBangla.buyplane = function (){
+    this.planes++;
+    console.log(this.planes);
+}
+
+document.querySelector('.buy').addEventListener('click', AirBangla.buyplane.bind(AirBangla));
+//What will bind method do if a function does not have this keyword
+// Partial application
+const addTax = (rate, value) => value + value * rate;
+console.log(addTax(0.1, 200));
+
+const addVAT = addTax.bind(null, 0.23);
+// addVAT = value => value + value * 0.23;
+//here on script 206 the bind method used null. Because the addTax function does not have this keyword. So while writing the null does not refer to the first parameter instead it says there is no this keyword. so 0.23 is the parameter for 'rate'.
+console.log(addVAT(100));
+console.log(addVAT(23));
+
+//Function calling another function
+const addTaxRate = function (rate) {
+  return function (value) {
+    return value + value * rate;
+  };
+};
+const addVAT2 = addTaxRate(0.23);
+console.log(addVAT2(100));
+console.log(addVAT2(23));
