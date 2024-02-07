@@ -71,39 +71,68 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// //////////////////////////////////////////////////////////////////////////////////////////////////
+// // Simple Array Methods
+// //////////////////////////////////////////////////////////////////////////////////////////////////
+// let arr = ['a', 'b', 'c', 'd', 'e'];
+
+// // SLICE- Will cut the array and save in a new array
+// console.log(arr.slice(2));
+// console.log(arr.slice(2, 4));
+// console.log(arr.slice(-2));
+// console.log(arr.slice(-1));
+// console.log(arr.slice(1, -2));
+// console.log(arr.slice());
+// console.log([...arr]);
+
+// // SPLICE-will delete the element by mutating the array
+// // console.log(arr.splice(2));
+// arr.splice(-1);
+// console.log(arr);
+// arr.splice(1, 2);
+// console.log(arr);
+
+// // REVERSE-will reverse the array also mutate it
+// arr = ['a', 'b', 'c', 'd', 'e'];
+// const arr2 = ['j', 'i', 'h', 'g', 'f'];
+// console.log(arr2.reverse());
+// console.log(arr2);
+
+// // CONCAT-combined another array
+// const letters = arr.concat(arr2);
+// console.log(letters);
+// console.log([...arr, ...arr2]);
+
+// // JOIN-will join the elements with a "-" interval
+// console.log(letters.join(' - '));
+
+///////////////////////////////////////
+// Looping Arrays: forEach
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
-// Simple Array Methods
-//////////////////////////////////////////////////////////////////////////////////////////////////
-let arr = ['a', 'b', 'c', 'd', 'e'];
+// for (const movement of movements) {
+for (const [i, movement] of movements.entries()) { //entries() method to access index and array value
+  if (movement > 0) {
+    console.log(`Movement ${i + 1}: You deposited ${movement}`);
+  } else {
+    console.log(`Movement ${i + 1}: You withdrew ${Math.abs(movement)}`);
+  }
+}
 
-// SLICE- Will cut the array and save in a new array
-console.log(arr.slice(2));
-console.log(arr.slice(2, 4));
-console.log(arr.slice(-2));
-console.log(arr.slice(-1));
-console.log(arr.slice(1, -2));
-console.log(arr.slice());
-console.log([...arr]);
+console.log('---- FOREACH ----');
+//movements.forEach(function (mov) {
+movements.forEach(function (mov, i, arr) {  //We can do similar method for each loop{entries()} , but the function perameter will follow the array value, index then the array
+  if (mov > 0) {
+    console.log(`Movement ${i + 1}: You deposited ${mov}`);
+  } else {
+    console.log(`Movement ${i + 1}: You withdrew ${Math.abs(mov)}`);
+  }
+});
+// 0: function(200)
+// 1: function(450)
+// 2: function(400)
+// ...
 
-// SPLICE-will delete the element by mutating the array
-// console.log(arr.splice(2));
-arr.splice(-1);
-console.log(arr);
-arr.splice(1, 2);
-console.log(arr);
-
-// REVERSE-will reverse the array also mutate it
-arr = ['a', 'b', 'c', 'd', 'e'];
-const arr2 = ['j', 'i', 'h', 'g', 'f'];
-console.log(arr2.reverse());
-console.log(arr2);
-
-// CONCAT-combined another array
-const letters = arr.concat(arr2);
-console.log(letters);
-console.log([...arr, ...arr2]);
-
-// JOIN-will join the elements with a "-" interval
-console.log(letters.join(' - '));
+//***The only problem with forEach method that we cannot use continue or break statement, in that case we need to use forOf loop */
