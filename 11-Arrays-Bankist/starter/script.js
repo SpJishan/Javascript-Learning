@@ -219,5 +219,17 @@ const createUsername = function(accs){
 createUsername(accounts);
 console.log(accounts);
 
+//////////////////////////////////////////////////////////////////////////////
+// Bankist - filter Method
+//////////////////////////////////////////////////////////////////////////////
+
+const deposits= movements.filter(mov => mov > 0);
+
+console.log(movements);
+console.log(deposits);
+
+const withdrawals = movements.filter(mov => mov < 0)
+
+console.log(withdrawals);
 
 
