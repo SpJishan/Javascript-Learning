@@ -255,9 +255,9 @@ console.log(withdrawals);
 // const balance = movements.reduce((acc, cur) => acc+cur, 0);
 // console.log(balance);
 
-const calcDisplayBalance = function(movements){
-  const balance = movements.reduce((acc, cur) => acc+cur, 0);
-  labelBalance.textContent= `${balance} €`;
+const calcDisplayBalance = function(acc){  //4. Changing perticular displayBalance to targeted acc line 258
+  acc.balance = acc.movements.reduce((acc, cur) => acc+cur, 0);
+  labelBalance.textContent= `${acc.balance} €`;
 }
 
 // calcDisplayBalance(account1.movements);
@@ -309,6 +309,19 @@ console.log(account);
 // Implementing LogIN
 //////////////////////////////////////
 
+//8. Refactoring Code creating udpadteUI function
+const updateUI = function(acc){
+  //ii. Display Movements
+  displayMovements(acc.movements);
+
+  //iii. Display Balance
+  calcDisplayBalance(acc);  //5. Updating calcDisplayBalance(currentAccount) to call on account obj instead movements array
+
+
+  //iv. Display Summary
+  calcDisplaySummary(acc);
+}
+
 //4. Declaring currentOwner variable outside of eventlistener
 let currentAccount;
 
@@ -329,15 +342,7 @@ btnLogin.addEventListener('click', function(e){
       containerApp.style.opacity = 100;
 
 
-      //ii. Display Movements
-      displayMovements(currentAccount.movements);
-
-      //iii. Display Balance
-      calcDisplayBalance(currentAccount.movements);
-
-
-      //iv. Display Summary
-      calcDisplaySummary(currentAccount);
+      updateUI(currentAccount);
 
       // v. Clear input fields
       inputLoginUsername.value = inputLoginPin.value = '';
@@ -347,6 +352,32 @@ btnLogin.addEventListener('click', function(e){
 
   
 });
+
+///////////////////////////////////////
+// Implementing Transfers
+//////////////////////////////////////
+
+btnTransfer.addEventListener('click' , function(e){
+  e.preventDefault();                               //1. Event listener & preventdefault
+  const amount = Number(inputTransferAmount.value); //2.  Checking number in amount
+  const receiverAcc = accounts.find( acc => acc.userName === inputTransferTo.value);  //3. CheckingrecieverAcc username
+  console.log(amount, receiverAcc);
+
+  if(amount>0 && receiverAcc && currentAccount.balance >= amount && receiverAcc?.userName !== currentAccount.userName){ // 6. Implementing 4 checking if amount is greater 0 then is a valid recieverACC? and current acc balance is greater than the sending amount also reciever account username is not the current acc username
+      // 7. Doing the transfer-> removing amount from current acc and adding amount to reciever acc
+    currentAccount.movements.push(- amount);
+    receiverAcc.movements.push(amount);
+
+    updateUI(currentAccount);
+
+
+
+  }
+  inputTransferAmount.value = inputTransferTo.value = ''; //9. Clear input fields for transfer
+});
+
+
+
 
 
 ///////////////////////////////////////
