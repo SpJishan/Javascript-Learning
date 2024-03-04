@@ -137,7 +137,14 @@ const account4 = {
   pin: 4444,
 };
 
-const accounts = [account1, account2, account3, account4];
+const account5 = {
+  owner: 'Shafinul Pasha',
+  movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
+  interestRate: 1.2, // %
+  pin: 5555,
+};
+
+const accounts = [account1, account2, account3, account4, account5];
 
 // Elements
 const labelWelcome = document.querySelector('.welcome');
@@ -165,9 +172,9 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-/////////////////////////////////////////////////
-// BANKIST APP CodeBase
-/////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+// BANKIST APP CodeBase -> Creating dynamic movements row to show deposits and withdrawals
+/////////////////////////////////////////////////////////////////////////////////////////
 
 const displayMovements = function(movements){
 
@@ -180,17 +187,17 @@ const displayMovements = function(movements){
     `<div class="movements__row">
           <div class="movements__type movements__type--${type}">${i+1} ${type}</div>
           <div class="movements__date">3 days ago</div>
-          <div class="movements__value">${mov}</div>
+          <div class="movements__value">${mov} €</div>
     </div>
     `;
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
 
-displayMovements(account1.movements);
+// displayMovements(account1.movements);
 
 //////////////////////////////////////////////////////////////////////////////
-// Bankist - Creating UserName
+// Bankist - Creating UserName -> will use toLowercase(),split()and join() method
 //////////////////////////////////////////////////////////////////////////////
 
 
@@ -224,7 +231,7 @@ createUsername(accounts);
 console.log(accounts);
 
 //////////////////////////////////////////////////////////////////////////////
-// Bankist - filter Method
+// Bankist - filter Method -> Deposits holds an array of positive value, vice versa for withdrawals
 //////////////////////////////////////////////////////////////////////////////
 
 const deposits= movements.filter(mov => mov > 0);
@@ -237,7 +244,7 @@ const withdrawals = movements.filter(mov => mov < 0)
 console.log(withdrawals);
 
 //////////////////////////////////////////////////////////////////////////////
-// Bankist - Reduce Method
+// Bankist - Reduce Method-> I would use it to calculate total available balance
 //////////////////////////////////////////////////////////////////////////////
 
 // const balance = movements.reduce(function(acc, cur, i, arr){
@@ -248,12 +255,33 @@ console.log(withdrawals);
 // const balance = movements.reduce((acc, cur) => acc+cur, 0);
 // console.log(balance);
 
-const calcDisplayBalance = function(movements){
-  const balance = movements.reduce((acc, cur) => acc+cur, 0);
-  labelBalance.textContent= `${balance} EUR`;
+const calcDisplayBalance = function(acc){  //4. Changing perticular displayBalance to targeted acc line 258
+  acc.balance = acc.movements.reduce((acc, cur) => acc+cur, 0);
+  labelBalance.textContent= `${acc.balance} €`;
 }
 
-calcDisplayBalance(account1.movements);
+// calcDisplayBalance(account1.movements);
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// Bankist - The Magic of Chaining method. In this part I will calculate and display the total in , out and interest balance.
+////////////////////////////////////////////////////////////////////////////////////////
+
+
+const calcDisplaySummary = function(acc){  //7. calcDisplaysummary changing the perameter (movement to acc to view individual interest) of the function
+  const incomes = acc.movements.filter(mov => mov > 0).reduce((acc, mov) => acc+mov , 0);
+  labelSumIn.textContent = `${incomes} €`;
+
+  const out = acc.movements.filter(mov => mov <0).reduce((acc,mov) => acc+mov, 0);
+  labelSumOut.textContent= `${Math.abs(out)} €`
+
+  const interest = acc.movements.filter(mov => mov>0).map((deposits => (deposits*acc.interestRate)/100)).filter((int, i, arr) => {
+    // console.log(arr);
+    return int >= 1;
+  }).reduce((acc, int) => acc+int, 0);
+  labelSumInterest.textContent= `${interest} €`
+};
+
+// calcDisplaySummary(account1.movements);
 
 
 //MAX Value
@@ -262,6 +290,119 @@ calcDisplayBalance(account1.movements);
 //   else return mov;
 // }, movements[0]);
 // console.log(max);
+
+
+///////////////////////////////////////
+// The find Method
+//////////////////////////////////////
+const firstWithdrawal = movements.find(mov => mov < 0);
+console.log(movements);
+console.log(firstWithdrawal);
+
+console.log(accounts);
+
+const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+console.log(account);
+
+
+///////////////////////////////////////
+// Implementing LogIN
+//////////////////////////////////////
+
+//8. Refactoring Code creating udpadteUI function
+const updateUI = function(acc){
+  //ii. Display Movements
+  displayMovements(acc.movements);
+
+  //iii. Display Balance
+  calcDisplayBalance(acc);  //5. Updating calcDisplayBalance(currentAccount) to call on account obj instead movements array
+
+
+  //iv. Display Summary
+  calcDisplaySummary(acc);
+}
+
+//4. Declaring currentOwner variable outside of eventlistener
+let currentAccount;
+
+//1. Add evet listener to the login button
+
+btnLogin.addEventListener('click', function(e){
+
+  e.preventDefault();      //2. Prevent Default to stop resubmitting the form
+  
+
+  currentAccount= accounts.find(acc => acc.userName === inputLoginUsername.value);     //Line 160. 3.Using find method to match the username for login
+  console.log(currentAccount); 
+
+  if(currentAccount?.pin === Number(inputLoginPin.value) ){  //5. Adding optional chaining to check the pin number of an username
+    console.log('login');
+      //i. Display UI And Message
+      labelWelcome.textContent=`Welcome Back, ${currentAccount.owner.split(' ')[0]}`;
+      containerApp.style.opacity = 100;
+
+
+      updateUI(currentAccount);
+
+      // v. Clear input fields
+      inputLoginUsername.value = inputLoginPin.value = '';
+      // vi. Hiding the focus of cursor
+      inputLoginPin.blur();
+  }
+
+  
+});
+
+///////////////////////////////////////
+// Implementing Transfers
+//////////////////////////////////////
+
+btnTransfer.addEventListener('click' , function(e){
+  e.preventDefault();                               //1. Event listener & preventdefault
+  const amount = Number(inputTransferAmount.value); //2.  Checking number in amount
+  const receiverAcc = accounts.find( acc => acc.userName === inputTransferTo.value);  //3. CheckingrecieverAcc username
+  console.log(amount, receiverAcc);
+
+  if(amount>0 && receiverAcc && currentAccount.balance >= amount && receiverAcc?.userName !== currentAccount.userName){ // 6. Implementing 4 checking if amount is greater 0 then is a valid recieverACC? and current acc balance is greater than the sending amount also reciever account username is not the current acc username
+      // 7. Doing the transfer-> removing amount from current acc and adding amount to reciever acc
+    currentAccount.movements.push(- amount);
+    receiverAcc.movements.push(amount);
+
+    updateUI(currentAccount);
+
+
+
+  }
+  inputTransferAmount.value = inputTransferTo.value = ''; //9. Clear input fields for transfer
+});
+
+///////////////////////////////////////
+// Close Account - The findIndex Method
+//////////////////////////////////////
+
+// 1. event handler
+
+btnClose.addEventListener('click', function(e){
+  e.preventDefault();
+  if(inputCloseUsername.value===currentAccount.userName && Number(inputClosePin.value)===currentAccount.pin){    // 2. checking user and pin
+    const index = accounts.findIndex( acc => acc.userName === currentAccount.userName);
+    console.log(index);
+//4. Delete Account Using slice
+    accounts.slice(index, 1);
+
+  // 5. Hiding the UI
+
+  containerApp.style.opacity=0;
+
+
+  }
+  inputClosePin.value= inputCloseUsername.value= ''; //6. Removing inputs 
+
+});
+
+
+
+
 
 ///////////////////////////////////////
 // Coding Challenge #1
@@ -323,23 +464,23 @@ GOOD LUCK 😀
 */
 
 
-const calcAverageHumanAge = function (ages) {
-  const humanAges = ages.map(age => (age <= 2 ? 2 * age : 16 + age * 4));
-  const adults = humanAges.filter(age => age >= 18);
-  console.log(humanAges);
-  console.log(adults);
+// const calcAverageHumanAge = function (ages) {
+//   const humanAges = ages.map(age => (age <= 2 ? 2 * age : 16 + age * 4));
+//   const adults = humanAges.filter(age => age >= 18);
+//   console.log(humanAges);
+//   console.log(adults);
 
-  // const average = adults.reduce((acc, age) => acc + age, 0) / adults.length;
+//   // const average = adults.reduce((acc, age) => acc + age, 0) / adults.length;
 
-  const average = adults.reduce(
-    (acc, age, i, arr) => acc + age / arr.length,
-    0
-  );
+//   const average = adults.reduce(
+//     (acc, age, i, arr) => acc + age / arr.length,
+//     0
+//   );
 
-  // 2 3. (2+3)/2 = 2.5 === 2/2+3/2 = 2.5
+//   // 2 3. (2+3)/2 = 2.5 === 2/2+3/2 = 2.5
 
-  return average;
-};
-const avg1 = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
-const avg2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
-console.log(avg1, avg2);
+//   return average;
+// };
+// const avg1 = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+// const avg2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+// console.log(avg1, avg2);
