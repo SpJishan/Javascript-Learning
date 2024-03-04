@@ -137,7 +137,14 @@ const account4 = {
   pin: 4444,
 };
 
-const accounts = [account1, account2, account3, account4];
+const account5 = {
+  owner: 'Shafinul Pasha',
+  movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
+  interestRate: 1.2, // %
+  pin: 5555,
+};
+
+const accounts = [account1, account2, account3, account4, account5];
 
 // Elements
 const labelWelcome = document.querySelector('.welcome');
@@ -187,7 +194,7 @@ const displayMovements = function(movements){
   });
 };
 
-displayMovements(account1.movements);
+// displayMovements(account1.movements);
 
 //////////////////////////////////////////////////////////////////////////////
 // Bankist - Creating UserName -> will use toLowercase(),split()and join() method
@@ -253,27 +260,28 @@ const calcDisplayBalance = function(movements){
   labelBalance.textContent= `${balance} €`;
 }
 
-calcDisplayBalance(account1.movements);
+// calcDisplayBalance(account1.movements);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 // Bankist - The Magic of Chaining method. In this part I will calculate and display the total in , out and interest balance.
 ////////////////////////////////////////////////////////////////////////////////////////
 
-const calcDisplaySummary = function(movements){
-  const incomes = movements.filter(mov => mov > 0).reduce((acc, mov) => acc+mov , 0);
+
+const calcDisplaySummary = function(acc){  //7. calcDisplaysummary changing the perameter (movement to acc to view individual interest) of the function
+  const incomes = acc.movements.filter(mov => mov > 0).reduce((acc, mov) => acc+mov , 0);
   labelSumIn.textContent = `${incomes} €`;
 
-  const out = movements.filter(mov => mov <0).reduce((acc,mov) => acc+mov, 0);
+  const out = acc.movements.filter(mov => mov <0).reduce((acc,mov) => acc+mov, 0);
   labelSumOut.textContent= `${Math.abs(out)} €`
 
-  const interest = movements.filter(mov => mov>0).map((deposits => (deposits*1.2)/100)).filter((int, i, arr) => {
+  const interest = acc.movements.filter(mov => mov>0).map((deposits => (deposits*acc.interestRate)/100)).filter((int, i, arr) => {
     // console.log(arr);
     return int >= 1;
   }).reduce((acc, int) => acc+int, 0);
   labelSumInterest.textContent= `${interest} €`
 };
 
-calcDisplaySummary(account1.movements);
+// calcDisplaySummary(account1.movements);
 
 
 //MAX Value
@@ -295,6 +303,52 @@ console.log(accounts);
 
 const account = accounts.find(acc => acc.owner === 'Jessica Davis');
 console.log(account);
+
+
+///////////////////////////////////////
+// Implementing LogIN
+//////////////////////////////////////
+
+//4. Declaring currentOwner variable outside of eventlistener
+let currentAccount;
+
+//1. Add evet listener to the login button
+
+btnLogin.addEventListener('click', function(e){
+
+  e.preventDefault();      //2. Prevent Default to stop resubmitting the form
+  
+
+  currentAccount= accounts.find(acc => acc.userName === inputLoginUsername.value);     //Line 160. 3.Using find method to match the username for login
+  console.log(currentAccount); 
+
+  if(currentAccount?.pin === Number(inputLoginPin.value) ){  //5. Adding optional chaining to check the pin number of an username
+    console.log('login');
+      //i. Display UI And Message
+      labelWelcome.textContent=`Welcome Back, ${currentAccount.owner.split(' ')[0]}`;
+      containerApp.style.opacity = 100;
+
+
+      //ii. Display Movements
+      displayMovements(currentAccount.movements);
+
+      //iii. Display Balance
+      calcDisplayBalance(currentAccount.movements);
+
+
+      //iv. Display Summary
+      calcDisplaySummary(currentAccount);
+
+      // v. Clear input fields
+      inputLoginUsername.value = inputLoginPin.value = '';
+      // vi. Hiding the focus of cursor
+      inputLoginPin.blur();
+  }
+
+  
+});
+
+
 ///////////////////////////////////////
 // Coding Challenge #1
 
