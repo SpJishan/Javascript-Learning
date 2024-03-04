@@ -376,6 +376,30 @@ btnTransfer.addEventListener('click' , function(e){
   inputTransferAmount.value = inputTransferTo.value = ''; //9. Clear input fields for transfer
 });
 
+///////////////////////////////////////
+// Close Account - The findIndex Method
+//////////////////////////////////////
+
+// 1. event handler
+
+btnClose.addEventListener('click', function(e){
+  e.preventDefault();
+  if(inputCloseUsername.value===currentAccount.userName && Number(inputClosePin.value)===currentAccount.pin){    // 2. checking user and pin
+    const index = accounts.findIndex( acc => acc.userName === currentAccount.userName);
+    console.log(index);
+//4. Delete Account Using slice
+    accounts.slice(index, 1);
+
+  // 5. Hiding the UI
+
+  containerApp.style.opacity=0;
+
+
+  }
+  inputClosePin.value= inputCloseUsername.value= ''; //6. Removing inputs 
+
+});
+
 
 
 
