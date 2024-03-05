@@ -527,9 +527,50 @@ console.log(`Ascending Order: ${movements}` );
 movements.sort((a,b)=> b-a);
 
 console.log(`Descending Order: ${movements}` );
+
+/////////////////////////////////////////////
+// More Ways of Creating and Filling Arrays
+/////////////////////////////////////////////
+
+
+const arr2 = [1, 2, 3, 4, 5, 6, 7];
+console.log(new Array(1, 2, 3, 4, 5, 6, 7));
+
+// Emprty arrays + fill method
+const x = new Array(7);
+console.log(x);
+// console.log(x.map(() => 5));
+x.fill(1, 3, 5);
+x.fill(1);
+console.log(x);
+
+arr.fill(23, 2, 6);
+console.log(arr2);
+
+// Array.from
+const y = Array.from({ length: 7 }, () => 1);
+console.log(y);
+
+const z = Array.from({ length: 7 }, (_, i) => i + 1);
+console.log(z);
+
+
+//Collecting elements from event handler and constructing a new array of info
+labelBalance.addEventListener('click', function (e) {
+  e.preventDefault();
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'),
+    el => Number(el.textContent.replace('€', ''))
+  );
+  console.log(movementsUI);
+
+  const movementsUI2 = [...document.querySelectorAll('.movements__value')];
+});
+
+
 ///////////////////////////////////////
 // Coding Challenge #1
-
+//////////////////////////////////////
 /* 
 Julia and Kate are doing a study on dogs. So each of them asked 5 dog owners about their dog's age, and stored the data into an array (one array for each). For now, they are just interested in knowing whether a dog is an adult or a puppy. A dog is an adult if it is at least 3 years old, and it's a puppy if it's less than 3 years old.
 
