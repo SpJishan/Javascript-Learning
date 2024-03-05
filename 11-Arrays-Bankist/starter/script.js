@@ -176,11 +176,14 @@ const inputClosePin = document.querySelector('.form__input--pin');
 // BANKIST APP CodeBase -> Creating dynamic movements row to show deposits and withdrawals
 /////////////////////////////////////////////////////////////////////////////////////////
 
-const displayMovements = function(movements){
+const displayMovements = function(movements, sort = false){ //1. Line 179 Adding sort perameter to displayMovements
 
+ 
   containerMovements.innerHTML= '';
 
-  movements.forEach(function(mov, i){
+  const movs = sort ? movements.slice().sort((a,b) => a-b) : movements; //2. sort() will change the movements array so we need a copy of movements array , in this case I would use Slice() . I would use a ternary operator to call upon sort or movements.
+
+  movs.forEach(function(mov, i){  //3. Using const mov instead of movements
 
     const type = mov > 0 ? 'deposit' : 'withdrawal';
     const html = 
@@ -424,6 +427,18 @@ btnLoan.addEventListener('click', function(e){
 });
 
 
+///////////////////////////////////////
+// Sorting Array- Bankist App
+///////////////////////////////////////
+
+let sorted = false;
+
+btnSort.addEventListener('click', function(e){  // 4. Event handler for btnSort , 
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);  // 5. To use perameter sort i use a boolean variable sorted and use it by ! '
+  sorted = !sorted;  // 6. Change the value also to use in multiple case
+});
+
 
 
 ///////////////////////////////////////
@@ -450,9 +465,112 @@ console.log(movements.every(deposit));
 console.log(movements.filter(deposit));
 
 
+
+///////////////////////////////////////
+// flat and flatMap
+///////////////////////////////////////
+
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat());
+
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat(2));  //1. Flat method can convert nested array to a single array , we can configure how many level array need to be flaten. In this case it is 2 level.
+
+// flat
+const overalBalance = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overalBalance);
+
+// flatMap
+const overalBalance2 = accounts
+  .flatMap(acc => acc.movements)     // 2. FlatMap can perform a mapping operation then it will flaten the arrray 1 level only
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overalBalance2);
+
+///////////////////////////////////////
+// Sorting Array
+///////////////////////////////////////
+
+//String
+const owner = ['Shafinul', 'Jonas' , 'Nafi', 'Zubayed'];
+console.log(owner.sort());
+console.log(owner); // 2. After sorting it will mutate the original array
+
+//Number
+console.log(movements);
+console.log(movements.sort()); // 1. sort() methods works on string but doesn't work on numbers
+
+// 3. Ascending
+// return<0 a<b (keeping the order)
+// return>0 a>b (Switch order)
+
+// movements.sort((a,b)=>{
+// if(a>b) return 1;
+// if(a<b) return -1;
+// });
+
+movements.sort((a,b)=> a-b);
+
+console.log(`Ascending Order: ${movements}` );
+
+//4.Descending
+//return<0 a>b (keeping the order)
+//return>0 a<b (Switch order)
+
+// movements.sort((a,b)=>{
+//   if(a<b) return 1;
+//   if(a>b) return -1;
+//   });
+
+movements.sort((a,b)=> b-a);
+
+console.log(`Descending Order: ${movements}` );
+
+/////////////////////////////////////////////
+// More Ways of Creating and Filling Arrays
+/////////////////////////////////////////////
+
+
+const arr2 = [1, 2, 3, 4, 5, 6, 7];
+console.log(new Array(1, 2, 3, 4, 5, 6, 7));
+
+// Emprty arrays + fill method
+const x = new Array(7);
+console.log(x);
+// console.log(x.map(() => 5));
+x.fill(1, 3, 5);
+x.fill(1);
+console.log(x);
+
+arr.fill(23, 2, 6);
+console.log(arr2);
+
+// Array.from
+const y = Array.from({ length: 7 }, () => 1);
+console.log(y);
+
+const z = Array.from({ length: 7 }, (_, i) => i + 1);
+console.log(z);
+
+
+//Collecting elements from event handler and constructing a new array of info
+labelBalance.addEventListener('click', function (e) {
+  e.preventDefault();
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'),
+    el => Number(el.textContent.replace('€', ''))
+  );
+  console.log(movementsUI);
+
+  const movementsUI2 = [...document.querySelectorAll('.movements__value')];
+});
+
+
 ///////////////////////////////////////
 // Coding Challenge #1
-
+//////////////////////////////////////
 /* 
 Julia and Kate are doing a study on dogs. So each of them asked 5 dog owners about their dog's age, and stored the data into an array (one array for each). For now, they are just interested in knowing whether a dog is an adult or a puppy. A dog is an adult if it is at least 3 years old, and it's a puppy if it's less than 3 years old.
 
