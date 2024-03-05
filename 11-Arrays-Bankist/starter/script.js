@@ -176,11 +176,14 @@ const inputClosePin = document.querySelector('.form__input--pin');
 // BANKIST APP CodeBase -> Creating dynamic movements row to show deposits and withdrawals
 /////////////////////////////////////////////////////////////////////////////////////////
 
-const displayMovements = function(movements){
+const displayMovements = function(movements, sort = false){ //1. Line 179 Adding sort perameter to displayMovements
 
+ 
   containerMovements.innerHTML= '';
 
-  movements.forEach(function(mov, i){
+  const movs = sort ? movements.slice().sort((a,b) => a-b) : movements; //2. sort() will change the movements array so we need a copy of movements array , in this case I would use Slice() . I would use a ternary operator to call upon sort or movements.
+
+  movs.forEach(function(mov, i){  //3. Using const mov instead of movements
 
     const type = mov > 0 ? 'deposit' : 'withdrawal';
     const html = 
@@ -423,6 +426,18 @@ btnLoan.addEventListener('click', function(e){
   inputLoanAmount.value = '';
 });
 
+
+///////////////////////////////////////
+// Sorting Array- Bankist App
+///////////////////////////////////////
+
+let sorted = false;
+
+btnSort.addEventListener('click', function(e){  // 4. Event handler for btnSort , 
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);  // 5. To use perameter sort i use a boolean variable sorted and use it by ! '
+  sorted = !sorted;  // 6. Change the value also to use in multiple case
+});
 
 
 
