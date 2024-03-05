@@ -475,6 +475,44 @@ const overalBalance2 = accounts
 console.log(overalBalance2);
 
 ///////////////////////////////////////
+// Sorting Array
+///////////////////////////////////////
+
+//String
+const owner = ['Shafinul', 'Jonas' , 'Nafi', 'Zubayed'];
+console.log(owner.sort());
+console.log(owner); // 2. After sorting it will mutate the original array
+
+//Number
+console.log(movements);
+console.log(movements.sort()); // 1. sort() methods works on string but doesn't work on numbers
+
+// 3. Ascending
+// return<0 a<b (keeping the order)
+// return>0 a>b (Switch order)
+
+// movements.sort((a,b)=>{
+// if(a>b) return 1;
+// if(a<b) return -1;
+// });
+
+movements.sort((a,b)=> a-b);
+
+console.log(`Ascending Order: ${movements}` );
+
+//4.Descending
+//return<0 a>b (keeping the order)
+//return>0 a<b (Switch order)
+
+// movements.sort((a,b)=>{
+//   if(a<b) return 1;
+//   if(a>b) return -1;
+//   });
+
+movements.sort((a,b)=> b-a);
+
+console.log(`Descending Order: ${movements}` );
+///////////////////////////////////////
 // Coding Challenge #1
 
 /* 
