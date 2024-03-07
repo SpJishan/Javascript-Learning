@@ -81,19 +81,27 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // Functions
 
-const displayMovements = function (movements, sort = false) {
+const displayMovements = function (acc,movements, sort = false) { //4. passing a whole acc as displayMovements perameter
   containerMovements.innerHTML = '';
 
-  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+  const movs = sort ? acc.movements.slice().sort((a, b) => a - b) : acc.movements;
 
-  movs.forEach(function (mov, i) {
+  movs.forEach(function (mov, i) {   // 5. Added HTML to show dates, created and apply displayDate variable
     const type = mov > 0 ? 'deposit' : 'withdrawal';
+
+    const date = new Date(acc.movementsDates[i]);
+    const day = `${date.getDate()}`.padStart(2, 0);
+    const month = `${date.getMonth() + 1}`.padStart(2, 0);
+    const year = date.getFullYear();
+   
+    const displayDate= `${day}/${month}/${year} `
 
     const html = `
       <div class="movements__row">
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
+        <div class="movements__date">${displayDate}</div>  
         <div class="movements__value">${mov.toFixed(2)}€</div>
       </div>
     `;
@@ -142,7 +150,7 @@ createUsernames(accounts);
 
 const updateUI = function (acc) {
   // Display movements
-  displayMovements(acc.movements);
+  displayMovements(acc);
 
   // Display balance
   calcDisplayBalance(acc);
@@ -154,6 +162,18 @@ const updateUI = function (acc) {
 ///////////////////////////////////////
 // Event handlers
 let currentAccount;
+
+///////////////////////////////////////
+// Adding Dates to Bankist App
+///////////////////////////////////////
+
+// 1. Fake Loggind in to manipulates diff date changes
+
+currentAccount = account1
+updateUI(currentAccount);
+containerApp.style.opacity = 100;
+
+
 
 btnLogin.addEventListener('click', function (e) {
   // Prevent form from submitting
@@ -170,6 +190,17 @@ btnLogin.addEventListener('click', function (e) {
       currentAccount.owner.split(' ')[0]
     }`;
     containerApp.style.opacity = 100;
+
+    // 2. Displaying the date under Current balance
+    // 3. Modifying the date structure using padStart(number_of_digit, digit_to_fill)
+
+    const now = new Date();
+    const day = `${now.getDate()}`.padStart(2, 0);
+    const month = `${now.getMonth() + 1}`.padStart(2, 0);
+    const year = now.getFullYear();
+    const hour = `${now.getHours()}`.padStart(2, 0);
+    const min = `${now.getMinutes()}`.padStart(2, 0);
+    labelDate.textContent= `${day}/${month}/${year} ${hour}:${min}`
 
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
@@ -198,6 +229,10 @@ btnTransfer.addEventListener('click', function (e) {
     currentAccount.movements.push(-amount);
     receiverAcc.movements.push(amount);
 
+    // 6. Adding Transfer date
+    currentAccount.movementsDates.push(new Date().toISOString());
+    receiverAcc.movementsDates.push(new Date().toISOString());
+
     // Update UI
     updateUI(currentAccount);
   }
@@ -211,6 +246,10 @@ btnLoan.addEventListener('click', function (e) {
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // Add movement
     currentAccount.movements.push(amount);
+
+    // 7. Adding Loan date
+    currentAccount.movementsDates.push(new Date().toISOString());
+    
 
     // Update UI
     updateUI(currentAccount);
@@ -349,29 +388,130 @@ btnSort.addEventListener('click', function (e) {
 ///////////////////////////////////////
 
 
-console.log(5 % 2);
-console.log(5 / 2); // 5 = 2 * 2 + 1
+// console.log(5 % 2);
+// console.log(5 / 2); // 5 = 2 * 2 + 1
 
-console.log(8 % 3);
-console.log(8 / 3); // 8 = 2 * 3 + 2
+// console.log(8 % 3);
+// console.log(8 / 3); // 8 = 2 * 3 + 2
 
-console.log(6 % 2);
-console.log(6 / 2);
+// console.log(6 % 2);
+// console.log(6 / 2);
 
-console.log(7 % 2);
-console.log(7 / 2);
+// console.log(7 % 2);
+// console.log(7 / 2);
 
-const isEven = n => n % 2 === 0;
-console.log(isEven(8));
-console.log(isEven(23));
-console.log(isEven(514));
+// const isEven = n => n % 2 === 0;
+// console.log(isEven(8));
+// console.log(isEven(23));
+// console.log(isEven(514));
 
-// Using event handler to use reminder in multiple of 2 and 3 rows of movements
-labelBalance.addEventListener('click', function () {
-  [...document.querySelectorAll('.movements__row')].forEach(function (row, i) {
-    // 0, 2, 4, 6
-    if (i % 2 === 0) row.style.backgroundColor = 'orangered';
-    // 0, 3, 6, 9
-    if (i % 3 === 0) row.style.backgroundColor = 'blue';
-  });
-});
+// // Using event handler to use reminder in multiple of 2 and 3 rows of movements
+// labelBalance.addEventListener('click', function () {
+//   [...document.querySelectorAll('.movements__row')].forEach(function (row, i) {
+//     // 0, 2, 4, 6
+//     if (i % 2 === 0) row.style.backgroundColor = 'orangered';
+//     // 0, 3, 6, 9
+//     if (i % 3 === 0) row.style.backgroundColor = 'blue';
+//   });
+// });
+
+
+///////////////////////////////////////
+// Numeric Separators
+///////////////////////////////////////
+
+// //287,460,000,000 To understand a big number easily we can use numeric separator we use _ 
+// const diameter = 287_460_000_000;
+// console.log(diameter);
+
+// const price = 345_99;
+// console.log(price);
+
+// const transferFee1 = 15_00;
+// const transferFee2 = 1_500;
+
+// const PI = 3.14_15;
+// console.log(PI);
+
+// console.log(Number('230_000'));
+// console.log(parseInt('230_000'));
+
+///////////////////////////////////////
+// Working with BigInt
+///////////////////////////////////////
+
+
+// console.log(2 ** 53 - 1);
+// console.log(Number.MAX_SAFE_INTEGER);
+// console.log(2 ** 53 + 1);
+// console.log(2 ** 53 + 2);
+// console.log(2 ** 53 + 3);
+// console.log(2 ** 53 + 4);
+
+// console.log(4838430248342043823408394839483204n);
+// console.log(BigInt(48384302));
+
+// // Operations
+// console.log(10000n + 10000n);
+// console.log(36286372637263726376237263726372632n * 10000000n);
+// // console.log(Math.sqrt(16n));
+
+// const huge = 20289830237283728378237n;
+// const num = 23;
+// console.log(huge * BigInt(num));
+
+// // Exceptions
+// console.log(20n > 15);
+// console.log(20n === 20);
+// console.log(typeof 20n);
+// console.log(20n == '20');
+
+// console.log(huge + ' is REALLY big!!!');
+
+// // Divisions
+// console.log(11n / 3n);
+// console.log(10 / 3);
+
+///////////////////////////////////////
+// Creating Dates
+///////////////////////////////////////
+
+
+// Create a date
+
+// const now = new Date();
+// console.log(now);
+
+// console.log(new Date('Aug 02 2020 18:05:41'));
+// console.log(new Date('December 24, 2015'));
+// console.log(new Date(account1.movementsDates[0]));
+
+// console.log(new Date(2037, 10, 19, 15, 23, 5));
+// console.log(new Date(2037, 10, 31));
+
+// console.log(new Date(0));
+// console.log(new Date(3 * 24 * 60 * 60 * 1000));
+
+
+// // Working with dates
+// const future = new Date(2037, 10, 19, 15, 23);
+// console.log(future);
+// console.log(future.getFullYear());
+// console.log(future.getMonth()); // 2. months starts with 0
+// console.log(future.getDate());
+// console.log(future.getDay());
+// console.log(future.getHours());
+// console.log(future.getMinutes());
+// console.log(future.getSeconds());
+// console.log(future.toISOString());
+// console.log(future.getTime());
+
+// console.log(new Date(2142256980000)); //line458
+
+// console.log(Date.now()); // Will get current time stamp
+
+// future.setFullYear(2040);
+// console.log(future);
+
+
+
