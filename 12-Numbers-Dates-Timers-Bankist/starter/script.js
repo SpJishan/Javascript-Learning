@@ -109,6 +109,13 @@ const formatMovementDate= function(date, locale){  // 1. Refactroing the code to
   return new Intl.DateTimeFormat(locale).format(date);
 };
 
+const formatCur = function(value, locale, currency){ // 1. Refactoring to formatCur
+  return new Intl.NumberFormat(locale,{
+    style: 'currency',
+    currency: currency,
+  }).format(value);
+}
+
 const displayMovements = function (acc,movements, sort = false) { //4. passing a whole acc as displayMovements perameter
   containerMovements.innerHTML = '';
 
@@ -122,13 +129,20 @@ const displayMovements = function (acc,movements, sort = false) { //4. passing a
    
     const displayDate= formatMovementDate(date, acc.locale);
 
+    // const formattedMov = new Intl.NumberFormat(acc.locale,{
+    //   style: 'currency',
+    //   currency: acc.currency,
+    // }).format(mov);
+
+    const formattedMov = formatCur(mov, acc.locale, acc.currency);
+
     const html = `
       <div class="movements__row">
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
         <div class="movements__date">${displayDate}</div>  
-        <div class="movements__value">${mov.toFixed(2)}€</div>
+        <div class="movements__value">${formattedMov}</div>
       </div>
     `;
 
@@ -138,7 +152,7 @@ const displayMovements = function (acc,movements, sort = false) { //4. passing a
 
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${acc.balance.toFixed(2)}€`;
+  labelBalance.textContent = formatCur(acc.balance, acc.locale, acc.currency);
 };
 
 const calcDisplaySummary = function (acc) {
@@ -552,11 +566,32 @@ btnSort.addEventListener('click', function (e) {
 // Operations With Dates
 ///////////////////////////////////////
 
-const future = new Date(2037, 10, 19, 15, 23);
-console.log(+future);  // 1. Generating Timestamps
+// const future = new Date(2037, 10, 19, 15, 23);
+// console.log(+future);  // 1. Generating Timestamps
 
-const calcDaysPassed = (date1, date2) =>
-  Math.abs(date2 - date1) / (1000 * 60 * 60 * 24);
+// const calcDaysPassed = (date1, date2) =>
+//   Math.abs(date2 - date1) / (1000 * 60 * 60 * 24);
 
-const days1 = calcDaysPassed(new Date(2037, 3, 4), new Date(2037, 3, 14));
-console.log(days1);
+// const days1 = calcDaysPassed(new Date(2037, 3, 4), new Date(2037, 3, 14));
+// console.log(days1);
+
+///////////////////////////////////////
+// Internationalizing Numbers (Intl)
+///////////////////////////////////////
+const num = 3884764.23;
+
+const options = {
+  style: 'currency',
+  unit: 'celsius',
+  currency: 'EUR',
+  // useGrouping: false,
+};
+
+console.log('US:      ', new Intl.NumberFormat('en-US', options).format(num));
+console.log('Germany: ', new Intl.NumberFormat('de-DE', options).format(num));
+console.log('Syria:   ', new Intl.NumberFormat('ar-SY', options).format(num));
+console.log(
+  navigator.language,
+  new Intl.NumberFormat(navigator.language, options).format(num)
+);
+
