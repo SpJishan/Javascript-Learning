@@ -24,7 +24,6 @@ const account1 = {
     '2024-01-25T14:18:46.235Z',
     '2024-02-05T16:33:06.386Z',
     '2024-03-07T14:43:26.374Z',
-    
   ],
   currency: 'EUR',
   locale: 'pt-PT', // de-DE
@@ -82,25 +81,25 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // Functions
 
-const formatMovementDate= function(date, locale){  // 1. Refactroing the code to calculate days, month, year passed
+const formatMovementDate = function (date, locale) {
+  // 1. Refactroing the code to calculate days, month, year passed
 
   const calcDaysPassed = (date1, date2) =>
-  Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
+    Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
 
   const daysPassed = calcDaysPassed(new Date(), date);
-  
+
   // console.log(daysPassed);
-  const monthPassed= Math.round(Math.abs(daysPassed/30));
-  const yearPassed= Math.round(Math.abs(monthPassed/12));
+  const monthPassed = Math.round(Math.abs(daysPassed / 30));
+  const yearPassed = Math.round(Math.abs(monthPassed / 12));
   console.log(monthPassed);
   console.log(yearPassed);
-    // 2. Displaying different types of date format (days, month, year ago)
-  if(daysPassed===0) return "Today";
-  if(daysPassed===1) return "Yesterday";
-  if(daysPassed < 7) return `${daysPassed} days ago`;
-  if(daysPassed>30 && monthPassed < 12) return `${monthPassed} months ago`
-  if(monthPassed > 11 && monthPassed <18) return `${yearPassed} years ago`;
-
+  // 2. Displaying different types of date format (days, month, year ago)
+  if (daysPassed === 0) return 'Today';
+  if (daysPassed === 1) return 'Yesterday';
+  if (daysPassed < 7) return `${daysPassed} days ago`;
+  if (daysPassed > 30 && monthPassed < 12) return `${monthPassed} months ago`;
+  if (monthPassed > 11 && monthPassed < 18) return `${yearPassed} years ago`;
 
   // const day = `${date.getDate()}`.padStart(2, 0);
   // const month = `${date.getMonth() + 1}`.padStart(2, 0);
@@ -109,25 +108,29 @@ const formatMovementDate= function(date, locale){  // 1. Refactroing the code to
   return new Intl.DateTimeFormat(locale).format(date);
 };
 
-const formatCur = function(value, locale, currency){ // 1. Refactoring to formatCur
-  return new Intl.NumberFormat(locale,{
+const formatCur = function (value, locale, currency) {
+  // 1. Refactoring to formatCur
+  return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: currency,
   }).format(value);
-}
+};
 
-const displayMovements = function (acc,movements, sort = false) { //4. passing a whole acc as displayMovements perameter
+const displayMovements = function (acc, movements, sort = false) {
+  //4. passing a whole acc as displayMovements perameter
   containerMovements.innerHTML = '';
 
-  const movs = sort ? acc.movements.slice().sort((a, b) => a - b) : acc.movements;
+  const movs = sort
+    ? acc.movements.slice().sort((a, b) => a - b)
+    : acc.movements;
 
-  movs.forEach(function (mov, i) {   // 5. Added HTML to show dates, created and apply displayDate variable
+  movs.forEach(function (mov, i) {
+    // 5. Added HTML to show dates, created and apply displayDate variable
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const date = new Date(acc.movementsDates[i]);
-    
-   
-    const displayDate= formatMovementDate(date, acc.locale);
+
+    const displayDate = formatMovementDate(date, acc.locale);
 
     // const formattedMov = new Intl.NumberFormat(acc.locale,{
     //   style: 'currency',
@@ -210,7 +213,7 @@ const startLogOutTimer = function () {
     // When 0 seconds, stop timer and log out user
     if (time === 0) {
       clearInterval(timer);
-      labelWelcome.textContent = "Log in to get started";
+      labelWelcome.textContent = 'Log in to get started';
       containerApp.style.opacity = 0;
     }
 
@@ -242,8 +245,6 @@ let currentAccount, timer;
 // updateUI(currentAccount);
 // containerApp.style.opacity = 100;
 
-
-
 btnLogin.addEventListener('click', function (e) {
   // Prevent form from submitting
   e.preventDefault();
@@ -269,10 +270,13 @@ btnLogin.addEventListener('click', function (e) {
       minute: 'numeric',
       day: 'numeric',
       month: 'long',
-      year: 'numeric'
+      year: 'numeric',
     };
 
-    labelDate.textContent= new Intl.DateTimeFormat(currentAccount.locale, options).format(now);    
+    labelDate.textContent = new Intl.DateTimeFormat(
+      currentAccount.locale,
+      options
+    ).format(now);
     // const day = `${now.getDate()}`.padStart(2, 0);
     // const month = `${now.getMonth() + 1}`.padStart(2, 0);
     // const year = now.getFullYear();
@@ -286,7 +290,7 @@ btnLogin.addEventListener('click', function (e) {
 
     if (timer) clearInterval(timer);
     timer = startLogOutTimer();
-    
+
     // Update UI
     updateUI(currentAccount);
   }
@@ -334,7 +338,6 @@ btnLoan.addEventListener('click', function (e) {
 
       // Update UI
       updateUI(currentAccount);
-
     }, 2500);
   }
   inputLoanAmount.value = '';
@@ -375,7 +378,6 @@ btnSort.addEventListener('click', function (e) {
 // LECTURES
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
-
 
 /////////////////////////////////////////////////
 // Converting and Checking Numbers
@@ -429,7 +431,7 @@ btnSort.addEventListener('click', function (e) {
 // // 2. Finding max and min numbers- can do type conversion
 // console.log(Math.max(5, 18, 23, 11, 2));
 // console.log(Math.max(5, 18, '23', 11, 2));
-// console.log(Math.max(5, 18, '23px', 11, 2)); 
+// console.log(Math.max(5, 18, '23px', 11, 2));
 
 // console.log(Math.min(5, 18, 23, 11, 2));
 
@@ -465,11 +467,9 @@ btnSort.addEventListener('click', function (e) {
 // console.log((2.345).toFixed(2));
 // console.log(+(2.345).toFixed(2));
 
-
 ///////////////////////////////////////
 // The Remainder Operator
 ///////////////////////////////////////
-
 
 // console.log(5 % 2);
 // console.log(5 / 2); // 5 = 2 * 2 + 1
@@ -498,12 +498,11 @@ btnSort.addEventListener('click', function (e) {
 //   });
 // });
 
-
 ///////////////////////////////////////
 // Numeric Separators
 ///////////////////////////////////////
 
-// //287,460,000,000 To understand a big number easily we can use numeric separator we use _ 
+// //287,460,000,000 To understand a big number easily we can use numeric separator we use _
 // const diameter = 287_460_000_000;
 // console.log(diameter);
 
@@ -522,7 +521,6 @@ btnSort.addEventListener('click', function (e) {
 ///////////////////////////////////////
 // Working with BigInt
 ///////////////////////////////////////
-
 
 // console.log(2 ** 53 - 1);
 // console.log(Number.MAX_SAFE_INTEGER);
@@ -559,7 +557,6 @@ btnSort.addEventListener('click', function (e) {
 // Creating Dates
 ///////////////////////////////////////
 
-
 // Create a date
 
 // const now = new Date();
@@ -574,7 +571,6 @@ btnSort.addEventListener('click', function (e) {
 
 // console.log(new Date(0));
 // console.log(new Date(3 * 24 * 60 * 60 * 1000));
-
 
 // // Working with dates
 // const future = new Date(2037, 10, 19, 15, 23);
