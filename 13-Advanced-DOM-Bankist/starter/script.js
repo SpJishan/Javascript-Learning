@@ -85,14 +85,46 @@ btnScrollTo.addEventListener('click', function (e) {
 //Best way:
 // 1. Add event listener to common parent elements
 
-
 document.querySelector('.nav__links').addEventListener('click', function (e) {
   console.log(e.target);
-  if (e.target.classList.contains('.nav_link')) {  // // 2. Determine what element originated the event
+  if (e.target.classList.contains('.nav_link')) {
+    // // 2. Determine what element originated the event
     const id = this.getAttribute('href');
-    
+
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
+});
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Building a Tabbed Component
+///////////////////////////////////////////////////////////////////////////////////////
+
+// 1. Storing html elements
+
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+// 2. Applying Event Deligation to the parent element
+tabsContainer.addEventListener('click', function (e) {
+  const clicked = e.target.closest('.operations__tab'); //3. We cannot use only e.target because if we clicked on (not the tabbed area but on) number it will call upon the span element. -> We can use e.target.parentElement, on number click we would get the parent element of span that is .operations__tab. But on click on tab area we would get operations__tab's parent element. That is operations__tab-container. So we will use e.target.closest()
+  console.log(clicked);
+
+  // 4. Guard Clause - If someone clicked outside of a tab area
+  if (!clicked) return;
+
+  // 5. Removing Active class to select other tabs
+  tabs.forEach(t => t.classList.remove('operations__content--active'));
+  // 8. Removing Active content to seect other content
+  tabsContent.forEach(c => c.classList.remove('operations__content--active'));
+
+  // 6. Adding Active class upon clicked-Activate Tab
+  clicked.classList.add('operations__tab--active');
+
+  // 7. Activating the content area
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -228,36 +260,35 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 //   console.log('NAV', e.target, e.currentTarget);
 // });
 
-
 ///////////////////////////////////////////////////////////////////////////////////////
 // DOM Traversing
 ///////////////////////////////////////////////////////////////////////////////////////
 
-const h1 = document.querySelector('h1');
+// const h1 = document.querySelector('h1');
 
-// Going downwards: child
-console.log(h1.querySelectorAll('.highlight'));
-console.log(h1.childNodes);
-console.log(h1.children);
-h1.firstElementChild.style.color = 'white';
-h1.lastElementChild.style.color = 'orangered';
+// // Going downwards: child
+// console.log(h1.querySelectorAll('.highlight'));
+// console.log(h1.childNodes);
+// console.log(h1.children);
+// h1.firstElementChild.style.color = 'white';
+// h1.lastElementChild.style.color = 'orangered';
 
-// Going upwards: parents
-console.log(h1.parentNode);
-console.log(h1.parentElement);
+// // Going upwards: parents
+// console.log(h1.parentNode);
+// console.log(h1.parentElement);
 
-h1.closest('.header').style.background = 'var(--gradient-secondary)';
+// h1.closest('.header').style.background = 'var(--gradient-secondary)';
 
-h1.closest('h1').style.background = 'var(--gradient-primary)';
+// h1.closest('h1').style.background = 'var(--gradient-primary)';
 
-// Going sideways: siblings
-console.log(h1.previousElementSibling);
-console.log(h1.nextElementSibling);
+// // Going sideways: siblings
+// console.log(h1.previousElementSibling);
+// console.log(h1.nextElementSibling);
 
-console.log(h1.previousSibling);
-console.log(h1.nextSibling);
+// console.log(h1.previousSibling);
+// console.log(h1.nextSibling);
 
-console.log(h1.parentElement.children);
-[...h1.parentElement.children].forEach(function (el) {
-  if (el !== h1) el.style.transform = 'scale(0.5)';
-});
+// console.log(h1.parentElement.children);
+// [...h1.parentElement.children].forEach(function (el) {
+//   if (el !== h1) el.style.transform = 'scale(0.5)';
+// });
