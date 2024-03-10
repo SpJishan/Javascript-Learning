@@ -128,6 +128,45 @@ tabsContainer.addEventListener('click', function (e) {
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////
+// Passing Arguments to Event Handlers
+///////////////////////////////////////////////////////////////////////////////////////
+
+const nav = document.querySelector('.nav');
+
+const handleHover = function (e, opacity) {
+  const link = e.target;
+  if (link.classList.contains('nav__link')) {
+    // Note: while calling classlist we need to write only the name in the quotation without
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    const logo = link.closest('.nav').querySelector('img');
+
+    // siblings.forEach(el => {
+    //   if (el !== link) el.style.opacity = opacity;
+    // });
+    // logo.style.opacity = opacity;
+
+    // Defining this keyword , otherwise for bind method, it will select '.nav'
+    siblings.forEach(el => {
+      if (el !== link) el.style.opacity = this;
+    });
+    logo.style.opacity = this;
+  }
+};
+
+// nav.addEventListener('mouseover', function (e) {
+//   handleHover(e, 0.5);
+// });
+
+// nav.addEventListener('mouseout', function (e) {
+//   handleHover(e, 1);
+// });
+
+// ->New ways to pass argument with bind method
+
+nav.addEventListener('mouseover', handleHover.bind(0.5)); // 1. Adding event listener to the parent element: nav
+nav.addEventListener('mouseout', handleHover.bind(1));
+
+///////////////////////////////////////////////////////////////////////////////////////
 // Selecting, Creating, and Deleting Elements
 ///////////////////////////////////////////////////////////////////////////////////////
 
