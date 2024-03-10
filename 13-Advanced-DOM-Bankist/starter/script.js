@@ -68,6 +68,33 @@ btnScrollTo.addEventListener('click', function (e) {
 
   // section1.scrollIntoView({ behavior: 'smooth' });
 });
+
+///////////////////////////////////////////////////////////////////////////////////////
+//  Event Delegation Implementing Page Navigation
+///////////////////////////////////////////////////////////////////////////////////////
+
+// Event deligation from child element, best way to use it from parent elements.
+// document.querySelectorAll('.nav__link').forEach(function (el) {
+//   el.addEventListener('click', function (e) {
+//     e.preventDefault();
+//     const id = this.getAttribute('href');
+//     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+//   });
+// });
+
+//Best way:
+// 1. Add event listener to common parent elements
+
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  console.log(e.target);
+  if (e.target.classList.contains('.nav_link')) {  // // 2. Determine what element originated the event
+    const id = this.getAttribute('href');
+    
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  }
+});
+
 ///////////////////////////////////////////////////////////////////////////////////////
 // Selecting, Creating, and Deleting Elements
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -178,26 +205,25 @@ btnScrollTo.addEventListener('click', function (e) {
 // Event Propagation in Practice
 ///////////////////////////////////////////////////////////////////////////////////////
 
-const randomInt = (min, max) =>
-  Math.floor(Math.random() * (max - min + 1) + min);
+// const randomInt = (min, max) =>
+//   Math.floor(Math.random() * (max - min + 1) + min);
 
-const randomColor = () =>
-  `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+// const randomColor = () =>
+//   `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
 
-document.querySelector('.nav__link').addEventListener('click', function (e) { //bubble 
-  this.style.backgroundColor = randomColor();
-  console.log('LINK', e.target, e.currentTarget);
-  console.log(e.currentTarget === this);
+// document.querySelector('.nav__link').addEventListener('click', function (e) { //bubble
+//   this.style.backgroundColor = randomColor();
+//   console.log('LINK', e.target, e.currentTarget);
+//   console.log(e.currentTarget === this);
 
-  // Stop propagation
-  // e.stopPropagation();
-});
-document.querySelector('.nav__links').addEventListener('click', function (e) {
-  this.style.backgroundColor = randomColor();
-  console.log('CONTAINER', e.target, e.currentTarget);
-});
-document.querySelector('.nav').addEventListener('click', function (e) {//target 
-  this.style.backgroundColor = randomColor();
-  console.log('NAV', e.target, e.currentTarget);
-});
-
+//   // Stop propagation
+//   // e.stopPropagation();
+// });
+// document.querySelector('.nav__links').addEventListener('click', function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log('CONTAINER', e.target, e.currentTarget);
+// });
+// document.querySelector('.nav').addEventListener('click', function (e) {//target
+//   this.style.backgroundColor = randomColor();
+//   console.log('NAV', e.target, e.currentTarget);
+// });
