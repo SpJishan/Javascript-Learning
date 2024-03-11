@@ -194,10 +194,9 @@ const stickyNav = function (entries) {
   //console.log(entry);
 
   //2. we have 1st entry data , the 2nd entry will appear when the 1st entries viewport ends. So we need to define a logic for stickyNav like if it is not 1st entry then add sticky otherwise remove it
-  if (!entry.isIntersecting) nav.classList.add('sticky'); // 3. isIntersecting has a boolean value
+  if (!entry.isIntersecting)
+    nav.classList.add('sticky'); // 3. isIntersecting has a boolean value
   else nav.classList.remove('sticky');
-  
-  
 };
 
 const headerObserver = new IntersectionObserver(stickyNav, {
@@ -208,6 +207,32 @@ const headerObserver = new IntersectionObserver(stickyNav, {
 });
 
 headerObserver.observe(header); // 6. Calling Sticky nav Observer API
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Revealing Elements on Scroll
+///////////////////////////////////////////////////////////////////////////////////////
+
+const allSections = document.querySelectorAll('.section'); // 1. Selecting all section
+
+const revealSection = function (entries, observer) {  // 2. Here we will need observer parameter to unobserve once observed
+  const [entry] = entries;
+  // console.log(entry);
+
+  if(!entry.isIntersecting) return; // 7. Guard Cluase , there is always a defaut intersection
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target); // 3. unobserve improves performance once observed 
+};
+
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+}); // 4. when the next section entries at 15%
+
+allSections.forEach(function (section) {  // 5. calling the observe api
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden'); // 6. Also it will hide all the sections at first
+});
 
 ///////////////////////////////////////////////////////////////////////////////////////
 // Selecting, Creating, and Deleting Elements
