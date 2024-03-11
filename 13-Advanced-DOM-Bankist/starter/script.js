@@ -169,20 +169,45 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 ///////////////////////////////////////////////////////////////////////////////////////
 // Sticky navigation: Intersection Observer API
 ///////////////////////////////////////////////////////////////////////////////////////
-const obsCallback = function(entries, observer) {  // 5. entries are the array of threshold entries.
-    entries.forEach(entry => {
-      console.log(entry);
-    })
+// const obsCallback = function(entries, observer) {  // 5. entries are the array of threshold entries.
+//     entries.forEach(entry => {
+//       console.log(entry);
+//     })
+// };
+
+// const obsOptions = {
+//   root: null,             // 3. root: target element that need to intersect.null means viewport
+//   threshold: [0, 0.2],                 // 4. threshold: percentage of intercetion in which the observer fucntion is called. [0, 0.2] 0 means our callback function is called when the viewport ends and start a new one, 0.2 means 20% of threshold.
+// };
+
+// const observer = new IntersectionObserver(obsCallback, obsOptions); // 1. observer API will take a callback function and a collection of option
+
+// observer.observe(section1);  // 2. observe is a method
+
+//***Applying Sticky Navigation */
+
+const header = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
+
+const stickyNav = function (entries) {
+  const [entry] = entries; // 1. entry will collect the first entries
+  //console.log(entry);
+
+  //2. we have 1st entry data , the 2nd entry will appear when the 1st entries viewport ends. So we need to define a logic for stickyNav like if it is not 1st entry then add sticky otherwise remove it
+  if (!entry.isIntersecting) nav.classList.add('sticky'); // 3. isIntersecting has a boolean value
+  else nav.classList.remove('sticky');
+  
+  
 };
 
-const obsOptions = {
-  root: null,             // 3. root: target element that need to intersect.null means viewport
-  threshold: [0, 0.2],                 // 4. threshold: percentage of intercetion in which the observer fucntion is called. [0, 0.2] 0 means our callback function is called when the viewport ends and start a new one, 0.2 means 20% of threshold.
-};
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  // rootMargin: '-90px', // 4. example 90 is a box of 90 pixels that will be applied outside of our Target element. So triggering it inside we will need it in negative value
+  rootMargin: `-${navHeight}px`, // 5. Implementing dynamic rootMargin calculation
+});
 
-const observer = new IntersectionObserver(obsCallback, obsOptions); // 1. observer API will take a callback function and a collection of option
-
-observer.observe(section1);  // 2. observe is a method 
+headerObserver.observe(header); // 6. Calling Sticky nav Observer API
 
 ///////////////////////////////////////////////////////////////////////////////////////
 // Selecting, Creating, and Deleting Elements
