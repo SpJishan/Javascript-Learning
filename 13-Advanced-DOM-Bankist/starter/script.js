@@ -167,6 +167,24 @@ nav.addEventListener('mouseover', handleHover.bind(0.5)); // 1. Adding event lis
 nav.addEventListener('mouseout', handleHover.bind(1));
 
 ///////////////////////////////////////////////////////////////////////////////////////
+// Sticky navigation: Intersection Observer API
+///////////////////////////////////////////////////////////////////////////////////////
+const obsCallback = function(entries, observer) {  // 5. entries are the array of threshold entries.
+    entries.forEach(entry => {
+      console.log(entry);
+    })
+};
+
+const obsOptions = {
+  root: null,             // 3. root: target element that need to intersect.null means viewport
+  threshold: [0, 0.2],                 // 4. threshold: percentage of intercetion in which the observer fucntion is called. [0, 0.2] 0 means our callback function is called when the viewport ends and start a new one, 0.2 means 20% of threshold.
+};
+
+const observer = new IntersectionObserver(obsCallback, obsOptions); // 1. observer API will take a callback function and a collection of option
+
+observer.observe(section1);  // 2. observe is a method 
+
+///////////////////////////////////////////////////////////////////////////////////////
 // Selecting, Creating, and Deleting Elements
 ///////////////////////////////////////////////////////////////////////////////////////
 
@@ -334,12 +352,12 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 
 ///////////////////////////////////////
 // Sticky navigation-Basics
-const initialCoords = section1.getBoundingClientRect();
-console.log(initialCoords);
+// const initialCoords = section1.getBoundingClientRect();
+// console.log(initialCoords);
 
-window.addEventListener('scroll', function () {
-  console.log(window.scrollY);
+// window.addEventListener('scroll', function () {
+//   console.log(window.scrollY);
 
-  if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
-  else nav.classList.remove('sticky');
-});
+//   if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
+//   else nav.classList.remove('sticky');
+// });
