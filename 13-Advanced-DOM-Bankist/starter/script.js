@@ -269,16 +269,15 @@ imgTargets.forEach(img => imgObserver.observe(img));
 const slides = document.querySelectorAll('.slide'); // 1. Selecting  all slides
 const btnLeft = document.querySelector('.slider__btn--left'); // 4. Selecting the slider arrow buttons
 const btnRight = document.querySelector('.slider__btn--right');
-let curSlide= 0;                                    // 8. To change the output we take a variable with let
-const maxSlide= slides.length;                      // 9. Would use to move slider 
+let curSlide = 0; // 8. To change the output we take a variable with let
+const maxSlide = slides.length; // 9. Would use to move slider
 
-
-
-const goToSlide = function(slide){
-  slides.forEach((s, i) => {                        // 6. forEach to loopover so that we can add style property
-    s.style.transform = `translateX(${100 * (i-slide)}%)`; // 7. Output: -100% 0% 100% 200%
+const goToSlide = function (slide) {
+  slides.forEach((s, i) => {
+    // 6. forEach to loopover so that we can add style property
+    s.style.transform = `translateX(${100 * (i - slide)}%)`; // 7. Output: -100% 0% 100% 200%
   });
-}
+};
 
 // //**Refactoring */
 // slides.forEach((s, i) => {                        // 2. forEach to loopover so that we can add style property
@@ -288,30 +287,82 @@ goToSlide(0);
 
 // //**Refactoring */
 
-const nextSlide= function(){
-  if(curSlide === maxSlide-1){                 // 10. To move slider in first position   
-    curSlide=0;          
-  }else{
+const nextSlide = function () {
+  if (curSlide === maxSlide - 1) {
+    // 10. To move slider in first position
+    curSlide = 0;
+  } else {
     curSlide++;
   }
-//**Refactoring */
+  //**Refactoring */
   // slides.forEach((s, i) => {                        // 6. forEach to loopover so that we can add style property
   //   s.style.transform = `translateX(${100 * (i-curSlide)}%)`; // 7. Output: -100% 0% 100% 200%
   // });
 
   goToSlide(curSlide);
-}
-const prevSlide = function(){        // 12. for btnLeft event we create oposite function prevSlide
-  if(curSlide===0){                 // 10. To move slider in first position   
-    curSlide = maxSlide-1;          
-  }else{
+  activateDot(curSlide);
+};
+const prevSlide = function () {
+  // 12. for btnLeft event we create oposite function prevSlide
+  if (curSlide === 0) {
+    // 10. To move slider in first position
+    curSlide = maxSlide - 1;
+  } else {
     curSlide--;
   }
   goToSlide(curSlide);
-}
-                                                // 5. Adding event listner for next slide      
+  activateDot(curSlide);
+};
+// 5. Adding event listner for next slide
 btnRight.addEventListener('click', nextSlide);
-btnLeft.addEventListener('click', prevSlide);  
+btnLeft.addEventListener('click', prevSlide);
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Building a Slider Component Part 2
+///////////////////////////////////////////////////////////////////////////////////////
+
+const dotContainer = document.querySelector('.dots'); // 2. Selecting for dots
+
+const createDots = function () {
+  // 3. Function to create dots in HTML.
+  slides.forEach(function (_, i) {
+    // 4. Here in peremeter we use '_'(unerscore). It is a convention of a throughway variable, that we don't need.
+    dotContainer.insertAdjacentHTML(
+      'beforeend',
+      `<button class="dots__dot" data-slide="${i}"></button>`
+    );
+  });
+};
+
+createDots();
+
+//6. Creating a function to show active dot. In here we first remove all the active class then add active that we click
+
+const activateDot = function (slide) {
+  document
+    .querySelectorAll('.dots__dot')
+    .forEach(dot => dot.classList.remove('dots__dot--active'));
+
+    document
+      .querySelector(`.dots__dot[data-slide="${slide}"]`) // 7. dots__dot[data-slide="${slide}"], meaning if dots__dot class have certain property? in which we can pass value.
+      .classList.add('dots__dot--active');
+};
+activateDot(0); // 8. Calling the function to view first active dot. It also used in key events and dotContainer event
+
+document.addEventListener('keydown', function (e) {
+  //1. Adding keyboard event
+  if (e.key === 'ArrowLeft') prevSlide;
+  e.key === 'ArrowRight' && nextSlide;
+});
+
+dotContainer.addEventListener('click', function (e) {
+  if (e.target.classList.contains('dots__dot')) {
+    // const slide = e.target.dataset.slide;
+    const { slide } = e.target.dataset; // 5. As it has the same name we can declare and use it like the shown method.
+    goToSlide(slide);
+    activateDot(slide);
+  }
+});
 
 ///////////////////////////////////////////////////////////////////////////////////////
 // Selecting, Creating, and Deleting Elements
