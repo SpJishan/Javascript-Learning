@@ -167,6 +167,217 @@ nav.addEventListener('mouseover', handleHover.bind(0.5)); // 1. Adding event lis
 nav.addEventListener('mouseout', handleHover.bind(1));
 
 ///////////////////////////////////////////////////////////////////////////////////////
+// Sticky navigation: Intersection Observer API
+///////////////////////////////////////////////////////////////////////////////////////
+// const obsCallback = function(entries, observer) {  // 5. entries are the array of threshold entries.
+//     entries.forEach(entry => {
+//       console.log(entry);
+//     })
+// };
+
+// const obsOptions = {
+//   root: null,             // 3. root: target element that need to intersect.null means viewport
+//   threshold: [0, 0.2],                 // 4. threshold: percentage of intercetion in which the observer fucntion is called. [0, 0.2] 0 means our callback function is called when the viewport ends and start a new one, 0.2 means 20% of threshold.
+// };
+
+// const observer = new IntersectionObserver(obsCallback, obsOptions); // 1. observer API will take a callback function and a collection of option
+
+// observer.observe(section1);  // 2. observe is a method
+
+//***Applying Sticky Navigation */
+
+const header = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
+
+const stickyNav = function (entries) {
+  const [entry] = entries; // 1. entry will collect the first entries
+  //console.log(entry);
+
+  //2. we have 1st entry data , the 2nd entry will appear when the 1st entries viewport ends. So we need to define a logic for stickyNav like if it is not 1st entry then add sticky otherwise remove it
+  if (!entry.isIntersecting)
+    nav.classList.add('sticky'); // 3. isIntersecting has a boolean value
+  else nav.classList.remove('sticky');
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  // rootMargin: '-90px', // 4. example 90 is a box of 90 pixels that will be applied outside of our Target element. So triggering it inside we will need it in negative value
+  rootMargin: `-${navHeight}px`, // 5. Implementing dynamic rootMargin calculation
+});
+
+headerObserver.observe(header); // 6. Calling Sticky nav Observer API
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Revealing Elements on Scroll
+///////////////////////////////////////////////////////////////////////////////////////
+
+const allSections = document.querySelectorAll('.section'); // 1. Selecting all section
+
+const revealSection = function (entries, observer) {
+  // 2. Here we will need observer parameter to unobserve once observed
+  const [entry] = entries;
+  // console.log(entry);
+
+  if (!entry.isIntersecting) return; // 7. Guard Cluase , there is always a defaut intersection
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target); // 3. unobserve improves performance once observed
+};
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+}); // 4. when the next section entries at 15%
+
+allSections.forEach(function (section) {
+  // 5. calling the observe api
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden'); // 6. Also it will hide all the sections at
+});
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Lazy Loading Images
+///////////////////////////////////////////////////////////////////////////////////////
+
+const imgTargets = document.querySelectorAll('img[data-src]'); // 1. selecting all images taht has the custom property od data-src
+
+const loadimg = function (entries, observer) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+  entry.target.src = entry.target.dataset.src; // 2. else replace src with data-src
+
+  entry.target.addEventListener('load', function () {
+    entry.target.classList.remove('lazy-img');
+  });
+
+  observer.unobserve(entry.target);
+};
+
+const imgObserver = new IntersectionObserver(loadimg, {
+  root: null,
+  threshold: 0,
+  rootMargin: '200px', // 3. to load image in higher position of mouse scroll
+});
+
+imgTargets.forEach(img => imgObserver.observe(img));
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Building a Slider Component-Organized and Refactored to a single function
+///////////////////////////////////////////////////////////////////////////////////////
+const slider = function(){
+  // -> Organized all the variables functions and events
+const slides = document.querySelectorAll('.slide'); // 1. Selecting  all slides
+const btnLeft = document.querySelector('.slider__btn--left'); // 4. Selecting the slider arrow buttons
+const btnRight = document.querySelector('.slider__btn--right');
+let curSlide = 0; // 8. To change the output we take a variable with let
+const maxSlide = slides.length; // 9. Would use to move slider
+
+///////////////////////////////////////
+// Functions
+//////////////////////////////////////
+
+const goToSlide = function (slide) {
+  slides.forEach((s, i) => {
+    // 6. forEach to loopover so that we can add style property
+    s.style.transform = `translateX(${100 * (i - slide)}%)`; // 7. Output: -100% 0% 100% 200%
+  });
+};
+
+// //**Refactoring */
+// slides.forEach((s, i) => {                        // 2. forEach to loopover so that we can add style property
+//   s.style.transform = `translateX(${100 * i}%)`; // 3. Output:0% 100% 200%
+// });
+
+// //**Refactoring */
+
+const nextSlide = function () {
+  if (curSlide === maxSlide - 1) {
+    // 10. To move slider in first position
+    curSlide = 0;
+  } else {
+    curSlide++;
+  }
+  //**Refactoring */
+  // slides.forEach((s, i) => {                        // 6. forEach to loopover so that we can add style property
+  //   s.style.transform = `translateX(${100 * (i-curSlide)}%)`; // 7. Output: -100% 0% 100% 200%
+  // });
+
+  goToSlide(curSlide);
+  activateDot(curSlide);
+};
+const prevSlide = function () {
+  // 12. for btnLeft event we create oposite function prevSlide
+  if (curSlide === 0) {
+    // 10. To move slider in first position
+    curSlide = maxSlide - 1;
+  } else {
+    curSlide--;
+  }
+  goToSlide(curSlide);
+  activateDot(curSlide);
+};
+
+const dotContainer = document.querySelector('.dots'); // 2. Selecting for dots
+
+const createDots = function () {
+  // 3. Function to create dots in HTML.
+  slides.forEach(function (_, i) {
+    // 4. Here in peremeter we use '_'(unerscore). It is a convention of a throughway variable, that we don't need.
+    dotContainer.insertAdjacentHTML(
+      'beforeend',
+      `<button class="dots__dot" data-slide="${i}"></button>`
+    );
+  });
+};
+
+//6. Creating a function to show active dot. In here we first remove all the active class then add active that we click
+
+const activateDot = function (slide) {
+  document
+    .querySelectorAll('.dots__dot')
+    .forEach(dot => dot.classList.remove('dots__dot--active'));
+
+  document
+    .querySelector(`.dots__dot[data-slide="${slide}"]`) // 7. dots__dot[data-slide="${slide}"], meaning if dots__dot class have certain property? in which we can pass value.
+    .classList.add('dots__dot--active');
+};
+
+const init = function () {
+  goToSlide(0);
+  createDots();
+
+  activateDot(0);
+};
+init();
+
+///////////////////////////////////////
+// Event Listener
+//////////////////////////////////////
+
+// 5. Adding event listner for next slide
+btnRight.addEventListener('click', nextSlide);
+btnLeft.addEventListener('click', prevSlide);
+
+document.addEventListener('keydown', function (e) {
+  //1. Adding keyboard event
+  if (e.key === 'ArrowLeft') prevSlide;
+  e.key === 'ArrowRight' && nextSlide;
+});
+
+dotContainer.addEventListener('click', function (e) {
+  if (e.target.classList.contains('dots__dot')) {
+    // const slide = e.target.dataset.slide;
+    const { slide } = e.target.dataset; // 5. As it has the same name we can declare and use it like the shown method.
+    goToSlide(slide);
+    activateDot(slide);
+  }
+});
+};
+
+slider();  // -> Compressed all the code to a single function slider() and just call it to implement on browser
+
+///////////////////////////////////////////////////////////////////////////////////////
 // Selecting, Creating, and Deleting Elements
 ///////////////////////////////////////////////////////////////////////////////////////
 
@@ -334,12 +545,28 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 
 ///////////////////////////////////////
 // Sticky navigation-Basics
-const initialCoords = section1.getBoundingClientRect();
-console.log(initialCoords);
+// const initialCoords = section1.getBoundingClientRect();
+// console.log(initialCoords);
 
-window.addEventListener('scroll', function () {
-  console.log(window.scrollY);
+// window.addEventListener('scroll', function () {
+//   console.log(window.scrollY);
 
-  if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
-  else nav.classList.remove('sticky');
+//   if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
+//   else nav.classList.remove('sticky');
+// });
+
+///////////////////////////////////////
+// Lifecycle DOM Events
+document.addEventListener('DOMContentLoaded', function (e) {
+  console.log('HTML parsed and DOM tree built!', e);
+});
+
+window.addEventListener('load', function (e) {
+  console.log('Page fully loaded', e);
+});
+
+window.addEventListener('beforeunload', function (e) {
+  e.preventDefault();
+  console.log(e);
+  e.returnValue = '';
 });
