@@ -214,25 +214,104 @@ headerObserver.observe(header); // 6. Calling Sticky nav Observer API
 
 const allSections = document.querySelectorAll('.section'); // 1. Selecting all section
 
-const revealSection = function (entries, observer) {  // 2. Here we will need observer parameter to unobserve once observed
+const revealSection = function (entries, observer) {
+  // 2. Here we will need observer parameter to unobserve once observed
   const [entry] = entries;
   // console.log(entry);
 
-  if(!entry.isIntersecting) return; // 7. Guard Cluase , there is always a defaut intersection
+  if (!entry.isIntersecting) return; // 7. Guard Cluase , there is always a defaut intersection
   entry.target.classList.remove('section--hidden');
-  observer.unobserve(entry.target); // 3. unobserve improves performance once observed 
+  observer.unobserve(entry.target); // 3. unobserve improves performance once observed
 };
-
 
 const sectionObserver = new IntersectionObserver(revealSection, {
   root: null,
   threshold: 0.15,
 }); // 4. when the next section entries at 15%
 
-allSections.forEach(function (section) {  // 5. calling the observe api
+allSections.forEach(function (section) {
+  // 5. calling the observe api
   sectionObserver.observe(section);
-  section.classList.add('section--hidden'); // 6. Also it will hide all the sections at first
+  section.classList.add('section--hidden'); // 6. Also it will hide all the sections at
 });
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Lazy Loading Images
+///////////////////////////////////////////////////////////////////////////////////////
+
+const imgTargets = document.querySelectorAll('img[data-src]'); // 1. selecting all images taht has the custom property od data-src
+
+const loadimg = function (entries, observer) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+  entry.target.src = entry.target.dataset.src; // 2. else replace src with data-src
+
+  entry.target.addEventListener('load', function () {
+    entry.target.classList.remove('lazy-img');
+  });
+
+  observer.unobserve(entry.target);
+};
+
+const imgObserver = new IntersectionObserver(loadimg, {
+  root: null,
+  threshold: 0,
+  rootMargin: '200px', // 3. to load image in higher position of mouse scroll
+});
+
+imgTargets.forEach(img => imgObserver.observe(img));
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Building a Slider Component Part 1
+///////////////////////////////////////////////////////////////////////////////////////
+
+const slides = document.querySelectorAll('.slide'); // 1. Selecting  all slides
+const btnLeft = document.querySelector('.slider__btn--left'); // 4. Selecting the slider arrow buttons
+const btnRight = document.querySelector('.slider__btn--right');
+let curSlide= 0;                                    // 8. To change the output we take a variable with let
+const maxSlide= slides.length;                      // 9. Would use to move slider 
+
+
+
+const goToSlide = function(slide){
+  slides.forEach((s, i) => {                        // 6. forEach to loopover so that we can add style property
+    s.style.transform = `translateX(${100 * (i-slide)}%)`; // 7. Output: -100% 0% 100% 200%
+  });
+}
+
+// //**Refactoring */
+// slides.forEach((s, i) => {                        // 2. forEach to loopover so that we can add style property
+//   s.style.transform = `translateX(${100 * i}%)`; // 3. Output:0% 100% 200%
+// });
+goToSlide(0);
+
+// //**Refactoring */
+
+const nextSlide= function(){
+  if(curSlide === maxSlide-1){                 // 10. To move slider in first position   
+    curSlide=0;          
+  }else{
+    curSlide++;
+  }
+//**Refactoring */
+  // slides.forEach((s, i) => {                        // 6. forEach to loopover so that we can add style property
+  //   s.style.transform = `translateX(${100 * (i-curSlide)}%)`; // 7. Output: -100% 0% 100% 200%
+  // });
+
+  goToSlide(curSlide);
+}
+const prevSlide = function(){        // 12. for btnLeft event we create oposite function prevSlide
+  if(curSlide===0){                 // 10. To move slider in first position   
+    curSlide = maxSlide-1;          
+  }else{
+    curSlide--;
+  }
+  goToSlide(curSlide);
+}
+                                                // 5. Adding event listner for next slide      
+btnRight.addEventListener('click', nextSlide);
+btnLeft.addEventListener('click', prevSlide);  
 
 ///////////////////////////////////////////////////////////////////////////////////////
 // Selecting, Creating, and Deleting Elements
