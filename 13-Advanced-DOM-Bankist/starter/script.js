@@ -263,14 +263,19 @@ const imgObserver = new IntersectionObserver(loadimg, {
 imgTargets.forEach(img => imgObserver.observe(img));
 
 ///////////////////////////////////////////////////////////////////////////////////////
-// Building a Slider Component Part 1
+// Building a Slider Component-Organized and Refactored to a single function
 ///////////////////////////////////////////////////////////////////////////////////////
-
+const slider = function(){
+  // -> Organized all the variables functions and events
 const slides = document.querySelectorAll('.slide'); // 1. Selecting  all slides
 const btnLeft = document.querySelector('.slider__btn--left'); // 4. Selecting the slider arrow buttons
 const btnRight = document.querySelector('.slider__btn--right');
 let curSlide = 0; // 8. To change the output we take a variable with let
 const maxSlide = slides.length; // 9. Would use to move slider
+
+///////////////////////////////////////
+// Functions
+//////////////////////////////////////
 
 const goToSlide = function (slide) {
   slides.forEach((s, i) => {
@@ -283,7 +288,6 @@ const goToSlide = function (slide) {
 // slides.forEach((s, i) => {                        // 2. forEach to loopover so that we can add style property
 //   s.style.transform = `translateX(${100 * i}%)`; // 3. Output:0% 100% 200%
 // });
-goToSlide(0);
 
 // //**Refactoring */
 
@@ -313,13 +317,6 @@ const prevSlide = function () {
   goToSlide(curSlide);
   activateDot(curSlide);
 };
-// 5. Adding event listner for next slide
-btnRight.addEventListener('click', nextSlide);
-btnLeft.addEventListener('click', prevSlide);
-
-///////////////////////////////////////////////////////////////////////////////////////
-// Building a Slider Component Part 2
-///////////////////////////////////////////////////////////////////////////////////////
 
 const dotContainer = document.querySelector('.dots'); // 2. Selecting for dots
 
@@ -334,8 +331,6 @@ const createDots = function () {
   });
 };
 
-createDots();
-
 //6. Creating a function to show active dot. In here we first remove all the active class then add active that we click
 
 const activateDot = function (slide) {
@@ -343,11 +338,26 @@ const activateDot = function (slide) {
     .querySelectorAll('.dots__dot')
     .forEach(dot => dot.classList.remove('dots__dot--active'));
 
-    document
-      .querySelector(`.dots__dot[data-slide="${slide}"]`) // 7. dots__dot[data-slide="${slide}"], meaning if dots__dot class have certain property? in which we can pass value.
-      .classList.add('dots__dot--active');
+  document
+    .querySelector(`.dots__dot[data-slide="${slide}"]`) // 7. dots__dot[data-slide="${slide}"], meaning if dots__dot class have certain property? in which we can pass value.
+    .classList.add('dots__dot--active');
 };
-activateDot(0); // 8. Calling the function to view first active dot. It also used in key events and dotContainer event
+
+const init = function () {
+  goToSlide(0);
+  createDots();
+
+  activateDot(0);
+};
+init();
+
+///////////////////////////////////////
+// Event Listener
+//////////////////////////////////////
+
+// 5. Adding event listner for next slide
+btnRight.addEventListener('click', nextSlide);
+btnLeft.addEventListener('click', prevSlide);
 
 document.addEventListener('keydown', function (e) {
   //1. Adding keyboard event
@@ -363,6 +373,9 @@ dotContainer.addEventListener('click', function (e) {
     activateDot(slide);
   }
 });
+};
+
+slider();  // -> Compressed all the code to a single function slider() and just call it to implement on browser
 
 ///////////////////////////////////////////////////////////////////////////////////////
 // Selecting, Creating, and Deleting Elements
