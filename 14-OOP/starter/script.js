@@ -150,10 +150,25 @@ class PersonCl {
     console.log(`Hey ${this.fullName}`);
   }
 
+  // 3. classes do also have getters and setters, and they do indeed work in the exact same way.
   
+  get age() {
+    return 2037 - this.birthYear;
+  }
+  
+  // 4. Set a property that already exists
+  set fullName(name) {
+    if (name.includes(' ')) this._fullName = name;
+    else alert(`${name} is not a full name!`);
+  }
+
+  get fullName() {
+    return this._fullName;
+  }
 }
 
 const jessica = new PersonCl('Jessica Davis', 1996);
+const walter = new PersonCl('Walter', 1965);     // doesn't have _fullName
 console.log(jessica);
 jessica.calcAge();
 
@@ -172,3 +187,22 @@ jessica.greet();
 // PersonCl.hey();
 
 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Setters and Getters
+const account = {
+  owner: 'Jonas',
+  movements: [200, 530, 120, 300],
+
+  get latest() {
+    return this.movements.slice(-1).pop();  // 1. this.movements.slice (-1) But this is actually gonna return an array, so an array with the last position and so we can simply take that out using the pop method.
+  },
+
+  set latest(mov) {  // 2. any setter method needs to have exactly one parameter
+    this.movements.push(mov);
+  },
+};
+
+console.log(account.latest);
+
+account.latest = 50;
+console.log(account.movements);
