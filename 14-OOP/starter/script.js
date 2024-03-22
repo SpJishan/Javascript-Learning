@@ -139,7 +139,7 @@ class PersonCl {
   }
 
 
-  //2. Instance methods Methods will be added to .prototype property. Now, what's important to understand here is that all of these methods that we write in the class, so outside of the constructor will be on the prototype of the objects. And not on the objects themselves.
+  //2. Instance methods: Methods will be added to .prototype property. Now, what's important to understand here is that all of these methods that we write in the class, so outside of the constructor will be on the prototype of the objects. And not on the objects themselves.
 
 
   calcAge() {
@@ -165,10 +165,15 @@ class PersonCl {
   get fullName() {
     return this._fullName;
   }
+  //Static Method
+  static hey() {
+    console.log('Hey there 👋');
+    console.log(this);
+  }
 }
 
 const jessica = new PersonCl('Jessica Davis', 1996);
-const walter = new PersonCl('Walter', 1965);     // doesn't have _fullName
+const walter = new PersonCl('Walter White', 1965);     // doesn't have _fullName
 console.log(jessica);
 jessica.calcAge();
 
@@ -184,7 +189,7 @@ jessica.greet();
 // 4. Classes are first-class citizens
 // 5. Classes are executed in strict mode
 
-// PersonCl.hey();
+PersonCl.hey();
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
