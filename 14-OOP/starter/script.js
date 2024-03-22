@@ -194,20 +194,52 @@ PersonCl.hey();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // Setters and Getters
-const account = {
-  owner: 'Jonas',
-  movements: [200, 530, 120, 300],
+// const account = {
+//   owner: 'Jonas',
+//   movements: [200, 530, 120, 300],
 
-  get latest() {
-    return this.movements.slice(-1).pop();  // 1. this.movements.slice (-1) But this is actually gonna return an array, so an array with the last position and so we can simply take that out using the pop method.
+//   get latest() {
+//     return this.movements.slice(-1).pop();  // 1. this.movements.slice (-1) But this is actually gonna return an array, so an array with the last position and so we can simply take that out using the pop method.
+//   },
+
+//   set latest(mov) {  // 2. any setter method needs to have exactly one parameter
+//     this.movements.push(mov);
+//   },
+// };
+
+// console.log(account.latest);
+
+// account.latest = 50;
+// console.log(account.movements);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Object.create
+
+const PersonProto = {
+  calcAge() {
+    console.log(2024 - this.birthYear);
   },
 
-  set latest(mov) {  // 2. any setter method needs to have exactly one parameter
-    this.movements.push(mov);
+  init(firstName, birthYear) {
+    this.firstName =firstName;
+    this.birthYear = birthYear;
   },
-};
+}
 
-console.log(account.latest);
+const Shafinul = Object.create(PersonProto);  
 
-account.latest = 50;
-console.log(account.movements);
+console.log(Shafinul);
+
+Shafinul.name= 'Shafinul';
+Shafinul.birthYear= 1993;
+Shafinul.calcAge();
+
+console.log(Shafinul.__proto__ === PersonProto);
+
+const Sarah = Object.create(PersonProto);
+
+Sarah.init('Sarah', 1997);
+Sarah.calcAge();
+
+
+
