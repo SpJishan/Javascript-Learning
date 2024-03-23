@@ -288,43 +288,105 @@ GOOD LUCK 😀
 /////////////////////////////////////////////////////////////////////////////////////////////
 // Inheritance Between "Classes": Constructor Functions
 
-const person = function(firstName, birthYear){
-  this.firstName = firstName;
-  this.birthYear = birthYear;
+// const person = function(firstName, birthYear){
+//   this.firstName = firstName;
+//   this.birthYear = birthYear;
+// };
+
+// person.prototype.calcage = function(){
+//   console.log(2024-this.birthYear);
+// }
+
+// const student = function (firstName, birthYear, course) {
+//   // this.firstName = firstName;
+//   // this.birthYear = birthYear;
+//   person.call(this, firstName, birthYear)   // commit msg 1
+//   this.course = course;
+// }
+
+// // 2. Linking prototypes
+// student.prototype = Object.create(person.prototype);
+
+// student.prototype.introduce = function()
+// {
+//   console.log(`My name is ${this.firstName} and I studied in ${this.course}.`)
+// }
+// const shafinul = new student ('Shafinul', 1995, 'CSE');
+
+// console.log(shafinul);
+// shafinul.introduce();
+// shafinul.calcage();
+
+// // 3. Checking all the inherit prototypes
+
+// console.log(mike.__proto__);
+// console.log(mike.__proto__.__proto__);
+
+// console.log(mike instanceof Student);
+// console.log(mike instanceof Person);
+// console.log(mike instanceof Object);
+
+// Student.prototype.constructor = Student;
+// console.dir(Student.prototype.constructor);
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+// Coding Challenge #3
+
+/* 
+1. Use a constructor function to implement an Electric Car (called EV) as a CHILD "class" of Car. Besides a make and current speed, the EV also has the current battery charge in % ('charge' property);
+2. Implement a 'chargeBattery' method which takes an argument 'chargeTo' and sets the battery charge to 'chargeTo';
+3. Implement an 'accelerate' method that will increase the car's speed by 20, and decrease the charge by 1%. Then log a message like this: 'Tesla going at 140 km/h, with a charge of 22%';
+4. Create an electric car object and experiment with calling 'accelerate', 'brake' and 'chargeBattery' (charge to 90%). Notice what happens when you 'accelerate'! HINT: Review the definiton of polymorphism 😉
+
+DATA CAR 1: 'Tesla' going at 120 km/h, with a charge of 23%
+
+GOOD LUCK 😀
+*/
+
+//1. Copy the car parent 
+const Car = function (make, speed) {
+  this.make = make;
+  this.speed = speed;
 };
 
-person.prototype.calcage = function(){
-  console.log(2024-this.birthYear);
-}
+Car.prototype.accelerate = function () {
+  this.speed += 10;
+  console.log(`${this.make} is going at ${this.speed} km/h`);
+};
 
-const student = function (firstName, birthYear, course) {
-  // this.firstName = firstName;
-  // this.birthYear = birthYear;
-  person.call(this, firstName, birthYear)   // commit msg 1
-  this.course = course;
-}
+Car.prototype.brake = function () {
+  this.speed -= 5;
+  console.log(`${this.make} is going at ${this.speed} km/h`);
+};
 
-// 2. Linking prototypes
-student.prototype = Object.create(person.prototype);
+// 2. Constructing EV function as a child of car
+const EV = function (make, speed, charge) {
+  Car.call(this, make, speed);
+  this.charge = charge;
+};
 
-student.prototype.introduce = function()
-{
-  console.log(`My name is ${this.firstName} and I studied in ${this.course}.`)
-}
-const shafinul = new student ('Shafinul', 1995, 'CSE');
 
-console.log(shafinul);
-shafinul.introduce();
-shafinul.calcage();
+// 3. Link the prototypes
+EV.prototype = Object.create(Car.prototype);
 
-// 3. Checking all the inherit prototypes
+// 4. Adding new prototype chargebettery to EV
+EV.prototype.chargeBattery = function (chargeTo) {
+  this.charge = chargeTo;
+};
 
-console.log(mike.__proto__);
-console.log(mike.__proto__.__proto__);
+// 5. Implementing coding point 3
 
-console.log(mike instanceof Student);
-console.log(mike instanceof Person);
-console.log(mike instanceof Object);
+EV.prototype.accelerate = function () {
+  this.speed += 20;
+  this.charge--;
+  console.log(
+    `${this.make} is going at ${this.speed} km/h, with a charge of ${this.charge}`
+  );
+};
 
-Student.prototype.constructor = Student;
-console.dir(Student.prototype.constructor);
+// 6. Testing Data
+const tesla = new EV('Tesla', 120, 23);
+tesla.chargeBattery(90);
+console.log(tesla);
+tesla.brake();
+tesla.accelerate();
