@@ -506,37 +506,44 @@ class Account {
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
-    this.pin = pin;
-    this.movements = []; // 1. of course we can create even more properties on any instance and properties that are not based on any inputs.
+    this._pin = pin;
+    this._movements = []; // 1.Protected property(putting underscore). again this does not actually make the property truly private because this is just a convention.So it's something that developers agree to use
     this.locale = navigator.language;
 
     console.log(`Thank you ${owner} for openning a new account.`);
   }
 
-  // 2. Adding other methods to the class
+  // 2. Adding other methods to the class ------Public API's
+
+  getMovements(){
+    return this._movements;
+  }
+
   deposit(val) {
-    this.movements.push(val);
+    this._movements.push(val);
   }
 
   withdraw(val) {
-    this.movements.push(-val);
+    this._movements.push(-val);
   }
 
-  approveLoan(val) {
+  _approveLoan(val) {
     return true;
   }
 
   requestLoan(val) {
-    if (this.approveLoan(val)) {
+    if (this._approveLoan(val)) {
       this.deposit(val);
     }
     console.log(`Loan Approved`);
   }
 }
 
-// 3. Testing data
+
 const acc1 = new Account('Shafinul', 'BDT', 1111);
 acc1.deposit(1500000);
 acc1.withdraw(1000000);
 acc1.requestLoan(500000);
+
+console.log(acc1.getMovements()); // 3. Everyone can still at least access the movements but they cannot override them.
 console.log(acc1);
