@@ -9,10 +9,10 @@
 //   this.firstName = firstName;
 //   this.birthYear = birthYear;
 
-  // Never to this!
-  // this.calcAge = function () {
-  //   console.log(2037 - this.birthYear);
-  // };
+// Never to this!
+// this.calcAge = function () {
+//   console.log(2037 - this.birthYear);
+// };
 // };
 
 // const jonas = new Person('Jonas', 1991);
@@ -283,8 +283,6 @@ GOOD LUCK 😀
 // ford.speedUS = 50;
 // console.log(ford)
 
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////
 // Inheritance Between "Classes": Constructor Functions
 
@@ -343,50 +341,117 @@ DATA CAR 1: 'Tesla' going at 120 km/h, with a charge of 23%
 GOOD LUCK 😀
 */
 
-//1. Copy the car parent 
-const Car = function (make, speed) {
-  this.make = make;
-  this.speed = speed;
-};
+//1. Copy the car parent
+// const Car = function (make, speed) {
+//   this.make = make;
+//   this.speed = speed;
+// };
 
-Car.prototype.accelerate = function () {
-  this.speed += 10;
-  console.log(`${this.make} is going at ${this.speed} km/h`);
-};
+// Car.prototype.accelerate = function () {
+//   this.speed += 10;
+//   console.log(`${this.make} is going at ${this.speed} km/h`);
+// };
 
-Car.prototype.brake = function () {
-  this.speed -= 5;
-  console.log(`${this.make} is going at ${this.speed} km/h`);
-};
+// Car.prototype.brake = function () {
+//   this.speed -= 5;
+//   console.log(`${this.make} is going at ${this.speed} km/h`);
+// };
 
-// 2. Constructing EV function as a child of car
-const EV = function (make, speed, charge) {
-  Car.call(this, make, speed);
-  this.charge = charge;
-};
+// // 2. Constructing EV function as a child of car
+// const EV = function (make, speed, charge) {
+//   Car.call(this, make, speed);
+//   this.charge = charge;
+// };
+
+// // 3. Link the prototypes
+// EV.prototype = Object.create(Car.prototype);
+
+// // 4. Adding new prototype chargebettery to EV
+// EV.prototype.chargeBattery = function (chargeTo) {
+//   this.charge = chargeTo;
+// };
+
+// // 5. Implementing coding point 3
+
+// EV.prototype.accelerate = function () {
+//   this.speed += 20;
+//   this.charge--;
+//   console.log(
+//     `${this.make} is going at ${this.speed} km/h, with a charge of ${this.charge}`
+//   );
+// };
+
+// // 6. Testing Data
+// const tesla = new EV('Tesla', 120, 23);
+// tesla.chargeBattery(90);
+// console.log(tesla);
+// tesla.brake();
+// tesla.accelerate();
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Inheritance Between "Classes": ES6 Classes
+
+// 1. Copied the parent class
+class PersonCl {
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
+
+  // Instance methods
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  }
+
+  greet() {
+    console.log(`Hey ${this.fullName}`);
+  }
+
+  get age() {
+    return 2037 - this.birthYear;
+  }
+
+  set fullName(name) {
+    if (name.includes(' ')) this._fullName = name;
+    else alert(`${name} is not a full name!`);
+  }
+
+  get fullName() {
+    return this._fullName;
+  }
+
+  // Static method
+  static hey() {
+    console.log('Hey there 👋');
+  }
+}
+
+// 2. 
+class StudentCl extends PersonCl {
+  constructor(fullName, birthYear, course) {  // 3.
+    // Always needs to happen first!
+    super(fullName, birthYear); // 4.
+    this.course = course;       // 5.
+  }
 
 
-// 3. Link the prototypes
-EV.prototype = Object.create(Car.prototype);
+  // 6.
+  introduce() {
+    console.log(`My name is ${this.fullName} and I study ${this.course}`);
+  }
 
-// 4. Adding new prototype chargebettery to EV
-EV.prototype.chargeBattery = function (chargeTo) {
-  this.charge = chargeTo;
-};
+  calcAge() {
+    console.log(
+      `I'm ${
+        2037 - this.birthYear
+      } years old, but as a student I feel more like ${
+        2037 - this.birthYear + 10
+      }`
+    );
+  }
+}
 
-// 5. Implementing coding point 3
 
-EV.prototype.accelerate = function () {
-  this.speed += 20;
-  this.charge--;
-  console.log(
-    `${this.make} is going at ${this.speed} km/h, with a charge of ${this.charge}`
-  );
-};
-
-// 6. Testing Data
-const tesla = new EV('Tesla', 120, 23);
-tesla.chargeBattery(90);
-console.log(tesla);
-tesla.brake();
-tesla.accelerate();
+const martha = new StudentCl('Martha Jones', 2012, 'Computer Science');
+martha.introduce();
+martha.calcAge();
