@@ -502,40 +502,72 @@ GOOD LUCK 😀
 // const acc1 = new Account('Shafinul', 'BDT', 1111 , []);
 // console.log(acc1);
 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Encapsulation: Protected Properties and Methods
+// Encapsulation: Private Class Fields and Methods
+
+// 1) Public fields
+// 2) Private fields
+// 3) Public methods
+// 4) Private methods
+// (there is also the static version)
+
+
+
 class Account {
+
+  //Public Fields (instences)
+  locale = navigator.language;
+  // _movements = [];
+
+  //Private Fields -it is like declaring a variable
+  #movements = [];
+  #pin
+
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
-    this._pin = pin;
-    this._movements = []; // 1.Protected property(putting underscore). again this does not actually make the property truly private because this is just a convention.So it's something that developers agree to use
-    this.locale = navigator.language;
+    this.#pin = pin;
+    // this._movements = []; // 1.Protected property(putting underscore). again this does not actually make the property truly private because this is just a convention.So it's something that developers agree to use
+    // this.locale = navigator.language;
 
     console.log(`Thank you ${owner} for openning a new account.`);
   }
 
   // 2. Adding other methods to the class ------Public API's
-
+  // Public Methods
   getMovements(){
-    return this._movements;
+    return this.#movements;
   }
 
   deposit(val) {
-    this._movements.push(val);
+    this.#movements.push(val);
+    return this;      // It will make chainable
   }
 
   withdraw(val) {
-    this._movements.push(-val);
+    this.#movements.push(-val);
+    return this;
   }
 
-  _approveLoan(val) {
+  
+
+  requestLoan(val) {
+    if (this.#approveLoan(val)) {
+      this.deposit(val);
+      console.log(`Loan Approved`);
+      return this;
+    }
+    
+  }
+
+  // Private Method
+  #approveLoan(val) {
     return true;
   }
 
-  requestLoan(val) {
-    if (this._approveLoan(val)) {
-      this.deposit(val);
-    }
-    console.log(`Loan Approved`);
+  static helper(){
+    console.log(`helper`);
   }
 }
 
@@ -547,3 +579,8 @@ acc1.requestLoan(500000);
 
 console.log(acc1.getMovements()); // 3. Everyone can still at least access the movements but they cannot override them.
 console.log(acc1);
+Account.helper();
+
+// Chaining
+acc1.deposit(300).deposit(500).withdraw(35).requestLoan(25000).withdraw(4000);
+console.log(acc1.getMovements());
