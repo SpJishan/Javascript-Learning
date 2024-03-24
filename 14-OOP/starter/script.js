@@ -514,73 +514,151 @@ GOOD LUCK 😀
 
 
 
-class Account {
+// class Account {
 
-  //Public Fields (instences)
-  locale = navigator.language;
-  // _movements = [];
+//   //Public Fields (instences)
+//   locale = navigator.language;
+//   // _movements = [];
 
-  //Private Fields -it is like declaring a variable
-  #movements = [];
-  #pin
+//   //Private Fields -it is like declaring a variable
+//   #movements = [];
+//   #pin
 
-  constructor(owner, currency, pin) {
-    this.owner = owner;
-    this.currency = currency;
-    this.#pin = pin;
-    // this._movements = []; // 1.Protected property(putting underscore). again this does not actually make the property truly private because this is just a convention.So it's something that developers agree to use
-    // this.locale = navigator.language;
+//   constructor(owner, currency, pin) {
+//     this.owner = owner;
+//     this.currency = currency;
+//     this.#pin = pin;
+//     // this._movements = []; // 1.Protected property(putting underscore). again this does not actually make the property truly private because this is just a convention.So it's something that developers agree to use
+//     // this.locale = navigator.language;
 
-    console.log(`Thank you ${owner} for openning a new account.`);
-  }
+//     console.log(`Thank you ${owner} for openning a new account.`);
+//   }
 
-  // 2. Adding other methods to the class ------Public API's
-  // Public Methods
-  getMovements(){
-    return this.#movements;
-  }
+//   // 2. Adding other methods to the class ------Public API's
+//   // Public Methods
+//   getMovements(){
+//     return this.#movements;
+//   }
 
-  deposit(val) {
-    this.#movements.push(val);
-    return this;      // It will make chainable
-  }
+//   deposit(val) {
+//     this.#movements.push(val);
+//     return this;      // It will make chainable
+//   }
 
-  withdraw(val) {
-    this.#movements.push(-val);
-    return this;
-  }
+//   withdraw(val) {
+//     this.#movements.push(-val);
+//     return this;
+//   }
 
   
 
-  requestLoan(val) {
-    if (this.#approveLoan(val)) {
-      this.deposit(val);
-      console.log(`Loan Approved`);
-      return this;
-    }
+//   requestLoan(val) {
+//     if (this.#approveLoan(val)) {
+//       this.deposit(val);
+//       console.log(`Loan Approved`);
+//       return this;
+//     }
     
+//   }
+
+//   // Private Method
+//   #approveLoan(val) {
+//     return true;
+//   }
+
+//   static helper(){
+//     console.log(`helper`);
+//   }
+// }
+
+
+// const acc1 = new Account('Shafinul', 'BDT', 1111);
+// acc1.deposit(1500000);
+// acc1.withdraw(1000000);
+// acc1.requestLoan(500000);
+
+// console.log(acc1.getMovements()); // 3. Everyone can still at least access the movements but they cannot override them.
+// console.log(acc1);
+// Account.helper();
+
+// // Chaining
+// acc1.deposit(300).deposit(500).withdraw(35).requestLoan(25000).withdraw(4000);
+// console.log(acc1.getMovements());
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+// Coding Challenge #4
+
+/* 
+1. Re-create challenge #3, but this time using ES6 classes: create an 'EVCl' child class of the 'CarCl' class
+2. Make the 'charge' property private;
+3. Implement the ability to chain the 'accelerate' and 'chargeBattery' methods of this class, and also update the 'brake' method in the 'CarCl' class. They experiment with chining!
+
+DATA CAR 1: 'Rivian' going at 120 km/h, with a charge of 23%
+
+GOOD LUCK 😀
+*/
+
+
+class CarCl {
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
   }
 
-  // Private Method
-  #approveLoan(val) {
-    return true;
+  accelerate() {
+    this.speed += 10;
+    console.log(`${this.make} is going at ${this.speed} km/h`);
   }
 
-  static helper(){
-    console.log(`helper`);
+  brake() {
+    this.speed -= 5;
+    console.log(`${this.make} is going at ${this.speed} km/h`);
+    return this;
+  }
+
+  get speedUS() {
+    return this.speed / 1.6;
+  }
+
+  set speedUS(speed) {
+    this.speed = speed * 1.6;
   }
 }
 
+class EVCl extends CarCl {
+  #charge;
 
-const acc1 = new Account('Shafinul', 'BDT', 1111);
-acc1.deposit(1500000);
-acc1.withdraw(1000000);
-acc1.requestLoan(500000);
+  constructor(make, speed, charge) {
+    super(make, speed);
+    this.#charge = charge;
+  }
 
-console.log(acc1.getMovements()); // 3. Everyone can still at least access the movements but they cannot override them.
-console.log(acc1);
-Account.helper();
+  chargeBattery(chargeTo) {
+    this.#charge = chargeTo;
+    return this;
+  }
 
-// Chaining
-acc1.deposit(300).deposit(500).withdraw(35).requestLoan(25000).withdraw(4000);
-console.log(acc1.getMovements());
+  accelerate() {
+    this.speed += 20;
+    this.#charge--;
+    console.log(
+      `${this.make} is going at ${this.speed} km/h, with a charge of ${
+        this.#charge
+      }`
+    );
+    return this;
+  }
+}
+
+const rivian = new EVCl('Rivian', 120, 23);
+console.log(rivian);
+// console.log(rivian.#charge);
+rivian
+  .accelerate()
+  .accelerate()
+  .accelerate()
+  .brake()
+  .chargeBattery(50)
+  .accelerate();
+
+console.log(rivian.speedUS);
