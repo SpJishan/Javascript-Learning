@@ -11,56 +11,62 @@ const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 
-let map, mapEvent;
 
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(
-    function (position) {
-      // Gettinng the latitude and longitude
-      // const latitude = position.coords.latitude;
-      // const longitude = position.coords.longitude;
-      const { latitude } = position.coords; // New structuring
-      const { longitude } = position.coords;
 
-      const coords = [latitude, longitude];
+class App {
+  // 1
 
-      console.log(`https://www.google.com/maps/@${latitude},${longitude}`); // Converted it to google links
-      map = L.map('map').setView(coords, 10); //Replacing  co-ordinates array with coords
+  #map; //4
+  #mapEvent;
+  constructor() {
+    this._getPosition(); // 3.1
+    form.addEventListener('submit', this._newWorkout.bind(this)); // 5  // 5.1 //5.3
 
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      }).addTo(map);
+    inputType.addEventListener('change', this._toggleElevationField); //6   //Selcting the type field it also change the cadencce to elevation
+  }
 
-      map.on('click', function (mapE) {
-        //.on (map.on) is a leaflet property not javaScript
-        // Adding Click event on the map
-        mapEvent = mapE;
-        console.log(mapEvent);
-        form.classList.remove('hidden'); //1. To display form, removed the classlist hidden
-        inputDistance.focus(); //2. Focus input to the distance field
+  _getPosition() {
+    // 2
+    if (navigator.geolocation)
+      navigator.geolocation.getCurrentPosition(
+        this._loadMap.bind(this), // 2.1   // 4.2
+        function () {
+          alert(`Could not get your position`);
+        }
+      );
+  }
 
-        // const { lat, lng} = mapEvent.latlng;
+  _loadMap(position) {
+    // 2.1 // Gettinng the latitude and longitude // const latitude = position.coords.latitude; // const longitude = position.coords.longitude;
+    const { latitude } = position.coords; // New structuring
+    const { longitude } = position.coords;
 
-        // L.marker([lat, lng])  // setting lat lng
-        //   .addTo(map)
-        //   .bindPopup(L.popup({  // From leaflet documentaion in marker added different property to the popup
-        //     maxWidth: 250,
-        //     minWidth: 100,
-        //     autoClose: false,
-        //     closeOnClick: false,
-        //     className: 'running-popup',
-        //   }))
-        //   .setPopupContent('Workout')
-        //   .openPopup();
-      });
-    },
-    function () {
-      alert(`Could not get your position`);
-    }
-  );
+    const coords = [latitude, longitude];
 
-  form.addEventListener('submit', function (e) {
+    console.log(`https://www.google.com/maps/@${latitude},${longitude}`); // Converted it to google links
+    this.#map = L.map('map').setView(coords, 17); //4.1 //Replacing  co-ordinates array with coords
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(this.#map); // 4.1
+
+    this.#map.on('click', this._showForm.bind(this)); // 4.1 //.on (map.on) is a leaflet property not javaScript // Adding Click event on the map
+  }
+
+  _showForm(mapE) {
+    this.#mapEvent = mapE; // 4.1
+    form.classList.remove('hidden'); //1. To display form, removed the classlist hidden
+    inputDistance.focus(); //2. Focus input to the distance field
+  }
+
+  _toggleElevationField() {
+    inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
+    inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
+  }
+
+  _newWorkout(e) {
+    //5.1
     // Rearrange code to a form event listner to  Display Marker
     e.preventDefault();
 
@@ -71,9 +77,9 @@ if (navigator.geolocation) {
       inputElevation.value =
         '';
 
-    const { lat, lng } = mapEvent.latlng;
+    const { lat, lng } = this.#mapEvent.latlng;
     L.marker([lat, lng]) // setting lat lng
-      .addTo(map)
+      .addTo(this.#map) //5.2
       .bindPopup(
         L.popup({
           // From leaflet documentaion in marker added different property to the popup
@@ -86,11 +92,8 @@ if (navigator.geolocation) {
       )
       .setPopupContent('Workout')
       .openPopup();
-  });
-
-//   Selcting the type field it also change the cadencce to elevation
-  inputType.addEventListener('change', function(){
-    inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
-    inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
-  })
+  }
 }
+
+const app = new App(); // 3.
+// app._getPosition();
