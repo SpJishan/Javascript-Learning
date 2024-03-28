@@ -4,6 +4,7 @@ class Workout {
   // 1
   date = new Date(); // 2
   id = (Date.now() + '').slice(-10); //2.1
+  clicks=0;
 
   constructor(coords, distance, duration) {
     // 3
@@ -20,6 +21,9 @@ class Workout {
     this.description = `${this.type[0].toUpperCase()}${this.type.slice(1)} on ${
       months[this.date.getMonth()]
     } ${this.date.getDate()}`;
+  }
+  click(){
+    this.clicks++;
   }
 }
 
@@ -74,6 +78,7 @@ class App {
   // 1
 
   #map; //4
+  #mapZoomLevel = 13;
   #mapEvent;
   #workouts = [];
 
@@ -81,6 +86,7 @@ class App {
     this._getPosition(); // 3.1
     form.addEventListener('submit', this._newWorkout.bind(this)); // 5  // 5.1 //5.3
     inputType.addEventListener('change', this._toggleElevationField); //6   //Selcting the type field it also change the cadencce to elevation
+    containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
   }
 
   _getPosition() {
@@ -102,7 +108,7 @@ class App {
     const coords = [latitude, longitude];
 
     console.log(`https://www.google.com/maps/@${latitude},${longitude}`); // Converted it to google links
-    this.#map = L.map('map').setView(coords, 17); //4.1 //Replacing  co-ordinates array with coords
+    this.#map = L.map('map').setView(coords, this.#mapZoomLevel); //4.1 //Replacing  co-ordinates array with coords
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution:
@@ -169,7 +175,7 @@ class App {
         !validInputs(distance, duration, cadence) ||
         !allPositive(distance, duration, cadence)
       )
-        return alert('Inputs have to be positive numbers!');
+        return alert('Inputs have to be positive numbers! or you may not complete all the input fields');
 
       workout = new Running([lat, lng], distance, duration, cadence); // 3
     }
@@ -219,7 +225,9 @@ class App {
           className: `${workout.type}-popup`, // 6.3 //6.4
         })
       )
-      .setPopupContent(`${workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'} ${workout.description}`)    // 9
+      .setPopupContent(
+        `${workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'} ${workout.description}`
+      ) // 9
       .openPopup();
   }
 
@@ -273,6 +281,26 @@ class App {
             </li>`;
 
     form.insertAdjacentHTML('afterend', html);
+  }
+
+  _moveToPopup(e) {
+    const workoutEl = e.target.closest('.workout'); // 1.1
+
+    if (!workoutEl) return; // 1.2
+
+    const workout = this.#workouts.find(
+      work => work.id === workoutEl.dataset.id
+    );
+
+    this.#map.setView(workout.coords, this.#mapZoomLevel + 2, {   // 1.4
+      animate: true,
+      pan: {
+        duration: 1,
+      },
+    });
+
+    //1.5 using the public interface
+    workout.click();
   }
 }
 
