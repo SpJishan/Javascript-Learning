@@ -4,7 +4,7 @@ class Workout {
   // 1
   date = new Date(); // 2
   id = (Date.now() + '').slice(-10); //2.1
-  clicks=0;
+  clicks = 0;
 
   constructor(coords, distance, duration) {
     // 3
@@ -22,7 +22,7 @@ class Workout {
       months[this.date.getMonth()]
     } ${this.date.getDate()}`;
   }
-  click(){
+  click() {
     this.clicks++;
   }
 }
@@ -62,7 +62,7 @@ class Cycling extends Workout {
 
 const run1 = new Running([23, 90], 5.2, 24, 178); // 5
 const cyc = new Cycling([70, -79], 5.2, 24, 178);
-console.log(run1, cyc);
+
 
 const form = document.querySelector('.form');
 const containerWorkouts = document.querySelector('.workouts');
@@ -83,7 +83,13 @@ class App {
   #workouts = [];
 
   constructor() {
+    //User Position
     this._getPosition(); // 3.1
+
+    //Get data from local storage
+    this._getLocalStorage();
+
+    //Attached Event Handlers
     form.addEventListener('submit', this._newWorkout.bind(this)); // 5  // 5.1 //5.3
     inputType.addEventListener('change', this._toggleElevationField); //6   //Selcting the type field it also change the cadencce to elevation
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
@@ -107,7 +113,7 @@ class App {
 
     const coords = [latitude, longitude];
 
-    console.log(`https://www.google.com/maps/@${latitude},${longitude}`); // Converted it to google links
+    // console.log(`https://www.google.com/maps/@${latitude},${longitude}`); // Converted it to google links
     this.#map = L.map('map').setView(coords, this.#mapZoomLevel); //4.1 //Replacing  co-ordinates array with coords
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -116,6 +122,10 @@ class App {
     }).addTo(this.#map); // 4.1
 
     this.#map.on('click', this._showForm.bind(this)); // 4.1 //.on (map.on) is a leaflet property not javaScript // Adding Click event on the map
+
+    this.#workouts.forEach(work => {
+      this._renderWorkoutMarker(work);
+    });
   }
 
   _showForm(mapE) {
@@ -175,7 +185,9 @@ class App {
         !validInputs(distance, duration, cadence) ||
         !allPositive(distance, duration, cadence)
       )
-        return alert('Inputs have to be positive numbers! or you may not complete all the input fields');
+        return alert(
+          'Inputs have to be positive numbers! or you may not complete all the input fields'
+        );
 
       workout = new Running([lat, lng], distance, duration, cadence); // 3
     }
@@ -209,6 +221,9 @@ class App {
 
     // Clearing the input field after typing
     this._hideForm();
+
+    // 9. Set local storage to all workout
+    this._setLocalStorage();
   }
   //Render workout marker
   _renderWorkoutMarker(workout) {
@@ -292,7 +307,8 @@ class App {
       work => work.id === workoutEl.dataset.id
     );
 
-    this.#map.setView(workout.coords, this.#mapZoomLevel + 2, {   // 1.4
+    this.#map.setView(workout.coords, this.#mapZoomLevel + 2, {
+      // 1.4
       animate: true,
       pan: {
         duration: 1,
@@ -300,7 +316,26 @@ class App {
     });
 
     //1.5 using the public interface
-    workout.click();
+    // workout.click();
+  }
+  _setLocalStorage() {
+    localStorage.setItem('workouts', JSON.stringify(this.#workouts)); // 9.1
+  }
+
+  _getLocalStorage() {
+    const data = JSON.parse(localStorage.getItem('workouts')); // 9.2
+
+    if (!data) return;
+
+    this.#workouts = data;
+    this.#workouts.forEach(work => {
+      this._renderWorkout(work);
+    });
+  }
+  
+  reset() {
+    localStorage.removeItem('workouts');
+    location.reload();
   }
 }
 
