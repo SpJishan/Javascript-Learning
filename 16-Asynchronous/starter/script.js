@@ -5,8 +5,8 @@ const countriesContainer = document.querySelector('.countries');
 
 ///////////////////////////////////////
 
-// const getCountryData = function(country) { 
-// const request = new XMLHttpRequest();  
+// const getCountryData = function(country) {
+// const request = new XMLHttpRequest();
 // request.open(
 //   'GET',
 //   `https://countries-api-836d.onrender.com/countries/name/${country}`
@@ -14,12 +14,12 @@ const countriesContainer = document.querySelector('.countries');
 // request.send();
 
 // request.addEventListener('load', function () {
-//   const [data] = JSON.parse(this.responseText);  
+//   const [data] = JSON.parse(this.responseText);
 //   console.log(data);
 
 //   const html = `
 //     <article class="country">
-//     <img class="country__img" src="${data.flag}" />  
+//     <img class="country__img" src="${data.flag}" />
 //     <div class="country__data">
 //       <h3 class="country__name">${data.name}</h3>
 //       <h4 class="country__region">${data.region}</h4>
@@ -28,20 +28,17 @@ const countriesContainer = document.querySelector('.countries');
 //       <p class="country__row"><span>💰</span>${data.currencies[0].name}</p>
 //     </div>
 //   </article>
-//     `; 
+//     `;
 //     countriesContainer.insertAdjacentHTML("beforeend", html);
 //     countriesContainer.style.opacity = 1;
 // });
 
 // };
 
-
 // getCountryData('bangladesh');
 // getCountryData('portugal');
 // getCountryData('usa');
 // getCountryData('canada');
-
-
 
 /////////////////////////////////////////////////////////////
 // Callback Hell
@@ -49,7 +46,7 @@ const countriesContainer = document.querySelector('.countries');
 // const renderCountry = function(data, className='') {  //1
 //     const html = `
 //     <article class="country ${className}">
-//     <img class="country__img" src="${data.flag}" />  
+//     <img class="country__img" src="${data.flag}" />
 //     <div class="country__data">
 //       <h3 class="country__name">${data.name}</h3>
 //       <h4 class="country__region">${data.region}</h4>
@@ -58,36 +55,35 @@ const countriesContainer = document.querySelector('.countries');
 //       <p class="country__row"><span>💰</span>${data.currencies[0].name}</p>
 //     </div>
 //   </article>
-//     `; 
+//     `;
 //     countriesContainer.insertAdjacentHTML("beforeend", html);
 //     countriesContainer.style.opacity = 1;
 // }
 
-// const getCountryAndNeighbour = function(country) { 
+// const getCountryAndNeighbour = function(country) {
 
-// // AZAX Call 1    
-// const request = new XMLHttpRequest();  
+// // AZAX Call 1
+// const request = new XMLHttpRequest();
 // request.open(
 //   'GET',
 //   `https://countries-api-836d.onrender.com/countries/name/${country}`
 // ); // 2
 // request.send();
 
-
 // request.addEventListener('load', function () {
-//   const [data] = JSON.parse(this.responseText);  
+//   const [data] = JSON.parse(this.responseText);
 //   console.log(data);
 
 // //   render country 1
 //   renderCountry(data);
 
 //   const neighbour = data.borders[0];
-//   //const [neihbour] = data.border  
+//   //const [neihbour] = data.border
 
 //   if(!neighbour) return;
 // // AZAX Call 2 // 2
 
-//  const request2 = new XMLHttpRequest();  
+//  const request2 = new XMLHttpRequest();
 // request2.open(
 //   'GET',
 //   `https://countries-api-836d.onrender.com/countries/alpha/${neighbour}`
@@ -100,7 +96,7 @@ const countriesContainer = document.querySelector('.countries');
 
 //     renderCountry(data2, 'neighbour');
 // })
-  
+
 // });
 
 // // Get Neighbour country
@@ -123,18 +119,66 @@ const countriesContainer = document.querySelector('.countries');
 //     }, 1000);
 //   }, 1000);
 
-
- /////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 // Promises and the Fetch API
 
-
-// // AZAX Call 1 (old way)   
-// const request = new XMLHttpRequest();  
+// // AZAX Call 1 (old way)
+// const request = new XMLHttpRequest();
 // request.open(
 //   'GET',
 //   `https://countries-api-836d.onrender.com/countries/name/${country}`
 // ); // 2
 // request.send();
 
-const request = fetch('https://countries-api-836d.onrender.com/countries/name/bangladesh')
+// const request = fetch('https://countries-api-836d.onrender.com/countries/name/bangladesh')
 
+//////////////////////////////////////////////////////////////
+//Consuming Promises
+
+const renderCountry = function (data, className = '') {
+  //1
+  const html = `
+    <article class="country ${className}">
+    <img class="country__img" src="${data.flag}" />  
+    <div class="country__data">
+      <h3 class="country__name">${data.name}</h3>
+      <h4 class="country__region">${data.region}</h4>
+      <p class="country__row"><span>👫</span>${(
+        +data.population / 1000000
+      ).toFixed(1)} M</p>
+      <p class="country__row"><span>🗣️</span>${data.languages[0].nativeName}</p>
+      <p class="country__row"><span>💰</span>${data.currencies[0].name}</p>
+    </div>
+  </article>
+    `;
+  countriesContainer.insertAdjacentHTML('beforeend', html);
+  countriesContainer.style.opacity = 1;
+};
+// const getCountryData = function(country){
+//     fetch(`https://countries-api-836d.onrender.com/countries/name/${country}`).then(function(response){  // 1
+//         console.log(response);
+//         return response.json();
+//     }).then(function(data){
+//         console.log(data);
+//         renderCountry(data[0]);
+//     })
+// }
+
+//Simplifying the code
+const getCountryData = function (country) {
+  //Country 1
+  fetch(`https://countries-api-836d.onrender.com/countries/name/${country}`)
+    .then(response => response.json())
+    .then(data => {
+      renderCountry(data[0]);
+      const neighbour = data[0].borders?.[0];
+      if (!neighbour) return;
+      // Country 2
+      return fetch(
+        `https://countries-api-836d.onrender.com/countries/alpha/${neighbour}`
+      ); // not in here 1
+    })
+    .then(response => response.json()) // like this 1
+    .then(data => renderCountry(data, 'neighbour'));
+};
+getCountryData('usa');
